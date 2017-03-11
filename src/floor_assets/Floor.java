@@ -26,21 +26,12 @@ public class Floor {
 	 * Auto Completes the Entire area with one array containing the values of each 
 	 * sub zones
 	 */
-	public Floor(int[]nums){
-		if (nums.length == 5){
-			int a = nums[0];
-			int b = nums[1];
-			int c = nums[2];
-			int d = nums[3];
-			int e = nums[4];
+	public Floor(int a, int b,int c,int d,int e){
 			
 			this.zones = new ArrayList<Zone>();
 			for(int i=0;i<a;i++){
 				Zone z = new Zone(b,c,d,e);
 				this.zones.add(z);
-				}
-			}else{
-				System.out.println("Wrong Value Error");
 			}
 		}
 		
