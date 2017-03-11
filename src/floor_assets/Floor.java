@@ -1,14 +1,19 @@
 package floor_assets;
+import java.util.ArrayList;
 
 public class Floor {
-	private Aisle[] aisles;
+	public ArrayList<Zone> zones;
 	
 	public Floor(){
-		this.aisles = new Aisle[10000];
+		this.zones = new ArrayList<Zone>();
 	}
 	
 	public Floor(int num){
-		this.aisles = new Aisle[num];
+		this.zones = new ArrayList<Zone>();
+		for (int i=0;i<num;i++){
+			Zone a = new Zone();
+			this.zones.add(a);
+		}
 	}
 	
 }
