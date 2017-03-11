@@ -1,7 +1,9 @@
+import java.util.Arrays;
+
 public class Warehouse {
 	
 	private Floor floor;
-	public FaxMachine fax;
+	private ArrayList<FaxMachine> faxMachines;
 	private Server server;
 	private Worker workers;
 	
@@ -11,7 +13,7 @@ public class Warehouse {
 	
 	public Warehouse(){
 		this.floor = new Floor();
-		this.fax = new FaxMachine();
+		this.faxMachines = new ArrayList<FaxMachine>;
 		this.server = new Server();
 		this.workers = new Worker();
 		
@@ -21,8 +23,8 @@ public class Warehouse {
 	 * Get the fax machine
 	 */
 
-	public String getFaxMachine() {
-		return fax;
+	public String getFaxMachines() {
+		return this.faxMachines;
 	}
 	
 	/*
