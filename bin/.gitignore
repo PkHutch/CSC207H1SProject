@@ -1,8 +1,5 @@
-/WareHous.class
-/WareHouse.class
-/Floor.class
-/Aisle.class
-/Level.class
-/Rack.class
-/Shelf.class
+/Order.class
 /Server.class
+/WareHouse.class
+/Worker.class
+/floor_assets/
