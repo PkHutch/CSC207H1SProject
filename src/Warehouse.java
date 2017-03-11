@@ -1,4 +1,4 @@
-public class WareHouse {
+public class Warehouse {
 	
 	private Floor floor;
 	public FaxMachine fax;
@@ -9,7 +9,7 @@ public class WareHouse {
 	 * Initialize parameters needed to operate a Warehouse 
 	 */
 	
-	public WareHouse(){
+	public Warehouse(){
 		this.floor = new Floor();
 		this.fax = new FaxMachine();
 		this.server = new Server();
