@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import floor_assets.*;
 
 public class Warehouse {
 	
