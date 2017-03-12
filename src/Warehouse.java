@@ -26,15 +26,7 @@ public class Warehouse {
 	public String getFaxMachines() {
 		return this.faxMachines;
 	}
-	
-	/*
-	 * Set a fax for the WareHouse
-	 */
 
-	public void setFaxMachine(FaxMachine fax) {
-		this.fax = fax;
-	}
-	
 	/*
 	 * Get the floor plan of the WareHouse
 	 */
@@ -42,15 +34,7 @@ public class Warehouse {
 	public Floor getFloor() {
 		return floor;
 	}
-	
-	/*
-	 * Set a floor plan for the WareHouse
-	 */
-	
-	public void setFloor(Floor floor) {
-		this.floor = floor;
-	}
-	
+
 	/*
 	 * Get the server for the WareHouse
 	 */
@@ -60,27 +44,10 @@ public class Warehouse {
 	}
 	
 	/*
-	 * Set Server for the WareHouse
-	 */
-
-	public void setServer(Server server) {
-		this.server = server;
-	}
-	
-	/*
 	 * Get the workers working in the WareHouse
 	 */
 
 	public Worker getWorkers() {
 		return workers;
-	}
-	
-	/*
-	 * Set the workers for the WareHouse
-	 */
-
-	public void setWorkers(Worker workers) {
-		this.workers = workers;
-	}
-	
+	}	
 }
