@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 import workers.Worker;
 import floor_assets.*;
 
@@ -6,50 +6,61 @@ import floor_assets.*;
  * The warehouse class, which is where the simulation takes place.
  */
 public class Warehouse {
-    private ArrayList<FaxMachine> faxMachines;
-    private Floor floor;
-    private Server server;
-    private ArrayList<Worker> workers;
+	private ArrayList<FaxMachine> faxMachines;
+	private Floor floor;
+	private Server server;
+	private ArrayList<Worker> workers;
 
-    /**
-     * Initializes a Warehouse object.
-     */
-    public Warehouse() {
-        this.faxMachines = new ArrayList<FaxMachine>;
-        this.floor = new Floor();
-        this.server = new Server();
-        this.workers = new Worker();
-    }
+	/**
+	 * Initializes a Warehouse object.
+	 */
+	public Warehouse() {
+		this.faxMachines = new ArrayList<FaxMachine>();
+		this.floor = new Floor();
+		this.server = new Server();
+		this.workers = new ArrayList<Worker>();
+	}
 
-    /**
-     * Returns the fax machines of the Warehouse.
-     * @return Returns the ArrayList of FaxMachine.
-     */
-    public ArrayList<FaxMachine> getFaxMachines() {
-        return this.faxMachines;
-    }
+	public Warehouse(int a, int b, int c, int d, int e, ArrayList<Worker> workers) {
+		this.faxMachines = new ArrayList<FaxMachine>();
+		this.faxMachines.add(new FaxMachine());
+		this.floor = new Floor(a, b, c, d, e);
+		this.workers = workers;
+	}
 
-    /**
-     * Return the floor object of the warehouse.
-     * @return Returns the object which is the floor attribute.
-     */
-    public Floor getFloor() {
-        return floor;
-    }
+	/**
+	 * Returns the fax machines of the Warehouse.
+	 * 
+	 * @return Returns the ArrayList of FaxMachine.
+	 */
+	public ArrayList<FaxMachine> getFaxMachines() {
+		return this.faxMachines;
+	}
 
-    /**
-     * Returns the server, which makes the decisions for the warehouse.
-     * @return Returns the server object for the warehouse.
-     */
-    public Server getServer() {
-        return server;
-    }
+	/**
+	 * Return the floor object of the warehouse.
+	 * 
+	 * @return Returns the object which is the floor attribute.
+	 */
+	public Floor getFloor() {
+		return floor;
+	}
 
-    /**
-     * Returns the workers, which do tasks within the warehouse.
-     * @return Returns the workers of the warehouse.
-     */
-    public Worker getWorkers() {
-        return workers;
-    }
+	/**
+	 * Returns the server, which makes the decisions for the warehouse.
+	 * 
+	 * @return Returns the server object for the warehouse.
+	 */
+	public Server getServer() {
+		return server;
+	}
+
+	/**
+	 * Returns the workers, which do tasks within the warehouse.
+	 * 
+	 * @return Returns the workers of the warehouse.
+	 */
+	public ArrayList<Worker> getWorkers() {
+		return workers;
+	}
 }
