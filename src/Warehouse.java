@@ -27,7 +27,6 @@ public class Warehouse {
 		this.faxMachines.add(new FaxMachine());
 		this.floor = new Floor(a, b, c, d, e);
 		this.workers = workers;
-		this.server = new Server();
 	}
 
 	/**
