@@ -29,21 +29,21 @@ public class Rack {
 	/*
 	 * returns an Arraylist of levels
 	 */
-	public ArrayList<Level> get_level() {
+	public ArrayList<Level> getLevel() {
 		return this.level;
 	}
 
 	/*
 	 * Adds a level to the ArrayList,Level
 	 */
-	public void add_level(Level l) {
+	public void addLevel(Level l) {
 		this.level.add(l);
 	}
 
 	/*
 	 * Remove a level from the Arraylist, level
 	 */
-	public void remove_level(Level l) {
+	public void removeLevel(Level l) {
 		for (int i = 0; i < this.level.size(); i++) {
 			if (this.level.get(i) == l) {
 				this.level.remove(l);

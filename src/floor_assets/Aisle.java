@@ -29,21 +29,21 @@ public class Aisle {
 	/*
 	 * Return an ArrayList, the shelf.
 	 */
-	public ArrayList<Rack> get_Shelves() {
+	public ArrayList<Rack> getRacks() {
 		return this.rack;
 	}
 
 	/*
 	 * Add a Shelf s to the arrayList Shelves.
 	 */
-	public void add_shelf(Rack r) {
+	public void addRack(Rack r) {
 		this.rack.add(r);
 	}
 
 	/*
 	 * Remove a Shelf s from the arraylist Shelves.
 	 */
-	public void remove_zone(Rack r) {
+	public void removeRack(Rack r) {
 		for (int i = 0; i < this.rack.size(); i++) {
 			if (this.rack.get(i) == r) {
 				this.rack.remove(r);

@@ -26,22 +26,25 @@ public class Zone {
 			this.aisles.add(y);
 		}
 	}
+
 	/*
 	 * Returns a ArrayList of aisles
 	 */
-	public ArrayList<Aisle> get_aisles() {
+	public ArrayList<Aisle> getAisle() {
 		return this.aisles;
 	}
+
 	/*
 	 * Add an aisle a into the ArrayList
 	 */
-	public void add_zone(Aisle a) {
+	public void addAisle(Aisle a) {
 		this.aisles.add(a);
 	}
+
 	/*
-	 * Remove an Aisle a from the 
+	 * Remove an Aisle a from the
 	 */
-	public void remove_zone(Aisle a) {
+	public void removeAisles(Aisle a) {
 		for (int i = 0; i < this.aisles.size(); i++) {
 			if (this.aisles.get(i) == a) {
 				this.aisles.remove(a);

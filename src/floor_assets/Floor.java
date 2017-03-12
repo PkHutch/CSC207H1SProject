@@ -42,21 +42,21 @@ public class Floor {
 	/*
 	 * Gets a list of zones
 	 */
-	public ArrayList<Zone> get_Zones() {
+	public ArrayList<Zone> getZones() {
 		return this.zones;
 	}
 
 	/*
 	 * Adds a zone to the floor
 	 */
-	public void add_zone(Zone z) {
+	public void addZone(Zone z) {
 		this.zones.add(z);
 	}
 
 	/*
 	 * Remove a Zone z from the floor
 	 */
-	public void remove_zone(Zone z) {
+	public void removeZone(Zone z) {
 		for (int i = 0; i < this.zones.size(); i++) {
 			if (this.zones.get(i) == z) {
 				this.zones.remove(z);

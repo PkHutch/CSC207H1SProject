@@ -24,7 +24,7 @@ public class Level {
 	 * Puts an array of items on the shelf planned to use when intiazing the
 	 * warehouse
 	 */
-	public void fill_level(int[] objects) {
+	public void fillLevel(int[] objects) {
 		for (int i = 0; i < this.items.length; i++) {
 			items[i] = objects[i];
 		}
@@ -33,7 +33,7 @@ public class Level {
 	/*
 	 * Puts single items on the shelf fails if shelf is full
 	 */
-	public void add_item(int object) {
+	public void addItem(int object) {
 		for (int i = 0; i < this.items.length; i++) {
 			if (this.items[i] == 0) {
 				items[i] = object;
@@ -47,14 +47,14 @@ public class Level {
 	/*
 	 * Return the list of items.
 	 */
-	public int[] get_items() {
+	public int[] getItems() {
 		return this.items;
 	}
 
 	/*
 	 * Remove an item from the Array, items
 	 */
-	public void remove_item(int item) {
+	public void removeItem(int item) {
 		for (int i = 0; i < this.items.length; i++) {
 			if (this.items[i] == item) {
 				this.items[i] = 0;
