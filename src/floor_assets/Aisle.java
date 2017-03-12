@@ -6,13 +6,13 @@ import java.util.ArrayList;
  * The aisles from a zone
  */
 public class Aisle {
-	private ArrayList<Shelf> shelf;
+	private ArrayList<Rack> rack;
 
 	/*
 	 * Initialze a flexable shelf for the Aisle
 	 */
 	public Aisle() {
-		this.shelf = new ArrayList<Shelf>();
+		this.rack = new ArrayList<Rack>();
 	}
 
 	/*
@@ -21,32 +21,32 @@ public class Aisle {
 	 */
 	public Aisle(int a, int b, int c) {
 		for (int i = 0; i < a; i++) {
-			Shelf x = new Shelf(b, c);
-			this.shelf.add(x);
+			Rack x = new Rack(b, c);
+			this.rack.add(x);
 		}
 	}
 
 	/*
 	 * Return an ArrayList, the shelf.
 	 */
-	public ArrayList<Shelf> get_Shelves() {
-		return this.shelf;
+	public ArrayList<Rack> get_Shelves() {
+		return this.rack;
 	}
 
 	/*
 	 * Add a Shelf s to the arrayList Shelves.
 	 */
-	public void add_shelf(Shelf s) {
-		this.shelf.add(s);
+	public void add_shelf(Rack r) {
+		this.rack.add(r);
 	}
 
 	/*
 	 * Remove a Shelf s from the arraylist Shelves.
 	 */
-	public void remove_zone(Shelf s) {
-		for (int i = 0; i < this.shelf.size(); i++) {
-			if (this.shelf.get(i) == s) {
-				this.shelf.remove(s);
+	public void remove_zone(Rack r) {
+		for (int i = 0; i < this.rack.size(); i++) {
+			if (this.rack.get(i) == r) {
+				this.rack.remove(r);
 			}
 		}
 	}

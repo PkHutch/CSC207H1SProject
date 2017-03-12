@@ -18,10 +18,10 @@ public class Rack {
 	/*
 	 * Part of the auto-complete, can be called alone if needed.
 	 */
-	public Rack(int num) {
+	public Rack(int a, int b) {
 		this.level = new ArrayList<Level>();
-		for (int i = 0; i < num; i++) {
-			Level x = new Level();
+		for (int i = 0; i < a; i++) {
+			Level x = new Level(b);
 			this.level.add(x);
 		}
 	}

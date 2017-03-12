@@ -39,7 +39,7 @@ public class Zone {
 		this.aisles.add(a);
 	}
 	/*
-	 * Remove an Aisle a from the ArrayList
+	 * Remove an Aisle a from the 
 	 */
 	public void remove_zone(Aisle a) {
 		for (int i = 0; i < this.aisles.size(); i++) {

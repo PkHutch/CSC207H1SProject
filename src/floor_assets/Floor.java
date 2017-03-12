@@ -38,18 +38,21 @@ public class Floor {
 			this.zones.add(z);
 		}
 	}
+
 	/*
 	 * Gets a list of zones
 	 */
 	public ArrayList<Zone> get_Zones() {
 		return this.zones;
 	}
+
 	/*
 	 * Adds a zone to the floor
 	 */
 	public void add_zone(Zone z) {
 		this.zones.add(z);
 	}
+
 	/*
 	 * Remove a Zone z from the floor
 	 */
