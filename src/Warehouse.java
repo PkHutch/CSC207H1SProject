@@ -1,54 +1,55 @@
 import java.util.Arrays;
+import workers.Worker;
 import floor_assets.*;
 
+/**
+ * The warehouse class, which is where the simulation takes place.
+ */
 public class Warehouse {
-	
-	private Floor floor;
-	private ArrayList<FaxMachine> faxMachines;
-	private Server server;
-	private Worker workers;
-	
-	/*
-	 * Initialize parameters needed to operate a Warehouse 
-	 */
-	
-	public Warehouse(){
-		this.floor = new Floor();
-		this.faxMachines = new ArrayList<FaxMachine>;
-		this.server = new Server();
-		this.workers = new Worker();
-		
-	}
-	
-	/*
-	 * Get the fax machine
-	 */
+    private ArrayList<FaxMachine> faxMachines;
+    private Floor floor;
+    private Server server;
+    private ArrayList<Worker> workers;
 
-	public String getFaxMachines() {
-		return this.faxMachines;
-	}
+    /**
+     * Initializes a Warehouse object.
+     */
+    public Warehouse() {
+        this.faxMachines = new ArrayList<FaxMachine>;
+        this.floor = new Floor();
+        this.server = new Server();
+        this.workers = new Worker();
+    }
 
-	/*
-	 * Get the floor plan of the WareHouse
-	 */
+    /**
+     * Returns the fax machines of the Warehouse.
+     * @return Returns the ArrayList of FaxMachine.
+     */
+    public ArrayList<FaxMachine> getFaxMachines() {
+        return this.faxMachines;
+    }
 
-	public Floor getFloor() {
-		return floor;
-	}
+    /**
+     * Return the floor object of the warehouse.
+     * @return Returns the object which is the floor attribute.
+     */
+    public Floor getFloor() {
+        return floor;
+    }
 
-	/*
-	 * Get the server for the WareHouse
-	 */
+    /**
+     * Returns the server, which makes the decisions for the warehouse.
+     * @return Returns the server object for the warehouse.
+     */
+    public Server getServer() {
+        return server;
+    }
 
-	public Server getServer() {
-		return server;
-	}
-	
-	/*
-	 * Get the workers working in the WareHouse
-	 */
-
-	public Worker getWorkers() {
-		return workers;
-	}	
+    /**
+     * Returns the workers, which do tasks within the warehouse.
+     * @return Returns the workers of the warehouse.
+     */
+    public Worker getWorkers() {
+        return workers;
+    }
 }
