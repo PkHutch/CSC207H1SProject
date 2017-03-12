@@ -6,6 +6,7 @@ package floor_assets;
 public class Level {
 	private int[] items;
 
+
 	/*
 	 * Initiaze a set 30 size limit level
 	 */

@@ -61,8 +61,6 @@ public class Floor {
 			if (this.zones.get(i) == z) {
 				this.zones.remove(z);
 			}
-
 		}
-	}
-
+    }
 }

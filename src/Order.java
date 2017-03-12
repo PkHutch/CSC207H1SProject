@@ -1,4 +1,3 @@
-
 public class Order {
 	private String size;
 	private String colour;
