@@ -36,7 +36,14 @@ public class Warehouse {
 	public ArrayList<FaxMachine> getFaxMachines() {
 		return this.faxMachines;
 	}
-
+	/**
+	 * Adds a Fax to the FaxMachine ArrayList
+	 * 
+	 * @return void
+	 */
+	public void addFax(FaxMachine f){
+		this.faxMachines.add(f);
+	}
 	/**
 	 * Return the floor object of the warehouse.
 	 * 

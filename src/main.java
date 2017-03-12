@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class main {
@@ -9,7 +10,7 @@ public class main {
 	public static final String INITIAL_PATH = "./resources/initial.csv";
 	private static Scanner input;
 
-	public static void init() {
+	public static Warehouse init() {
 		String csvFile = INITIAL_PATH;
 		BufferedReader br = null;
 		String line = "";
@@ -36,19 +37,32 @@ public class main {
 				}
 			}
 		}
+		return null;
 	}
 
 	public static String getInput() {
 		input = new Scanner(System.in);
 		return input.next();
 	}
-	
-	public static void run(){
-		System.out.println("LOL");
+
+	public static void run(Warehouse w) {
+		boolean b = false;
+		while (b == false) {
+			String command = getInput();
+			String[] par = command.split(" ");
+			switch (par[0]) {
+			case "Order":
+				ArrayList<FaxMachine> Fax = w.getFaxMachines();
+				Server s = w.getServer();
+				s.issueTask(TaskEntity());
+			case "Quit":
+				b = true;
+			}
+		}
 	}
 
 	public static void main(String[] args) {
-		main.init();
-		main.run();
+		Warehouse wh = main.init();
+		main.run(wh);
 	}
 }
