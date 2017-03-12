@@ -1,42 +1,65 @@
 package floor_assets;
+
 /*
  * Levels of a Rack
  */
 public class Level {
 	private int[] items;
+
+
 	/*
 	 * Initiaze a set 30 size limit level
 	 */
-	public Level(){
+	public Level() {
 		this.items = new int[30];
 	}
+
 	/*
 	 * Initiaze a set amount of items on this level
 	 */
-	public Level(int num){
+	public Level(int num) {
 		this.items = new int[num];
 	}
+
 	/*
-	 * Puts an array of items on the shelf
-	 * planned to use when intiazing the warehouse
+	 * Puts an array of items on the shelf planned to use when intiazing the
+	 * warehouse
 	 */
-	public void fill_level(int[]objects){
-		for(int i=0;i<this.items.length;i++){
+	public void fillLevel(int[] objects) {
+		for (int i = 0; i < this.items.length; i++) {
 			items[i] = objects[i];
 		}
 	}
+
 	/*
-	 * Puts single items on the shelf
-	 * fails if shelf is full
+	 * Puts single items on the shelf fails if shelf is full
 	 */
-	public void fill_item(int object){
-		for(int i=0;i<this.items.length;i++){
-			if(this.items[i] == 0){
+	public void addItem(int object) {
+		for (int i = 0; i < this.items.length; i++) {
+			if (this.items[i] == 0) {
 				items[i] = object;
 			}
-			if(i == this.items.length && items[i] != 0){
+			if (i == this.items.length && items[i] != 0) {
 				System.out.println("This Level is full");
-			}				
+			}
+		}
+	}
+
+	/*
+	 * Return the list of items.
+	 */
+	public int[] getItems() {
+		return this.items;
+	}
+
+	/*
+	 * Remove an item from the Array, items
+	 */
+	public void removeItem(int item) {
+		for (int i = 0; i < this.items.length; i++) {
+			if (this.items[i] == item) {
+				this.items[i] = 0;
+			}
 		}
 	}
 }
