@@ -6,9 +6,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class main {
-
 	public static final String INITIAL_PATH = "./resources/initial.csv";
 	private static Scanner input;
+
+	public static void main(String[] args) {
+		Warehouse wh = main.init();
+		main.run(wh);
+	}
 
 	public static Warehouse init() {
 		String csvFile = INITIAL_PATH;
@@ -60,10 +64,5 @@ public class main {
 				b = true;
 			}
 		}
-	}
-
-	public static void main(String[] args) {
-		Warehouse wh = main.init();
-		main.run(wh);
 	}
 }
