@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import workers.Worker;
 import floor_assets.*;
-import workers.*;
 
 /**
  * The warehouse class, which is where the simulation takes place.
@@ -22,25 +21,11 @@ public class Warehouse {
 		this.workers = new ArrayList<Worker>();
 	}
 
-	public Warehouse(int a, int b, int c, int d, int e, String[] workers) {
+	public Warehouse(int a, int b, int c, int d, int e, ArrayList<Worker> workers) {
 		this.faxMachines = new ArrayList<FaxMachine>();
 		this.faxMachines.add(new FaxMachine());
 		this.floor = new Floor(a, b, c, d, e);
-		for (int i = 0; i < workers.length; i++) {
-			switch (workers[i]) {
-			case "Picker":
-				this.workers.add(new Picker(workers[i]));
-			case "Loader":
-				this.workers.add(new Loader(workers[i]));
-			case "Sequencer":
-				this.workers.add(new Sequencer(workers[i]));
-			case "Resupplier":
-				this.workers.add(new Resupplier(workers[i]));
-
-			default:
-				System.out.println("This job is currently unavailbe");
-			}
-		}
+		this.workers = workers;
 	}
 
 	/**
