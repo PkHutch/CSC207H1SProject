@@ -1,20 +1,19 @@
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class main {
-	public static final String INITIAL_PATH = "./resources/initial.csv";
 
-	public static void main(String[] args) {
+	public static final String INITIAL_PATH = "./resources/initial.csv";
+	private static Scanner input;
+
+	public static void init() {
 		String csvFile = INITIAL_PATH;
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ",";
-
-		File f = new File("ice.txt");
-		System.out.println(f.getAbsolutePath());
 
 		try {
 			br = new BufferedReader(new FileReader(csvFile));
@@ -37,6 +36,15 @@ public class main {
 				}
 			}
 		}
+	}
+
+	public static String getInput() {
+		input = new Scanner(System.in);
+		return input.next();
+	}
+
+	public static void main(String[] args) {
+		main.init();
 
 	}
 }
