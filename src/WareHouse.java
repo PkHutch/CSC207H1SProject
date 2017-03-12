@@ -1,3 +1,4 @@
+import workers.Worker;
 
 public class WareHouse {
 	private Worker[] workers;
