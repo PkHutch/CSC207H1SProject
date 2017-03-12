@@ -10,8 +10,7 @@ public class Warehouse {
 	private ArrayList<FaxMachine> faxMachines;
 	private Floor floor;
 	private Server server;
-	private Worker workers;
-	private ArrayList<Worker> workerss;
+	private ArrayList<Worker> workers;
 
 	/**
 	 * Initializes a Warehouse object.
@@ -20,7 +19,7 @@ public class Warehouse {
 		this.faxMachines = new ArrayList<FaxMachine>();
 		this.floor = new Floor();
 		this.server = new Server();
-		this.workers = new Picker("Alice");
+		this.workers = new ArrayList<Worker>();
 	}
 
 	public Warehouse(int a, int b, int c, int d, int e, String[] workers) {
@@ -30,13 +29,13 @@ public class Warehouse {
 		for (int i = 0; i < workers.length; i++) {
 			switch (workers[i]) {
 			case "Picker":
-				this.workerss.add(new Picker(workers[i]));
+				this.workers.add(new Picker(workers[i]));
 			case "Loader":
-				this.workerss.add(new Loader(workers[i]));
+				this.workers.add(new Loader(workers[i]));
 			case "Sequencer":
-				this.workerss.add(new Sequencer(workers[i]));
+				this.workers.add(new Sequencer(workers[i]));
 			case "Resupplier":
-				this.workerss.add(new Resupplier(workers[i]));
+				this.workers.add(new Resupplier(workers[i]));
 
 			default:
 				System.out.println("This job is currently unavailbe");
@@ -76,7 +75,7 @@ public class Warehouse {
 	 * 
 	 * @return Returns the workers of the warehouse.
 	 */
-	public Worker getWorkers() {
+	public ArrayList<Worker> getWorkers() {
 		return workers;
 	}
 }
