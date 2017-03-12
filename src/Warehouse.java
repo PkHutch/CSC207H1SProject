@@ -24,7 +24,7 @@ public class Warehouse {
 
 	public Warehouse(int a, int b, int c, int d, int e, String[] workers) {
 		this.faxMachines = new ArrayList<FaxMachine>();
-		this.faxMachines.add(new FaxMachine(""));
+		this.faxMachines.add(new FaxMachine());
 		this.floor = new Floor(a, b, c, d, e);
 		for (int i = 0; i < workers.length; i++) {
 			switch (workers[i]) {
