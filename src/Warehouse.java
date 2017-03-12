@@ -1,6 +1,7 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 import workers.Worker;
 import floor_assets.*;
+import workers.*;
 
 /**
  * The warehouse class, which is where the simulation takes place.
@@ -9,16 +10,16 @@ public class Warehouse {
     private ArrayList<FaxMachine> faxMachines;
     private Floor floor;
     private Server server;
-    private ArrayList<Worker> workers;
+    private Worker workers;
 
     /**
      * Initializes a Warehouse object.
      */
     public Warehouse() {
-        this.faxMachines = new ArrayList<FaxMachine>;
+        this.faxMachines = new ArrayList<FaxMachine>();
         this.floor = new Floor();
         this.server = new Server();
-        this.workers = new Worker();
+        this.workers = new Picker("Alice");
     }
 
     /**
