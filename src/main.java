@@ -42,9 +42,13 @@ public class main {
 		input = new Scanner(System.in);
 		return input.next();
 	}
+	
+	public static void run(){
+		System.out.println("LOL");
+	}
 
 	public static void main(String[] args) {
 		main.init();
-
+		main.run();
 	}
 }
