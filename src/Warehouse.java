@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import workers.Worker;
+import workers.*;
 import floor_assets.*;
 
 /**
@@ -22,10 +22,12 @@ public class Warehouse {
 	}
 
 	public Warehouse(int a, int b, int c, int d, int e, ArrayList<Worker> workers) {
+		this.server = new Server();
 		this.faxMachines = new ArrayList<FaxMachine>();
 		this.faxMachines.add(new FaxMachine());
 		this.floor = new Floor(a, b, c, d, e);
 		this.workers = workers;
+		this.server = new Server();
 	}
 
 	/**

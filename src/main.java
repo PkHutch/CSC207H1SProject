@@ -52,9 +52,10 @@ public class main {
 			String[] par = command.split(" ");
 			switch (par[0]) {
 			case "Order":
-				ArrayList<FaxMachine> Fax = w.getFaxMachines();
-				Server s = w.getServer();
-				s.issueTask(TaskEntity());
+				ArrayList<FaxMachine> faxes = w.getFaxMachines();
+				FaxMachine fax = faxes.get(0);
+				fax.addOrder(new Order(par[1]+par[2]));
+				fax.doTask("");
 			case "Quit":
 				b = true;
 			}
