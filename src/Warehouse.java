@@ -1,6 +1,6 @@
 import workers.Worker;
 
-public class WareHouse {
+public class Warehouse {
 	private Worker[] workers;
 	private Server server;
 	public boolean ParkerisLate = true;

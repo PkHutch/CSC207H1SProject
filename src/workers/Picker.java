@@ -1,5 +1,6 @@
 package workers;
-import vehicles.*;
+
+import vehicles.Forklift;
 
 public class Picker extends Worker {
 

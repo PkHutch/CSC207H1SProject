@@ -1,5 +1,6 @@
 package workers;
-import vehicles.*;
+
+import vehicles.Trucks;
 
 public class Loader extends Worker {
 	private Trucks truck;

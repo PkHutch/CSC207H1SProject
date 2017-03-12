@@ -11,7 +11,5 @@ public abstract class Worker {
 		return this.name;
 	}
 
-	public void doTask() {
-		;
-	}
+	public abstract void doTask();
 }
