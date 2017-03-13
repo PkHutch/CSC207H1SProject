@@ -56,7 +56,7 @@ public class main {
 				ArrayList<FaxMachine> faxes = w.getFaxMachines();
 				FaxMachine fax = faxes.get(0);
 				fax.addOrder(new Order(par[1] + par[2]));
-				fax.doTask("");
+
 			case "Quit":
 				b = true;
 			case "Picker":
@@ -64,18 +64,50 @@ public class main {
 					ArrayList<Worker> works = w.getWorkers();
 					for (int i = 0; i < works.size(); i++) {
 						if (works.get(i).getName() == par[1]) {
-							/// add to inactive in server
+							Server s = w.getServer();
+							s.inactivePickers.add(works.get(i));
 						} else {
 							w.addWorker(new Picker(par[1]));
 						}
 					}
 				}
 			case "Sequencer":
-				/// make sequencer
+				if (par[2] == "ready") {
+					ArrayList<Worker> works = w.getWorkers();
+					for (int i = 0; i < works.size(); i++) {
+						if (works.get(i).getName() == par[1]) {
+							Server s = w.getServer();
+							s.inactiveSequencer.add(works.get(i));
+						} else {
+							w.addWorker(new Sequencer(par[1]));
+						}
+					}
+				}
 			case "Loader":
-				/// make loader
+				if (par[2] == "ready") {
+					ArrayList<Worker> works = w.getWorkers();
+					for (int i = 0; i < works.size(); i++) {
+						if (works.get(i).getName() == par[1]) {
+							Server s = w.getServer();
+							s.inactiveLoaders.add(works.get(i));
+						} else {
+							w.addWorker(new Loader(par[1]));
+						}
+					}
+				}
 			case "Replenisher":
-				/// make replenisher
+				if (par[2] == "ready") {
+					ArrayList<Worker> works = w.getWorkers();
+					for (int i = 0; i < works.size(); i++) {
+						if (works.get(i).getName() == par[1]) {
+							Server s = w.getServer();
+							s.inactiveResupplier.add(works.get(i));
+						} else {
+							w.addWorker(new Replenisher(par[1]));
+						}
+					}
+				}
+
 			default:
 				System.out.println("Could not find a matching action");
 			}
