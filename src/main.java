@@ -10,6 +10,7 @@ import workers.*;
 
 public class main {
 	public static final String INITIAL_PATH = "./resources/initial.csv";
+	public static final String INITIAL_PATH2 = "./resource/traversal_table.csv";
 	private static Scanner input;
 
 	public static void main(String[] args) {
@@ -19,28 +20,40 @@ public class main {
 
 	public static Warehouse init() {
 		String csvFile = INITIAL_PATH;
+		String csvFile2 = INITIAL_PATH2;
 		BufferedReader br = null;
+		BufferedReader br2 = null;
 		String line = "";
 		String cvsSplitBy = ",";
 		Warehouse wh = new Warehouse(2, 2, 3, 4, 30);
 
 		try {
 			br = new BufferedReader(new FileReader(csvFile));
-			while ((line = br.readLine()) != null) {
+			br2 = new BufferedReader(new FileReader(csvFile2));
+			while ((line = br.readLine()) != null || (line = br2.readLine()) != null) {
 				String[] init = line.split(cvsSplitBy);
+				String[] init2 = line.split(cvsSplitBy);
 
-				System.out.println("Zone[" + init[0] + "] Aisle:" + init[1] + " Rack[" + init[2] + "] Level:" + init[3]
-						+ " with " + init[4] + " items");
+				System.out.println(init[0] + init2[0]);
 				Floor f = wh.getFloor();
-				int zone = init[0].charAt(0) - 'A';
-				Zone z = f.getZones().get(zone);
-				Aisle aisle = z.getAisle().get(Integer.parseInt(init[1]));
-				Rack rack = aisle.getRacks().get(Integer.parseInt(init[2]));
-				Level level = rack.getLevel().get(Integer.parseInt(init[3]));
-				for (int i = 0; i < Integer.parseInt(init[4]); i++) {
-					level.addItem(new Fascia(i));
+				if (init[0] == init2[0]) {
+					int zone = init[0].charAt(0) - 'A';
+					if (init[1] == init2[1]) {
+						Zone z = f.getZones().get(zone);
+						if (init[2] == init2[2]) {
+							Aisle aisle = z.getAisle().get(Integer.parseInt(init[1]));
+							if (init[3] == init2[3]) {
+								Rack rack = aisle.getRacks().get(Integer.parseInt(init[2]));
+								if (init[4] == init2[4]) {
+									Level level = rack.getLevel().get(Integer.parseInt(init[3]));
+									for (int i = 0; i < Integer.parseInt(init[4]); i++) {
+										level.addItem(new Fascia(Integer.parseInt(init2[4])));
+									}
+								}
+							}
+						}
+					}
 				}
-
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
