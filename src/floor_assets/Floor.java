@@ -62,5 +62,5 @@ public class Floor {
 				this.zones.remove(z);
 			}
 		}
-    }
+	}
 }

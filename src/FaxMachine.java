@@ -7,7 +7,7 @@ public class FaxMachine {
 	public FaxMachine() {
 		this.orders = new LinkedList<Order>();
 	}
-	
+
 	public FaxMachine(Server s) {
 		this.orders = new LinkedList<Order>();
 		this.server = s;
@@ -29,8 +29,8 @@ public class FaxMachine {
 	public LinkedList<Order> getOrders() {
 		return this.orders;
 	}
-	
-	public void doTask(String argument){
+
+	public void doTask(String argument) {
 		this.server.issueTask(this);
 	}
 }

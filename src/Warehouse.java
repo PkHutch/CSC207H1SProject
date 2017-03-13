@@ -23,12 +23,12 @@ public class Warehouse {
 		this.marshalling = new Marshalling();
 	}
 
-	public Warehouse(int a, int b, int c, int d, int e, ArrayList<Worker> workers) {
+	public Warehouse(int a, int b, int c, int d, int e) {
 		this.server = new Server();
 		this.faxMachines = new ArrayList<FaxMachine>();
 		this.faxMachines.add(new FaxMachine());
 		this.floor = new Floor(a, b, c, d, e);
-		this.workers = workers;
+		this.workers = new ArrayList<Worker>();
 		this.marshalling = new Marshalling();
 	}
 

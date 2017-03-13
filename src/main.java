@@ -4,10 +4,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import floor_assets.*;
+import stocking.Fascia;
 import workers.*;
 
 public class main {
 	public static final String INITIAL_PATH = "./resources/initial.csv";
+	public static final String INITIAL_PATH2 = "./resource/traversal_table.csv";
 	private static Scanner input;
 
 	public static void main(String[] args) {
@@ -17,18 +20,42 @@ public class main {
 
 	public static Warehouse init() {
 		String csvFile = INITIAL_PATH;
+		String csvFile2 = INITIAL_PATH2;
 		BufferedReader br = null;
+		BufferedReader br2 = null;
 		String line = "";
 		String cvsSplitBy = ",";
+		Warehouse wh = new Warehouse(2, 2, 3, 4, 30);
+		ArrayList<String[]> traversaTable = new ArrayList<String[]>();
 
 		try {
 			br = new BufferedReader(new FileReader(csvFile));
+			br2 = new BufferedReader(new FileReader(csvFile2));
+			while ((line = br2.readLine()) != null) {
+				String[] table = line.split(cvsSplitBy);
+				traversaTable.add(table);
+			}
 			while ((line = br.readLine()) != null) {
 				String[] init = line.split(cvsSplitBy);
+				for (int j = 0; j < traversaTable.size(); j++) {
+					if (traversaTable.get(j)[0] == init[0] && 
+						traversaTable.get(j)[1] == init[1] && 
+						traversaTable.get(j)[2] == init[2] && 
+						traversaTable.get(j)[3] == init[3]) {
 
-				System.out.println("Zone[" + init[0] + "] Aisle:" + init[1] + " Rack[" + init[2] + "] Level:" + init[3]
-						+ " with " + init[4] + " items");
+						Floor f = wh.getFloor();
+						int zone = init[0].charAt(0) - 'A';
+						Zone z = f.getZones().get(zone);
+						Aisle aisle = z.getAisle().get(Integer.parseInt(init[1]));
+						Rack rack = aisle.getRacks().get(Integer.parseInt(init[2]));
+						Level level = rack.getLevel().get(Integer.parseInt(init[3]));
+						for (int i = 0; i < Integer.parseInt(init[4]); i++) {
+							level.addItem(new Fascia(Integer.parseInt(traversaTable.get(j)[4])));
+						}
+					}
+				}
 			}
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -42,7 +69,7 @@ public class main {
 				}
 			}
 		}
-		return null;
+		return wh;
 	}
 
 	public static String getInput() {
