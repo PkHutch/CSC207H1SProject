@@ -10,6 +10,7 @@ public class Warehouse {
 	private Floor floor;
 	private Server server;
 	private ArrayList<Worker> workers;
+	private Marshalling marshalling;
 
 	/**
 	 * Initializes a Warehouse object.
@@ -19,6 +20,7 @@ public class Warehouse {
 		this.floor = new Floor();
 		this.server = new Server();
 		this.workers = new ArrayList<Worker>();
+		this.marshalling = new Marshalling();
 	}
 
 	public Warehouse(int a, int b, int c, int d, int e, ArrayList<Worker> workers) {
@@ -27,6 +29,7 @@ public class Warehouse {
 		this.faxMachines.add(new FaxMachine());
 		this.floor = new Floor(a, b, c, d, e);
 		this.workers = workers;
+		this.marshalling = new Marshalling();
 	}
 
 	/**
@@ -37,14 +40,16 @@ public class Warehouse {
 	public ArrayList<FaxMachine> getFaxMachines() {
 		return this.faxMachines;
 	}
+
 	/**
 	 * Adds a Fax to the FaxMachine ArrayList
 	 * 
 	 * @return void
 	 */
-	public void addFax(FaxMachine f){
+	public void addFax(FaxMachine f) {
 		this.faxMachines.add(f);
 	}
+
 	/**
 	 * Return the floor object of the warehouse.
 	 * 
@@ -71,12 +76,14 @@ public class Warehouse {
 	public ArrayList<Worker> getWorkers() {
 		return workers;
 	}
+
 	/**
-	 * Adds a worker to the Worker ArrayList, which do tasks within the warehouse/
+	 * Adds a worker to the Worker ArrayList, which do tasks within the
+	 * warehouse/
 	 * 
 	 * @return void
 	 */
-	public void addWorker(Worker w){
+	public void addWorker(Worker w) {
 		this.workers.add(w);
 	}
 }
