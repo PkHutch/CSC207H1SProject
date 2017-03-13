@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import floor_assets.*;
 import workers.*;
 
 public class main {
@@ -20,6 +21,7 @@ public class main {
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ",";
+		Warehouse wh = new Warehouse(2, 2, 3, 4, 30);
 
 		try {
 			br = new BufferedReader(new FileReader(csvFile));
@@ -28,6 +30,12 @@ public class main {
 
 				System.out.println("Zone[" + init[0] + "] Aisle:" + init[1] + " Rack[" + init[2] + "] Level:" + init[3]
 						+ " with " + init[4] + " items");
+				Floor f = wh.getFloor();
+				int zone = init[0].charAt(0) - 'A';
+				Zone z = f.getZones().get(zone);
+				Aisle aisle = z.getAisle().get(Integer.parseInt(init[1]));
+				Rack rack = aisle.getRacks().get(Integer.parseInt(init[2]));
+
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -42,7 +50,7 @@ public class main {
 				}
 			}
 		}
-		return null;
+		return wh;
 	}
 
 	public static String getInput() {
