@@ -88,40 +88,46 @@ public class main {
 					}
 				}
 			case "sequencer":
-				ArrayList<Worker> worksS = w.getWorkers();
-				for (int i = 0; i < worksS.size(); i++) {
-					if (worksS.get(i).getName() == par[1]) {
-						s.inactiveSequencer.add(worksS.get(i));
-					} else {
-						Sequencer seq = new Sequencer(par[1]);
-						w.addWorker(seq);
-						s.inactiveSequencer.add(seq);
-						seq.doTask();
+				if (par[2] == "sequences") {
+					ArrayList<Worker> worksS = w.getWorkers();
+					for (int i = 0; i < worksS.size(); i++) {
+						if (worksS.get(i).getName() == par[1]) {
+							s.inactiveSequencer.add(worksS.get(i));
+						} else {
+							Sequencer seq = new Sequencer(par[1]);
+							w.addWorker(seq);
+							s.inactiveSequencer.add(seq);
+							seq.doTask();
+						}
 					}
 				}
 
 			case "loader":
-				ArrayList<Worker> worksL = w.getWorkers();
-				for (int i = 0; i < worksL.size(); i++) {
-					if (worksL.get(i).getName() == par[1]) {
-						Server s = w.getServer();
-						s.inactiveLoader.add(worksL.get(i));
-					} else {
-						Loader load = new Loader(par[1]);
-						w.addWorker(load);
-						load.doTask();
+				if (par[2] == "loads") {
+					ArrayList<Worker> worksL = w.getWorkers();
+					for (int i = 0; i < worksL.size(); i++) {
+						if (worksL.get(i).getName() == par[1]) {
+							Server s = w.getServer();
+							s.inactiveLoader.add(worksL.get(i));
+						} else {
+							Loader load = new Loader(par[1]);
+							w.addWorker(load);
+							load.doTask();
+						}
 					}
 				}
 			case "replenisher":
-				ArrayList<Worker> worksR = w.getWorkers();
-				for (int i = 0; i < worksR.size(); i++) {
-					if (worksR.get(i).getName() == par[1]) {
-						s.inactiveReplenisher.add(worksR.get(i));
-					} else {
-						Resupplier re = new Resupplier(par[1]);
-						w.addWorker(re);
-						s.inactiveReplenisher.add(re);
-						re.doTask();
+				if (par[2] == "replenish") {
+					ArrayList<Worker> worksR = w.getWorkers();
+					for (int i = 0; i < worksR.size(); i++) {
+						if (worksR.get(i).getName() == par[1]) {
+							s.inactiveReplenisher.add(worksR.get(i));
+						} else {
+							Resupplier re = new Resupplier(par[1]);
+							w.addWorker(re);
+							s.inactiveReplenisher.add(re);
+							re.doTask();
+						}
 					}
 				}
 
