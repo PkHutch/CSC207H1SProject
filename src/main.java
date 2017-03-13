@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import workers.*;
 
 public class main {
 
@@ -54,10 +55,29 @@ public class main {
 			case "Order":
 				ArrayList<FaxMachine> faxes = w.getFaxMachines();
 				FaxMachine fax = faxes.get(0);
-				fax.addOrder(new Order(par[1]+par[2]));
+				fax.addOrder(new Order(par[1] + par[2]));
 				fax.doTask("");
 			case "Quit":
 				b = true;
+			case "Picker":
+				if (par[2] == "ready") {
+					ArrayList<Worker> works = w.getWorkers();
+					for (int i = 0; i < works.size(); i++) {
+						if (works.get(i).getName() == par[1]) {
+							/// add to inactive in server
+						} else {
+							w.addWorker(new Picker(par[1]));
+						}
+					}
+				}
+			case "Sequencer":
+				/// make sequencer
+			case "Loader":
+				/// make loader
+			case "Replenisher":
+				/// make replenisher
+			default:
+				System.out.println("Could not find a matching action");
 			}
 		}
 	}

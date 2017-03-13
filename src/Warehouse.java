@@ -72,4 +72,12 @@ public class Warehouse {
 	public ArrayList<Worker> getWorkers() {
 		return workers;
 	}
+	/**
+	 * Adds a worker to the Worker ArrayList, which do tasks within the warehouse/
+	 * 
+	 * @return void
+	 */
+	public void addWorker(Worker w){
+		this.workers.add(w);
+	}
 }
