@@ -53,6 +53,7 @@ public class main {
 	public static void run(Warehouse w) {
 		boolean b = false;
 		while (b == false) {
+			Server s = w.getServer();
 			String command = getInput();
 			String[] par = command.split(" ");
 			switch (par[0].toLowerCase()) {
@@ -68,17 +69,18 @@ public class main {
 					ArrayList<Worker> worksP = w.getWorkers();
 					for (int i = 0; i < worksP.size(); i++) {
 						if (worksP.get(i).getName() == par[1]) {
-							Server s = w.getServer();
 							s.inactivePickers.add(worksP.get(i));
 						} else {
-							w.addWorker(new Picker(par[1]));
+							Picker p = new Picker(par[1]);
+							w.addWorker(p);
+							s.inactivePickers.add(p);
 						}
 					}
 				} else if (par[2] == "pick") {
 					Server s = w.getServer();
-					if (s.inactivePicker.contains(par[1])){
-						for(int i=0;i<inactivePicker.size();i++){
-							if(inactivePicker.get(i).getName() == par[1]){
+					if (s.inactivePicker.contains(par[1])) {
+						for (int i = 0; i < inactivePicker.size(); i++) {
+							if (inactivePicker.get(i).getName() == par[1]) {
 								Picker p = inactivePicker.get(i);
 								p.doTask();
 							}
@@ -89,11 +91,11 @@ public class main {
 				ArrayList<Worker> worksS = w.getWorkers();
 				for (int i = 0; i < worksS.size(); i++) {
 					if (worksS.get(i).getName() == par[1]) {
-						Server s = w.getServer();
 						s.inactiveSequencer.add(worksS.get(i));
 					} else {
 						Sequencer seq = new Sequencer(par[1]);
 						w.addWorker(seq);
+						s.inactiveSequencer.add(seq);
 						seq.doTask();
 					}
 				}
@@ -114,11 +116,11 @@ public class main {
 				ArrayList<Worker> worksR = w.getWorkers();
 				for (int i = 0; i < worksR.size(); i++) {
 					if (worksR.get(i).getName() == par[1]) {
-						Server s = w.getServer();
-						s.inactiveLoader.add(worksR.get(i));
+						s.inactiveReplenisher.add(worksR.get(i));
 					} else {
 						Resupplier re = new Resupplier(par[1]);
 						w.addWorker(re);
+						s.inactiveReplenisher.add(re);
 						re.doTask();
 					}
 				}
