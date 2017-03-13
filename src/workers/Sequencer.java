@@ -6,7 +6,7 @@ public class Sequencer extends Worker {
 		super(name);
 	}
 
-	public void doTask() {
+	public void doTask(String location) {
 		;
 	}
 }
