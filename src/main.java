@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import floor_assets.*;
+import stocking.Fascia;
 import workers.*;
 
 public class main {
@@ -35,6 +36,10 @@ public class main {
 				Zone z = f.getZones().get(zone);
 				Aisle aisle = z.getAisle().get(Integer.parseInt(init[1]));
 				Rack rack = aisle.getRacks().get(Integer.parseInt(init[2]));
+				Level level = rack.getLevel().get(Integer.parseInt(init[3]));
+				for (int i = 0; i < Integer.parseInt(init[4]); i++) {
+					level.addItem(new Fascia(i));
+				}
 
 			}
 		} catch (FileNotFoundException e) {
