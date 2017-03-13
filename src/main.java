@@ -55,60 +55,71 @@ public class main {
 		while (b == false) {
 			String command = getInput();
 			String[] par = command.split(" ");
-			switch (par[0]) {
-			case "Order":
+			switch (par[0].toLowerCase()) {
+			case "order":
 				ArrayList<FaxMachine> faxes = w.getFaxMachines();
 				FaxMachine fax = faxes.get(0);
 				fax.addOrder(new Order(par[1] + par[2]));
 
-			case "Quit":
+			case "quit":
 				b = true;
-			case "Picker":
+			case "picker":
 				if (par[2] == "ready") {
-					ArrayList<Worker> works = w.getWorkers();
-					for (int i = 0; i < works.size(); i++) {
-						if (works.get(i).getName() == par[1]) {
+					ArrayList<Worker> worksP = w.getWorkers();
+					for (int i = 0; i < worksP.size(); i++) {
+						if (worksP.get(i).getName() == par[1]) {
 							Server s = w.getServer();
-							s.inactivePickers.add(works.get(i));
+							s.inactivePickers.add(worksP.get(i));
 						} else {
 							w.addWorker(new Picker(par[1]));
 						}
 					}
-				}
-			case "Sequencer":
-				if (par[2] == "ready") {
-					ArrayList<Worker> works = w.getWorkers();
-					for (int i = 0; i < works.size(); i++) {
-						if (works.get(i).getName() == par[1]) {
-							Server s = w.getServer();
-							s.inactiveSequencer.add(works.get(i));
-						} else {
-							w.addWorker(new Sequencer(par[1]));
+				} else if (par[2] == "pick") {
+					Server s = w.getServer();
+					if (s.inactivePicker.contains(par[1])){
+						for(int i=0;i<inactivePicker.size();i++){
+							if(inactivePicker.get(i).getName() == par[1]){
+								Picker p = inactivePicker.get(i);
+								p.doTask();
+							}
 						}
 					}
 				}
-			case "Loader":
-				if (par[2] == "ready") {
-					ArrayList<Worker> works = w.getWorkers();
-					for (int i = 0; i < works.size(); i++) {
-						if (works.get(i).getName() == par[1]) {
-							Server s = w.getServer();
-							s.inactiveLoaders.add(works.get(i));
-						} else {
-							w.addWorker(new Loader(par[1]));
-						}
+			case "sequencer":
+				ArrayList<Worker> worksS = w.getWorkers();
+				for (int i = 0; i < worksS.size(); i++) {
+					if (worksS.get(i).getName() == par[1]) {
+						Server s = w.getServer();
+						s.inactiveSequencer.add(worksS.get(i));
+					} else {
+						Sequencer seq = new Sequencer(par[1]);
+						w.addWorker(seq);
+						seq.doTask();
 					}
 				}
-			case "Replenisher":
-				if (par[2] == "ready") {
-					ArrayList<Worker> works = w.getWorkers();
-					for (int i = 0; i < works.size(); i++) {
-						if (works.get(i).getName() == par[1]) {
-							Server s = w.getServer();
-							s.inactiveResupplier.add(works.get(i));
-						} else {
-							w.addWorker(new Replenisher(par[1]));
-						}
+
+			case "loader":
+				ArrayList<Worker> worksL = w.getWorkers();
+				for (int i = 0; i < worksL.size(); i++) {
+					if (worksL.get(i).getName() == par[1]) {
+						Server s = w.getServer();
+						s.inactiveLoader.add(worksL.get(i));
+					} else {
+						Loader load = new Loader(par[1]);
+						w.addWorker(load);
+						load.doTask();
+					}
+				}
+			case "replenisher":
+				ArrayList<Worker> worksR = w.getWorkers();
+				for (int i = 0; i < worksR.size(); i++) {
+					if (worksR.get(i).getName() == par[1]) {
+						Server s = w.getServer();
+						s.inactiveLoader.add(worksR.get(i));
+					} else {
+						Resupplier re = new Resupplier(par[1]);
+						w.addWorker(re);
+						re.doTask();
 					}
 				}
 
