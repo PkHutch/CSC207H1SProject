@@ -61,7 +61,7 @@ public class main {
 				ArrayList<FaxMachine> faxes = w.getFaxMachines();
 				FaxMachine fax = faxes.get(0);
 				fax.addOrder(new Order(par[1] + par[2]));
-
+				break;
 			case "quit":
 				b = true;
 			case "picker":
@@ -76,6 +76,7 @@ public class main {
 							s.inactivePickers.add(p);
 						}
 					}
+					break;
 				} else if (par[2] == "pick") {
 					Server s = w.getServer();
 					if (s.inactivePicker.contains(par[1])) {
@@ -87,6 +88,7 @@ public class main {
 						}
 					}
 				}
+				break;
 			case "sequencer":
 				if (par[2] == "sequences") {
 					ArrayList<Worker> worksS = w.getWorkers();
@@ -101,7 +103,7 @@ public class main {
 						}
 					}
 				}
-
+				break;
 			case "loader":
 				if (par[2] == "loads") {
 					ArrayList<Worker> worksL = w.getWorkers();
@@ -116,6 +118,7 @@ public class main {
 						}
 					}
 				}
+				break;
 			case "replenisher":
 				if (par[2] == "replenish") {
 					ArrayList<Worker> worksR = w.getWorkers();
@@ -130,6 +133,7 @@ public class main {
 						}
 					}
 				}
+				break;
 
 			default:
 				System.out.println("Could not find a matching action");
