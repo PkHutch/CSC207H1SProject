@@ -7,9 +7,13 @@ import java.util.Scanner;
 import workers.*;
 
 public class main {
-
 	public static final String INITIAL_PATH = "./resources/initial.csv";
 	private static Scanner input;
+
+	public static void main(String[] args) {
+		Warehouse wh = main.init();
+		main.run(wh);
+	}
 
 	public static Warehouse init() {
 		String csvFile = INITIAL_PATH;
@@ -112,10 +116,5 @@ public class main {
 				System.out.println("Could not find a matching action");
 			}
 		}
-	}
-
-	public static void main(String[] args) {
-		Warehouse wh = main.init();
-		main.run(wh);
 	}
 }
