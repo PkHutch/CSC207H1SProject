@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import workers.*;
 
 public class main {
 	public static final String INITIAL_PATH = "./resources/initial.csv";
@@ -52,16 +53,86 @@ public class main {
 	public static void run(Warehouse w) {
 		boolean b = false;
 		while (b == false) {
+			Server s = w.getServer();
 			String command = getInput();
 			String[] par = command.split(" ");
-			switch (par[0]) {
-			case "Order":
+			switch (par[0].toLowerCase()) {
+			case "order":
 				ArrayList<FaxMachine> faxes = w.getFaxMachines();
 				FaxMachine fax = faxes.get(0);
-				fax.addOrder(new Order(par[1]+par[2]));
-				fax.doTask("");
-			case "Quit":
+				fax.addOrder(new Order(par[1] + par[2]));
+
+			case "quit":
 				b = true;
+			case "picker":
+				if (par[2] == "ready") {
+					ArrayList<Worker> worksP = w.getWorkers();
+					for (int i = 0; i < worksP.size(); i++) {
+						if (worksP.get(i).getName() == par[1]) {
+							s.inactivePickers.add(worksP.get(i));
+						} else {
+							Picker p = new Picker(par[1]);
+							w.addWorker(p);
+							s.inactivePickers.add(p);
+						}
+					}
+				} else if (par[2] == "pick") {
+					Server s = w.getServer();
+					if (s.inactivePicker.contains(par[1])) {
+						for (int i = 0; i < inactivePicker.size(); i++) {
+							if (inactivePicker.get(i).getName() == par[1]) {
+								Picker p = inactivePicker.get(i);
+								p.doTask();
+							}
+						}
+					}
+				}
+			case "sequencer":
+				if (par[2] == "sequences") {
+					ArrayList<Worker> worksS = w.getWorkers();
+					for (int i = 0; i < worksS.size(); i++) {
+						if (worksS.get(i).getName() == par[1]) {
+							s.inactiveSequencer.add(worksS.get(i));
+						} else {
+							Sequencer seq = new Sequencer(par[1]);
+							w.addWorker(seq);
+							s.inactiveSequencer.add(seq);
+							seq.doTask();
+						}
+					}
+				}
+
+			case "loader":
+				if (par[2] == "loads") {
+					ArrayList<Worker> worksL = w.getWorkers();
+					for (int i = 0; i < worksL.size(); i++) {
+						if (worksL.get(i).getName() == par[1]) {
+							Server s = w.getServer();
+							s.inactiveLoader.add(worksL.get(i));
+						} else {
+							Loader load = new Loader(par[1]);
+							w.addWorker(load);
+							load.doTask();
+						}
+					}
+				}
+			case "replenisher":
+				if (par[2] == "replenish") {
+					ArrayList<Worker> worksR = w.getWorkers();
+					for (int i = 0; i < worksR.size(); i++) {
+						if (worksR.get(i).getName() == par[1]) {
+							s.inactiveReplenisher.add(worksR.get(i));
+						} else {
+							Resupplier re = new Resupplier(par[1]);
+							w.addWorker(re);
+							s.inactiveReplenisher.add(re);
+							re.doTask();
+						}
+					}
+				}
+
+			default:
+				System.out.println("Could not find a matching action");
 			}
 		}
 	}
