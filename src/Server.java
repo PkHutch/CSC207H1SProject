@@ -188,7 +188,7 @@ public class Server {
 //            }
 //        // If a Replenisher is calling the function then it needs the low levels of the racks.
 //        } else if(taskEntity instanceOf Replenisher) {
-//            taskEntity.addLowLevels(this.lowLevels);
+//            taskEntity.doTask(lowLevels);
 //            this.lowLevels = null;
 //        } else {
 //            throw new IllegalArgumentException("The TaskGiver does not have a defined result " +
