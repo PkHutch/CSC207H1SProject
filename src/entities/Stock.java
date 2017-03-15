@@ -1,4 +1,4 @@
-package stocking;
+package entities;
 
 public class Stock {
 	private int SKU;

@@ -1,4 +1,4 @@
-package workers;
+package entities.workers;
 
 import floor_assets.*;
 import warehouse.*;

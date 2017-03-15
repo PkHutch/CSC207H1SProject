@@ -1,4 +1,4 @@
-package workers;
+package entities.workers;
 
 import warehouse.*;
 import stocking.Fascia;
