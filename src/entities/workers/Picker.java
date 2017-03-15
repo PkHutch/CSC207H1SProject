@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import entities.Level;
 import entities.linkedlistcontainers.Forklift;
 import entities.Stock;
+import entities.taskentities.TaskExecutor;
 import entities.Warehouse;
 import entities.Worker;
 
@@ -15,7 +16,7 @@ import entities.Worker;
  * method. The Pickers job to stock off the shelves and bring them to the marshalling area as
  * per the server's instructions.
  */
-public class Picker extends Worker<String> {
+public class Picker extends Worker implements TaskExecutor<String> {
     // Defines the Picker variables.
     private boolean isActive = false;
     private int currentPick = 1;

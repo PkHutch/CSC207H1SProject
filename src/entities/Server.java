@@ -28,12 +28,10 @@ public class Server {
     private final static int DEFAULT_REFILL_QUANTITY = 5;
     private final static int DEFAULT_PICKING_REQUEST_SIZE = 8;
     private LinkedList<Integer[]> activePickingRequests;
-    private LinkedList<Loader> inactiveLoaders;
     private LinkedList<Picker> inactivePickers;
     private LinkedList<Integer[]> inactivePickingRequests;
     private LinkedList<Integer> inactivePicks;
-//    private LinkedList<Resupplier> inactiveResuppliers;
-//    private LinkedList<Sequencer> inactiveSequencers;
+    private LinkedList<Pallet> sequencedPickingRequests;
     private Warehouse warehouse;
 
     // Defines the constructor methods.
@@ -105,40 +103,13 @@ public class Server {
 
     // Defines the functional methods.
     /**
-     * Adds the worker to the inactiveLoaders list.
-     *
-     * @param worker the Loader to be added to the inactiveLoaders list.
-     */
-//    public void addInactiveLoader(Loader worker) {
-//        this.inactiveLoaders.add(worker);
-//    }
-
-    /**
-     * Adds the worker to the inactivePickerss list.
+     * Adds the worker to the inactivePickers list.
      *
      * @param worker the Picker to be added to the inactivePickers list.
      */
     public void addInactivePicker(Picker worker) {
         this.inactivePickers.add(worker);
     }
-
-    /**
-     * Adds the worker to the inactiveResuppliers list.
-     *
-     * @param worker the Resupplier to be added to the inactiveResuppliers list.
-     */
-//    public void addInactiveResupplier(Resupplier worker) {
-//        this.inactiveResuppliers.add(worker);
-//    }
-
-    /**
-     * Adds the worker to the inactiveSequencers list.
-     *
-     * @param worker the Sequencer to be added to the inactiveSequencers list.
-     */
-//    public void addInactiveSequencers(Sequencer worker) {
-//        this.inactiveSequencers.add(worker);
-//    }
 
     public void issueTask(Picker taskEntity) {
         // A picker should not already have a picking request assigned.
@@ -179,7 +150,7 @@ public class Server {
                 throw new IllegalArgumentException("This order requires stock which does " +
                               "not exist in the SKU lookup table.");
             }
-
+        }
         // If four orders have been placed, then creates a picking request.
         if(inactivePicks.size() == DEFAULT_PICKING_REQUEST_SIZE) {
             Integer[] newPickingRequest = new Integer[DEFAULT_PICKING_REQUEST_SIZE];
@@ -190,7 +161,11 @@ public class Server {
 
             inactivePickingRequests.add(newPickingRequest);
         }
-    }}
+    }
+
+    public void issueTask(Loader taskEntity) {
+        this.sequencedPickingRequests.clear();
+    }
 
     public boolean needsRefill() {
         return this.lowLevels.size() > 0;

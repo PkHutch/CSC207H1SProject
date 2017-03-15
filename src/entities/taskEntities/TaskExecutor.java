@@ -1,5 +1,7 @@
 package entities.taskentities;
 
-public interface TaskExecutor<T> implements TaskEntity{
+import entities.TaskEntity;
+
+public interface TaskExecutor<T> extends TaskEntity{
 	void doTask(T argument);
 }

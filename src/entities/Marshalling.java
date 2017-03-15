@@ -24,9 +24,8 @@ public class Marshalling {
 		return s;
 	}
 
-	public Pallet removePallet(Pallet p) {
-		this.marshallingPallet.remove(p);
-		return p;
+	public void removePallets() {
+		this.marshallingPallet.clear();
 	}
 
 	public boolean checkInv(int SKU) {
