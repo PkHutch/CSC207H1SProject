@@ -1,34 +1,26 @@
 package entities.workers;
 
+import entities.Marshalling;
+import entities.Pallet;
+import entities.stocking.Fascia;
 import entities.Warehouse;
 import entities.Worker;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
-import java.util.*;
-import entities.Marshalling;
-import entities.stocking.*;
-import entities.Pallet;
+public class Sequencer extends Worker implements taskExecutor<String>{
+    private LinkedList<Integer[]> activePickingRequests;
 
-public class Sequencer extends Worker {
+    public Sequencer(String name, Warehouse warehouse) {
+        super(name, warehouse);
+    }
 
-	public Sequencer(String name, Warehouse warehouse) {
-		super(name, warehouse);
-	}
-
-	public void doTask(LinkedList<ArrayList<Fascia>> orders) {
-		for (int i = 0; i < orders.size(); i++) {
-			ArrayList<Fascia> y = orders.removeFirst();
-			Pallet p = new Pallet();
-			p.addContent(y[0]);
-			p.addContent(y[2]);
-			p.addContent(p[4]);
-			p.addContent(p[6]);
-			Pallet pa = new Pallet();
-			pa.addContent(y[1]);
-			pa.addContent(y[3]);
-			pa.addContent(p[5]);
-			pa.addContent(p[7]);
-			warehouse.getMarshalling().addPallet(p);
-			warehouse.getMarshalling().addPallet(pa);
-		}
-	}
+    public void doTask(String argument) {
+        if (argument.equals("sequence")) {
+            // Call issueTask here to update activePickingRequests, then do
+            // the group of eight filtering.
+        } else {
+            // Exception.
+        }
+    }
 }
