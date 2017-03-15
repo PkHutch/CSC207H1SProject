@@ -194,11 +194,13 @@ public class Server {
 //                    activePickingRequests.add(this.inactivePickingRequests.pop());
 //                }
 //            }
-//        // If a Sequencer is calling issue task, then 
+//        // If a Sequencer is calling issue task, then give it the current list of
+//        // activePickingRequests to check.
+//        } else if(taskEntity instanceof Sequencer) {
+//            taskEntity.doTask(this.activeLinkedList);
 //        // If a Replenisher is calling the function then it needs the low levels of the racks.
 //        } else if(taskEntity instanceOf Replenisher) {
 //            taskEntity.doTask(lowLevels);
-//            this.lowLevels = null;
 //        } else {
 //            throw new IllegalArgumentException("The TaskGiver does not have a defined result " +
 //                          "when calling issueTask of the Server.");
