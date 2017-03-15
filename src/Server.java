@@ -174,6 +174,18 @@ public class Server {
 //
 //                inactivePickingRequests.add(newPickingRequest);
 //            }
+//        // If a Picker is calling the function then there are one of two options, then it has yet
+//        // to be assigned an inactive picking request.
+//        } else if(taskEntity instanceOf Picker) {
+//            // A picker should not already have a picking request assigned.
+//            if(taskEntity.hasPickingRequest) {
+//                throws new IllegalArgumentException(taskEntity.getName + " already has a " +
+//                               "picking request assigned to them.)
+//            } else {
+//                activePickingRequests.add(inactivePickingRequest.pop());
+//                taskEntity.setPickingRequest(this.warehouse.warehousePicking.optimize(this.
+//                    activePickingRequests.getLast()));
+//            }
 //        } else {
 //            throw new IllegalArgumentException("The TaskGiver does not have a defined result " +
 //                          "when calling issueTask of the Server.");
