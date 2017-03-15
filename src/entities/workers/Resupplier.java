@@ -1,8 +1,13 @@
 package entities.workers;
 
-import floor_assets.*;
-import warehouse.*;
-import stocking.*;
+import entities.Floor;
+import entities.Aisle;
+import entities.Zone;
+import entities.Rack;
+import entities.Level;
+import entities.Warehouse;
+import entities.stocking.Fascia;
+import entities.Worker;
 
 public class Resupplier extends Worker {
 

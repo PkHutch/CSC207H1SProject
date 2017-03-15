@@ -1,6 +1,7 @@
 package entities.workers;
 
-import warehouse.Warehouse;
+import entities.Worker;
+import entities.Warehouse;
 
 public class Sequencer extends Worker {
 

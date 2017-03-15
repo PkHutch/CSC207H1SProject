@@ -29,8 +29,8 @@ public class Rack {
 	/*
 	 * returns an Arraylist of levels
 	 */
-	public ArrayList<Level> getLevel() {
-		return this.level;
+	public Level getLevel(int index) {
+		return this.level.get(index);
 	}
 
 	/*
