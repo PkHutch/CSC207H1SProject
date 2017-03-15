@@ -47,30 +47,30 @@ public class Picker extends Worker<String> {
     public void doTask(String argument) {
         if(argument.equals("ready")) {
             if(this.currentPick == DEFAULT_PICK_START) {
-                this.getWarehouse().getServer().addInactivePickers(this);
+                this.getWarehouse().getServer().addInactivePicker(this);
                 this.getWarehouse().getServer().issueTask(this);
             } else {
-                throws new IllegalArgumentException("The Picker " + this.getName() + " is " +
-                               currently picking, they can not be ready!");
+                throw new IllegalArgumentException("The Picker " + this.getName() + " is " +
+                               "currently picking, they can not be ready!");
             }
-        } else if(argument.startsWith("pick") {
+        } else if(argument.startsWith("pick")) {
             // IE currentPick == x, where x is the int in "pick x" of the argument.
             if(currentPick == Integer.parseInt(argument.split(" ")[1])) {
                 String[] nextLocation = currentPickingRequest.pop();
 
                 Level nextLevel = this.getWarehouse().getFloor().getLevel(
                                      nextLocation[0].toChar(0), Integer.parseInt(nextLocation[1]),
-                                     Integer.parseInt(nextLocation[2],
+                                     Integer.parseInt(nextLocation[2]),
                                      Integer.parseInt(nextLocation[3]));
 
                 this.forklift.addItem(nextLevel.removeItem());
                 this.getWarehouse().getServer().issueTask(nextLevel);
-                }
             // Otherwise the picker is not on the specified pick.
             } else {
-                throws new IllegalArgumentException("The Picker " + this.getName() + " is not " +
+                throw new IllegalArgumentException("The Picker " + this.getName() + " is not " +
                                "on the given picking number, " + this.getName() + " is on " +
                                Integer.toString(this.currentPick));
+            }
         } else if(argument.equals("to Marshaling")) {
             if(this.currentPick == DEFAULT_PICK_END + 1) {
                 LinkedList<Stock> currentInventory = this.forklift.getInventory();
@@ -80,11 +80,11 @@ public class Picker extends Worker<String> {
                     this.getWarehouse().getMarshalling().addStock(currentInventory.pop());
                 }
             } else {
-                throws new IllegalArgumentException("The Picker " + this.getName() + " can't " +
+                throw new IllegalArgumentException("The Picker " + this.getName() + " can't " +
                                "go to marshalling, they do not have a full forklift!");
             }
         } else {
-            throws new IllegalArgumentException(argument + " called on Picker " + this.getName() +
+            throw new IllegalArgumentException(argument + " called on Picker " + this.getName() +
                            " is an illegal command!");
         }
     }
