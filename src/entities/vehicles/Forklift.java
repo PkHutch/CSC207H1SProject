@@ -1,4 +1,4 @@
-package vehicles;
+package entities.vehicles;
 
 import java.util.LinkedList;
 import stocking.*;
