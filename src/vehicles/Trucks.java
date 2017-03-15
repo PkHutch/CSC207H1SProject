@@ -6,7 +6,7 @@ import stocking.Stock;
 
 public class Trucks extends Vehicles {
 	public Trucks() {
-		super(80);
+		super(10000);
 	}
 
 	public LinkedList<Pallet> getInventory() {
@@ -25,18 +25,6 @@ public class Trucks extends Vehicles {
 
 	public void removeItem(Pallet item) {
 		inventory.remove(item);
-	}
-
-	@Override
-	public void addItem(Object item) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void removeItem(Object item) {
-		// TODO Auto-generated method stub
-
 	}
 
 }
