@@ -1,7 +1,6 @@
 package workers;
 
 import warehouse.*;
-import stocking.Fascia;
 import stocking.Pallet;
 import vehicles.Trucks;
 
@@ -14,8 +13,8 @@ public class Loader extends Worker {
 	}
 
 	public void doTask(String location) {
-		Pallet front = warehouse.getMarshalling().removePallet(new Pallet());
-		Pallet back = warehouse.getMarshalling().removePallet(new Pallet());
+		Pallet front = warehouse.getMarshalling().removePallet(warehouse.getMarshalling().marshallingPallet.get(0));
+		Pallet back = warehouse.getMarshalling().removePallet(warehouse.getMarshalling().marshallingPallet.get(0));
 		truck.addItem(front);
 		truck.addItem(back);
 	}

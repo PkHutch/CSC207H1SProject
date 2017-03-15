@@ -33,6 +33,6 @@ public class FaxMachine {
 	}
 
 	public void doTask(String argument) {
-		this.server.issueTask(this);
+		this.server.issueTask(1);
 	}
 }

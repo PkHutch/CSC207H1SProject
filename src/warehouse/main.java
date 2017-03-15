@@ -97,21 +97,20 @@ public class main {
 					ArrayList<Worker> worksP = w.getWorkers();
 					for (int i = 0; i < worksP.size(); i++) {
 						if (worksP.get(i).getName() == par[1]) {
-							s.inactivePickers.add(worksP.get(i));
+							s.inactivePickers.add((Picker) worksP.get(i));
 						} else {
-							Picker p = new Picker(par[1]);
+							Picker p = new Picker(par[1], w);
 							w.addWorker(p);
 							s.inactivePickers.add(p);
 						}
 					}
 					break;
 				} else if (par[2] == "pick") {
-					Server s = w.getServer();
-					if (s.inactivePicker.contains(par[1])) {
-						for (int i = 0; i < inactivePicker.size(); i++) {
-							if (inactivePicker.get(i).getName() == par[1]) {
-								Picker p = inactivePicker.get(i);
-								p.doTask();
+					if (s.inactivePickers.contains(par[1])) {
+						for (int i = 0; i < s.inactivePickers.size(); i++) {
+							if (s.inactivePickers.get(i).getName() == par[1]) {
+								Picker p = s.inactivePickers.get(i);
+								p.doTask(par[4]);
 							}
 						}
 					}
@@ -122,12 +121,12 @@ public class main {
 					ArrayList<Worker> worksS = w.getWorkers();
 					for (int i = 0; i < worksS.size(); i++) {
 						if (worksS.get(i).getName() == par[1]) {
-							s.inactiveSequencer.add(worksS.get(i));
+							s.inactiveSequencers.add((Sequencer) worksS.get(i));
 						} else {
-							Sequencer seq = new Sequencer(par[1]);
+							Sequencer seq = new Sequencer(par[1], w);
 							w.addWorker(seq);
-							s.inactiveSequencer.add(seq);
-							seq.doTask();
+							s.inactiveSequencers.add(seq);
+							seq.doTask(par[2]);
 						}
 					}
 				}
@@ -137,12 +136,11 @@ public class main {
 					ArrayList<Worker> worksL = w.getWorkers();
 					for (int i = 0; i < worksL.size(); i++) {
 						if (worksL.get(i).getName() == par[1]) {
-							Server s = w.getServer();
-							s.inactiveLoader.add(worksL.get(i));
+							s.inactiveLoaders.add((Loader) worksL.get(i));
 						} else {
-							Loader load = new Loader(par[1]);
+							Loader load = new Loader(par[1], w);
 							w.addWorker(load);
-							load.doTask();
+							load.doTask(par[2]);
 						}
 					}
 				}
@@ -152,11 +150,11 @@ public class main {
 					ArrayList<Worker> worksR = w.getWorkers();
 					for (int i = 0; i < worksR.size(); i++) {
 						if (worksR.get(i).getName() == par[1]) {
-							s.inactiveReplenisher.add(worksR.get(i));
+							s.inactiveResuppliers.add((Resupplier) worksR.get(i));
 						} else {
-							Resupplier re = new Resupplier(par[1]);
+							Resupplier re = new Resupplier(par[1], w);
 							w.addWorker(re);
-							s.inactiveReplenisher.add(re);
+							s.inactiveResuppliers.add(re);
 							re.doTask();
 						}
 					}

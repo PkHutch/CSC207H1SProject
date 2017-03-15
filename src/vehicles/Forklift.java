@@ -27,4 +27,16 @@ public class Forklift extends Vehicles {
 		inventory.remove(item);
 	}
 
+	@Override
+	public void addItem(Object item) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void removeItem(Object item) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

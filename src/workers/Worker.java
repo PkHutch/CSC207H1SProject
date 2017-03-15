@@ -4,7 +4,7 @@ import warehouse.*;
 
 public abstract class Worker {
 	private String name;
-	private Warehouse warehouse;
+	protected Warehouse warehouse;
 
 	public Worker(String name, Warehouse warehouse) {
 		this.name = name;
@@ -15,5 +15,4 @@ public abstract class Worker {
 		return this.name;
 	}
 
-	public abstract void doTask();
 }

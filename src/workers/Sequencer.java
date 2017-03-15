@@ -1,5 +1,7 @@
 package workers;
 
+import warehouse.Warehouse;
+
 public class Sequencer extends Worker {
 
 	public Sequencer(String name, Warehouse warehouse) {
