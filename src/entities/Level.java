@@ -6,64 +6,64 @@ package entities;
 public class Level {
     // Defines the class variables.
     private static final int DEFAULT_LEVEL_SIZE = 30;
-	private Stock[] items;
+    private Stock[] items;
 
-	/*
-	 * Initiaze a set 30 size limit level
-	 */
-	public Level() {
-		this.items = new Stock[30];
+    /*
+     * Initiaze a set 30 size limit level.
+     */
+    public Level() {
+        this.items = new Stock[30];
+    }
 
-	}
+    /*
+     * Initiaze a set amount of items on this level
+     */
+    public Level(int num) {
+        this.items = new Stock[num];
+    }
 
-	/*
-	 * Initiaze a set amount of items on this level
-	 */
-	public Level(int num) {
-		this.items = new Stock[num];
-	}
+    /*
+     * Puts an array of items on the shelf planned to use when intiazing the
+     * warehouse
+     */
+    public void fillLevel(Stock[] objects) {
+        for (int i = 0; i < this.items.length; i++) {
+            items[i] = objects[i];
+        }
+    }
 
-	/*
-	 * Puts an array of items on the shelf planned to use when intiazing the
-	 * warehouse
-	 */
-	public void fillLevel(Stock[] objects) {
-		for (int i = 0; i < this.items.length; i++) {
-			items[i] = objects[i];
-		}
-	}
+    /*
+     * Puts single items on the shelf fails if shelf is full
+     */
+    public void addItem(Stock object) {
+        for (int i = 0; i < this.items.length; i++) {
+            if (this.items[i] == null) {
+                items[i] = object;
+            }
 
-	/*
-	 * Puts single items on the shelf fails if shelf is full
-	 */
-	public void addItem(Stock object) {
-		for (int i = 0; i < this.items.length; i++) {
-			if (this.items[i] == null) {
-				items[i] = object;
-			}
-			if (i == this.items.length && items[i] != null) {
-				System.out.println("This Level is full");
-			}
-		}
-	}
+            if (i == this.items.length && items[i] != null) {
+                System.out.println("This Level is full");
+            }
+        }
+    }
 
-	/*
-	 * Return the list of items.
-	 */
-	public Stock[] getItems() {
-		return this.items;
-	}
+    /*
+     * Return the list of items.
+     */
+    public Stock[] getItems() {
+        return this.items;
+    }
 
-	/*
-	 * Remove an item from the Array, items
-	 */
-	public void removeItem(Stock item) {
-		for (int i = 0; i < this.items.length; i++) {
-			if (this.items[i] == item) {
-				this.items[i] = null;
-			}
-		}
-	}
+    /*
+     * Remove an item from the Array, items
+     */
+    public void removeItem(Stock item) {
+        for (int i = 0; i < this.items.length; i++) {
+            if (this.items[i] == item) {
+                this.items[i] = null;
+            }
+        }
+    }
 
     /**
      * Removes the non-null item of the largest index and returns it.
@@ -71,20 +71,25 @@ public class Level {
      * @return the Stock which is the item with the largest index.
      */
     public Stock removeItem() {
-        for (int index = DEFAULT_LEVEL_SIZE - 1; index >= 0; index--) {
-            if(this.items[index] != null) {
-                return this.items[index];
-            }
-        }
+        int currentIndex = DEFAULT_LEVEL_SIZE - 1;
+        Stock currentItem = null;
+
+        do {
+            currentItem = this.items[currentIndex];
+        } while(currentItem != null || currentIndex == 0);
+
+        return currentItem;
     }
 
-	public int numItem() {
-		int count = 0;
-		for (int i = 0; i < this.items.length; i++) {
-			if (this.items[i] != null) {
-				count += 1;
-			}
-		}
-		return count;
-	}
+    public int numItem() {
+        int count = 0;
+
+        for (int i = 0; i < this.items.length; i++) {
+            if (this.items[i] != null) {
+                count += 1;
+            }
+        }
+
+        return count;
+    }
 }

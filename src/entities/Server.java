@@ -3,7 +3,7 @@
 package entities;
 
 // Imports necessary packages.
-//import entities.Warehouse;
+import entities.Warehouse;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,10 +11,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.lang.IllegalArgumentException;
 import java.util.LinkedList;
-import entities.workers.Loader;
+//import entities.workers.Loader;
 import entities.workers.Picker;
-import entities.workers.Resupplier;
-import entities.workers.Sequencer;
+//import entities.workers.Resupplier;
+//import entities.workers.Sequencer;
 
 /**
  * This class defines the Server, which makes the majority of the logical decisions for a
@@ -22,92 +22,17 @@ import entities.workers.Sequencer;
  * issueTask methods.
  */
 public class Server {
-<<<<<<< HEAD
-	private ArrayList<String[]> translationArray;
-	// private ArrayList<Level> lowLevels;
-	public LinkedList<Loader> inactiveLoaders;
-	public LinkedList<Picker> inactivePickers;
-	// private LinkedList<int[]> inactivePickingRequests;
-	// private LinkedList<Integer> inactivePicks;
-	public LinkedList<Resupplier> inactiveResuppliers;
-	public LinkedList<Sequencer> inactiveSequencers;
-	// private Warehouse warehouse;
-
-	// Defines the constructor methods.
-	/**
-	 * The constructor for Server which doesn't any values to it's attributes
-	 * this should only be called by the Warehouse that it belongs to.
-	 *
-	 * @param warehouse
-	 *            the warehouse which this server belongs to.
-	 */
-	// public void Server(Warehouse warehouse) {
-	// this.warehouse = warehouse;
-	// parseTranslation();
-	// }
-
-	// Defines the helper methods.
-	/**
-	 * Parses the translation.csv file so that the server has a more readily
-	 * useable form for the sake of looking up SKU numbers of units, this is
-	 * more efficient than parsing the file every single time an SKU lookup is
-	 * required.
-	 *
-	 * @throws IllegalFormatException
-	 *             this is called when there are repeated SKUs in the
-	 *             translation.csv file.
-	 */
-	private void parseTranslation() {
-		BufferedReader bufferedReader = null;
-		String line;
-		final String translationFile = "./resources/translation.csv";
-		final String splitBy = ",";
-
-		try {
-			bufferedReader = new BufferedReader(new FileReader(translationFile));
-
-			// Skips the first line.
-			line = bufferedReader.readLine();
-
-			while ((line = bufferedReader.readLine()) != null) {
-				String[] translatedLine = line.split(splitBy);
-
-				for (int index = 0; index < this.translationArray.size(); index++) {
-					String[] currentTranslation = translationArray.get(index);
-
-					if (translatedLine[2] == currentTranslation[2] || translatedLine[2] == currentTranslation[3]
-							|| translatedLine[3] == currentTranslation[3] || translatedLine[3] == currentTranslation[2]
-							|| translatedLine[2] == translatedLine[3]) {
-						throw new IllegalArgumentException("The SKU " + translatedLine[2] + " or " + translatedLine[3]
-								+ " already exists in the translation source.");
-					} else {
-						this.translationArray.add(new String[] { translatedLine[0], translatedLine[1],
-								translatedLine[2], translatedLine[3] });
-					}
-				}
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (bufferedReader != null) {
-				try {
-					bufferedReader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-=======
     private ArrayList<String[]> translationArray;
-//  private ArrayList<Level> lowLevels;
-    private LinkedList<Loader> inactiveLoaders;
+    private ArrayList<Level> lowLevels;
+    private final static int DEFAULT_REFILL_QUANTITY = 5;
+    private LinkedList<Integer[]> activePickingRequests;
+//    private LinkedList<Loader> inactiveLoaders;
     private LinkedList<Picker> inactivePickers;
-//    private LinkedList<String[]> inactivePickingRequests;
+    private LinkedList<Integer[]> inactivePickingRequests;
 //    private LinkedList<Integer> inactivePicks;
-    private LinkedList<Resupplier> inactiveResuppliers;
-    private LinkedList<Sequencer> inactiveSequencers;
-//    private Warehouse warehouse;
+//    private LinkedList<Resupplier> inactiveResuppliers;
+//    private LinkedList<Sequencer> inactiveSequencers;
+    private Warehouse warehouse;
 
     // Defines the constructor methods.
     /**
@@ -171,7 +96,6 @@ public class Server {
                     bufferedReader.close();
                 } catch (IOException e) {
                     e.printStackTrace();
->>>>>>> e93ae04cfbc58c7c92f37d97fa76d608267d10a2
 		}
             }
         }
@@ -183,9 +107,9 @@ public class Server {
      *
      * @param worker the Loader to be added to the inactiveLoaders list.
      */
-    public void addInactiveLoader(Loader worker) {
-        this.inactiveLoaders.add(worker);
-    }
+//    public void addInactiveLoader(Loader worker) {
+//        this.inactiveLoaders.add(worker);
+//    }
 
     /**
      * Adds the worker to the inactivePickerss list.
@@ -201,17 +125,42 @@ public class Server {
      *
      * @param worker the Resupplier to be added to the inactiveResuppliers list.
      */
-    public void addInactiveResupplier(Resupplier worker) {
-        this.inactiveResuppliers.add(worker);
-    }
+//    public void addInactiveResupplier(Resupplier worker) {
+//        this.inactiveResuppliers.add(worker);
+//    }
 
     /**
      * Adds the worker to the inactiveSequencers list.
      *
      * @param worker the Sequencer to be added to the inactiveSequencers list.
      */
-    public void addInactiveSequencers(Sequencer worker) {
-        this.inactiveSequencers.add(worker);
+//    public void addInactiveSequencers(Sequencer worker) {
+//        this.inactiveSequencers.add(worker);
+//    }
+
+    public void issueTask(Picker taskEntity) {
+        // A picker should not already have a picking request assigned.
+        if(taskEntity.hasPickingRequest()) {
+            throw new IllegalArgumentException(taskEntity.getName() + " already has a picking " +
+                          "request assigned to them.");
+        } else {
+            Integer[] newPickingRequest = this.inactivePickingRequests.pop();
+
+            // If the picking request is already active, that means that it has failed before and
+            // should not be added to the activePickingRequests.
+            if(this.activePickingRequests.contains(newPickingRequest) == false) {
+                this.activePickingRequests.add(newPickingRequest);
+            }
+
+            // Give the picker the locations regardless.
+//            taskEntity.setPickingRequest(this.warehouse.getWarehousePicking().optimize(newPickingRequest));
+        }
+    }
+
+    public void issueTask(Level taskEntity) {
+        if(taskEntity.numItem() <= DEFAULT_REFILL_QUANTITY) {
+            this.lowLevels.add(taskEntity);
+        }
     }
 
 //    /**

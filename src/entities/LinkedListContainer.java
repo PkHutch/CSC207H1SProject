@@ -1,0 +1,78 @@
+// Defines package.
+package entities;
+
+// Defines imports.
+import java.util.LinkedList;
+
+/**
+ * The LinkedListContainer is effectively a stack of an arbitrary type and maximum size.
+ */
+public abstract class LinkedListContainer<T> {
+    // Defines variables.
+    private int currentInventorySize;
+    private LinkedList<T> inventory;
+    private int maxInventorySize;
+
+    // Defines contructor methods.
+    /**
+     * The main constructor, creates a LinkedListContainer with the max size being equal to
+     * inventorySize.
+     *
+     * @param inventorySize the integer which will be assigned to the max inventory size.
+     */
+    public LinkedListContainer(int inventorySize) {
+        this.maxInventorySize = inventorySize;
+    }
+
+    // Defines functional methods.
+    /**
+     * The method for adding an item to the inventory, adds it to the last position.
+     *
+     * @param item the object of type T which will be assigned to the max inventory size.
+     * @throws IllegalArgumentException the exception is thrown when an item is added and the
+     *         LinkedListContainer is at max capacity.
+     */
+    public void addItem(T item) {
+        if(this.currentInventorySize == this.maxInventorySize) {
+            throw new IllegalArgumentException("A LinkedListContainer is at max capacity but " +
+                          "something is trying to add to it.");
+        } else {
+            this.currentInventorySize++;
+            this.inventory.add(item);
+        }
+    }
+
+    /**
+     * The method for returning the inventory.
+     *
+     * @return the return is the LinkedList stored in the LinkedListContainer.
+     */
+    public LinkedList<T> getInventory() {
+        return this.inventory;
+    }
+
+    /**
+     * The method which returns whether or not the LinkedListContainer is empty.
+     *
+     * @return the boolean representing whether or not the LinkedListContainer is empty.
+     */
+    public boolean isEmpty() {
+        return this.inventory.size() == 0;
+    }
+
+    /**
+     * The method which returns whether or not the LinkedListContainer is empty.
+     *
+     * @return the first item in the LinkedListContainer.
+     * @throws IllegalArgumentException the exception is thrown when the container is empty yet
+     *         something attempts to remove an item.
+     */
+    public T removeItem() {
+        if(this.isEmpty()) {
+            throw new IllegalArgumentException("A LinkedListContainer is empty but something is" +
+                          " attempting to remove an item from it.");
+        } else {
+            return this.inventory.pop();
+        }
+    }
+}

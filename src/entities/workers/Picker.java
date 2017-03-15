@@ -1,23 +1,12 @@
 // Defines the package.
 package entities.workers;
 
-<<<<<<< HEAD
-import java.util.*;
-
-import entities.Stock;
-import entities.Worker;
-import entities.stocking.Fascia;
-import entities.Warehouse;
-import entities.vehicles.Forklift;
-
-/*
- * The Picker class, a worker in the warehouse
-=======
 // Defines the imports.
 import java.lang.IllegalArgumentException;
 import java.util.LinkedList;
 import entities.Level;
-import entities.vehicles.Forklift;
+import entities.linkedlistcontainers.Forklift;
+import entities.Stock;
 import entities.Warehouse;
 import entities.Worker;
 
@@ -25,7 +14,6 @@ import entities.Worker;
  * The Picker class extends the worker class and takes an arguement of String for it's doTask
  * method. The Pickers job to stock off the shelves and bring them to the marshalling area as
  * per the server's instructions.
->>>>>>> e93ae04cfbc58c7c92f37d97fa76d608267d10a2
  */
 public class Picker extends Worker<String> {
     // Defines the Picker variables.
@@ -59,9 +47,10 @@ public class Picker extends Worker<String> {
      */
     public void doTask(String argument) {
         if(argument.equals("ready")) {
-            if(this.currentPick == DEFAULT_PICK_START) {
+            if(this.currentPick == DEFAULT_PICK_START && this.isActive == false) {
                 this.getWarehouse().getServer().addInactivePicker(this);
                 this.getWarehouse().getServer().issueTask(this);
+                this.isActive = true;
             } else {
                 throw new IllegalArgumentException("The Picker " + this.getName() + " is " +
                                "currently picking, they can not be ready!");
@@ -72,7 +61,7 @@ public class Picker extends Worker<String> {
                 String[] nextLocation = currentPickingRequest.pop();
 
                 Level nextLevel = this.getWarehouse().getFloor().getLevel(
-                                     nextLocation[0].toChar(0), Integer.parseInt(nextLocation[1]),
+                                     nextLocation[0].charAt(0), Integer.parseInt(nextLocation[1]),
                                      Integer.parseInt(nextLocation[2]),
                                      Integer.parseInt(nextLocation[3]));
 
@@ -87,11 +76,14 @@ public class Picker extends Worker<String> {
         } else if(argument.equals("to Marshaling")) {
             if(this.currentPick == DEFAULT_PICK_END + 1) {
                 LinkedList<Stock> currentInventory = this.forklift.getInventory();
-                LinkedList<Stock> inventorySize = currentInventory.size();
+                int inventorySize = currentInventory.size();
 
                 for(int count = 0; count < inventorySize; count++) {
                     this.getWarehouse().getMarshalling().addStock(currentInventory.pop());
                 }
+
+                this.currentPick = DEFAULT_PICK_START;
+                this.isActive = false;
             } else {
                 throw new IllegalArgumentException("The Picker " + this.getName() + " can't " +
                                "go to marshalling, they do not have a full forklift!");
@@ -99,6 +91,16 @@ public class Picker extends Worker<String> {
         } else {
             throw new IllegalArgumentException(argument + " called on Picker " + this.getName() +
                            " is an illegal command!");
+        }
+    }
+
+    public boolean hasPickingRequest() {
+    	return this.isActive;
+    }
+
+    public void setPickingRequest(LinkedList<String[]> pickingRequest) {
+        if(currentPickingRequest.size() == 0) {
+            this.currentPickingRequest = pickingRequest;
         }
     }
 }
