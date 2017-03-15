@@ -1,12 +1,12 @@
 package entities.workers;
 
-<<<<<<< HEAD
 import entities.Warehouse;
 import entities.Worker;
-=======
-import entities.Worker;
-import entities.Warehouse;
->>>>>>> e93ae04cfbc58c7c92f37d97fa76d608267d10a2
+
+import java.util.*;
+import entities.Marshalling;
+import entities.stocking.*;
+import entities.Pallet;
 
 public class Sequencer extends Worker {
 
@@ -14,7 +14,21 @@ public class Sequencer extends Worker {
 		super(name, warehouse);
 	}
 
-	public void doTask(String location) {
-		;
+	public void doTask(LinkedList<ArrayList<Fascia>> orders) {
+		for (int i = 0; i < orders.size(); i++) {
+			ArrayList<Fascia> y = orders.removeFirst();
+			Pallet p = new Pallet();
+			p.addContent(y[0]);
+			p.addContent(y[2]);
+			p.addContent(p[4]);
+			p.addContent(p[6]);
+			Pallet pa = new Pallet();
+			pa.addContent(y[1]);
+			pa.addContent(y[3]);
+			pa.addContent(p[5]);
+			pa.addContent(p[7]);
+			warehouse.getMarshalling().addPallet(p);
+			warehouse.getMarshalling().addPallet(pa);
+		}
 	}
 }

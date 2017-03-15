@@ -1,0 +1,56 @@
+HANSEN CHEN
+The main creator of the frame and environment
+The author of:
+	main.java
+	Fascia.java
+	TaskExecutor.java
+	TaskGiver.java
+	Aisle.java
+	FaxMachine.java
+	Floor.java
+	Level.java
+	Marshalling.java
+	Order.java
+	Pallet.java
+	Rack.java
+	Stock.java
+	TaskEntity.java
+	Vehicle.java
+	Warehouse.java
+	WarehousePicking.java
+	Worker.java
+	Zone.java
+	initial.csv
+	with 2941 lines contributed
+	and deleted 1216 lines for correction
+	
+	
+ION BARBU
+Contributed design implementation ideas
+Helped develop the framework for certain classes
+Structured the way classes interact with server.java and main.java
+Assisted in debugging 
+The author of:
+	Vehicle.java
+	Trucks.java
+	Forklift.java
+	Worker.java
+	Picker.java
+	Loader.java
+	Resupplier.java
+	Sequencer.java
+	Pallet.java
+	Instructions.txt
+	
+
+PARKER HUTCHESON
+Project manager for the method of design
+Merged and reviewed pull requests
+Created issues to keep group on track
+Assisted in writing classes
+Developped the wiki page layout
+Created UML document
+The author of:
+	server.java
+
+	
