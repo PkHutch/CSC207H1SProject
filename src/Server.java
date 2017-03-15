@@ -17,6 +17,7 @@ import java.util.IllegalFormatException;
  * issueTask methods.
  */
 public class Server {
+    private ArrayList<String[]> translationArray;
 //    private Warehouse warehouse;
 
     // Defines the constructor methods.
