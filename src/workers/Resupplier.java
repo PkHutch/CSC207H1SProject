@@ -4,11 +4,24 @@ import floor_assets.*;
 import warehouse.*;
 import stocking.*;
 
+/*
+ * The Resupplier class which ressuplies the warehouse 
+ */
+
 public class Resupplier extends Worker {
+	
+	/*
+	 * Initialize a Resupplier Object
+	 */
 
 	public Resupplier(String name, Warehouse warehouse) {
 		super(name, warehouse);
 	}
+	
+	/*
+	 * Complete designated task of re-supplying warehouse
+	 * @see workers.Worker#doTask()
+	 */
 
 	public void doTask() {
 		for (int i = 0; i < warehouse.getFloor().size; i++) {
