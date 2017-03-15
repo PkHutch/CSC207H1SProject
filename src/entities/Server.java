@@ -3,7 +3,12 @@
 package entities;
 
 // Imports necessary packages.
+import entities.FaxMachine;
 import entities.Warehouse;
+import entities.workers.Loader;
+import entities.workers.Picker;
+//import entities.workers.Resupplier;
+//import entities.workers.Sequencer;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,10 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.lang.IllegalArgumentException;
 import java.util.LinkedList;
-//import entities.workers.Loader;
-import entities.workers.Picker;
-//import entities.workers.Resupplier;
-//import entities.workers.Sequencer;
 
 /**
  * This class defines the Server, which makes the majority of the logical decisions for a
@@ -25,11 +26,12 @@ public class Server {
     private ArrayList<String[]> translationArray;
     private ArrayList<Level> lowLevels;
     private final static int DEFAULT_REFILL_QUANTITY = 5;
+    private final static int DEFAULT_PICKING_REQUEST_SIZE = 8;
     private LinkedList<Integer[]> activePickingRequests;
-//    private LinkedList<Loader> inactiveLoaders;
+    private LinkedList<Loader> inactiveLoaders;
     private LinkedList<Picker> inactivePickers;
     private LinkedList<Integer[]> inactivePickingRequests;
-//    private LinkedList<Integer> inactivePicks;
+    private LinkedList<Integer> inactivePicks;
 //    private LinkedList<Resupplier> inactiveResuppliers;
 //    private LinkedList<Sequencer> inactiveSequencers;
     private Warehouse warehouse;
@@ -41,10 +43,10 @@ public class Server {
      *
      * @param warehouse the warehouse which this server belongs to.
      */
-//    public void Server(Warehouse warehouse) {
-//        this.warehouse = warehouse;
-//        parseTranslation();
-//    }
+    public void Server(Warehouse warehouse) {
+        this.warehouse = warehouse;
+        parseTranslation();
+    }
 
     // Defines the helper methods.
     /**
@@ -163,6 +165,37 @@ public class Server {
         }
     }
 
+    public void issueTask(FaxMachine taskEntity) {
+        Order faxOrder = taskEntity.removeOrder();
+
+        // Looks up the order in the translation table, or translationArray, throws an error
+        // if the stock specified in the order doesn't exist.
+        for (int index = 0; index < this.translationArray.size(); index++) {
+            if(faxOrder.getColour() == this.translationArray.get(index)[0] &&
+                faxOrder.getModel() == this.translationArray.get(index)[1]) {
+                this.inactivePicks.add(Integer.parseInt(this.translationArray.get(index)[2]));
+                this.inactivePicks.add(Integer.parseInt(this.translationArray.get(index)[3]));
+            } else {
+                throw new IllegalArgumentException("This order requires stock which does " +
+                              "not exist in the SKU lookup table.");
+            }
+
+        // If four orders have been placed, then creates a picking request.
+        if(inactivePicks.size() == DEFAULT_PICKING_REQUEST_SIZE) {
+            Integer[] newPickingRequest = new Integer[DEFAULT_PICKING_REQUEST_SIZE];
+
+            for(int counter = DEFAULT_PICKING_REQUEST_SIZE; counter >= 0; counter--) {
+                newPickingRequest[counter] = inactivePicks.pop();
+            }
+
+            inactivePickingRequests.add(newPickingRequest);
+        }
+    }}
+
+    public boolean needsRefill() {
+        return this.lowLevels.size() > 0;
+    }
+
 //    /**
 //     * Reacts by the type of taskEntity, if the taskEntity is a TaskGiver, then the server takes 
 //     * the appropriate action depending on the kind of TaskGiver that the taskEntity is, or if the
@@ -176,53 +209,9 @@ public class Server {
 //     *         defined result in the issueTask cases.
 //     */
 //    public void issueTask(TaskEntity taskEntity) {
-//        if(taskEntity instanceof FaxMachine) {
-//            Order faxOrder = FaxMachine.getFax();
-//
-//            // Looks up the order in the translation table, or translationArray, throws an error
-//            // if the stock specified in the order doesn't exist.
-//            for (int index = 0; index < this.translationArray.size(); index++) {
-//                if(faxOrder.colour == this.translationArray.get(index)[0] &&
-//                    faxOrder.model == this.translationArray.get(index)[1]) {
-//                    this.inactivePicks.add(Integer.parseInt(this.translationArray.get(index)[2]));
-//                    this.inactivePicks.add(Integer.parseInt(this.translationArray.get(index)[3]));
-//                } else {
-//                    throw new IllegalArgumentException("This order requires stock which does " +
-//                                  "not exist in the SKU lookup table.");
-//                }
-//
-//            // If four orders have been placed, then create a picking request.
-//            if(inactivePicks.size() == DEFAULT_PICKING_REQUEST_SIZE) {
-//                int[] newPickingRequest = new int[DEFAULT_PICKING_REQUEST_SIZE];
-//
-//                for(int index = DEFAULT_PICKING_REQUEST_SIZE; index >= 0; index--) {
-//                    newPickingRequest[index] = Integer.parseInt(inactivePicks.pop());
-//                }
-//
-//                inactivePickingRequests.add(newPickingRequest);
-//            }
-//        // If a Picker is calling the function then it must need a picking request.
-//        } else if(taskEntity instanceOf Picker) {
-//            // A picker should not already have a picking request assigned.
-//            if(taskEntity.hasPickingRequest) {
-//                throws new IllegalArgumentException(taskEntity.getName + " already has a " +
-//                               "picking request assigned to them.)
-//            } else {
-//                // If the picking request is already active, that means that it has failed 
-//                // before.
-//                if(this.activePickingRequests.contains(
-//                    this.inactivePickingRequests.getFirst())) {
-//                    taskEntity.setPickingRequest(this.warehouse.warehousePicking.optimize(
-//                        this.inactivePickingRequests.pop()));
-//                } else {
-//                    taskEntity.setPickingRequest(this.warehouse.warehousePicking.optimize(
-//                        this.inactivePickingRequests.getFirst()));
-//                    activePickingRequests.add(this.inactivePickingRequests.pop());
-//                }
-//            }
 //        // If a Sequencer is calling issue task, then give it the current list of
 //        // activePickingRequests to check.
-//        } else if(taskEntity instanceof Sequencer) {
+//        if(taskEntity instanceof Sequencer) {
 //            taskEntity.doTask(this.activeLinkedList);
 //        // If a Replenisher is calling the function then it needs the low levels of the racks.
 //        } else if(taskEntity instanceOf Replenisher) {

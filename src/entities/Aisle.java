@@ -54,16 +54,16 @@ public class Aisle {
 	 * Add a Shelf s to the arrayList Shelves.
 	 */
 	public void addRack(Rack r) {
-		this.rack.add(r);
+		this.racks.add(r);
 	}
 
 	/*
 	 * Remove a Shelf s from the arraylist Shelves.
 	 */
 	public void removeRack(Rack r) {
-		for (int i = 0; i < this.rack.size(); i++) {
-			if (this.rack.get(i) == r) {
-				this.rack.remove(r);
+		for (int i = 0; i < this.racks.size(); i++) {
+			if (this.racks.get(i) == r) {
+				this.racks.remove(r);
 			}
 		}
 	}

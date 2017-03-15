@@ -42,8 +42,9 @@ public class Picker extends Worker<String> {
      *         command for a Picker. Valid commands include ready, and pick, where pick is
      *         by a space or the number that the picker is currently on in their current
      *         picking request. Will also throw when the incorrect pick number is given, when
-     *         ready is called an the picker is already picking, or when a picker is told to go
-     *         to marshalling prematurely.
+     *         ready is called an the picker is already picking, when a picker is told to go to
+     *         marshalling prematurely, or a a picker is told to pick when a refill needs to be
+     *         done.
      */
     public void doTask(String argument) {
         if(argument.equals("ready")) {
@@ -56,8 +57,12 @@ public class Picker extends Worker<String> {
                                "currently picking, they can not be ready!");
             }
         } else if(argument.startsWith("pick")) {
+            // If the warehouse needs a refill, a replenishing request must be made.
+            if (this.getWarehouse().getServer().needsRefill()) {
+                throw new IllegalArgumentException("The Picker " + this.getName() + " is not " +
+                               "able to pick, a replenishing request must be made first.");
             // IE currentPick == x, where x is the int in "pick x" of the argument.
-            if(currentPick == Integer.parseInt(argument.split(" ")[1])) {
+            } else if(currentPick == Integer.parseInt(argument.split(" ")[1])) {
                 String[] nextLocation = currentPickingRequest.pop();
 
                 Level nextLevel = this.getWarehouse().getFloor().getLevel(

@@ -1,11 +1,12 @@
 package entities.workers;
 
+import entities.linkedlistcontainers.Truck;
+import entities.Pallet;
+import entities.taskentities.TaskGiver;
 import entities.Warehouse;
 import entities.Worker;
-import entities.Pallet;
-import entities.vehicles.Trucks;
 
-public class Loader extends Worker {
+public class Loader extends Worker implements TaskGiver{
 	private Trucks truck;
 
 	public Loader(String name, Warehouse warehouse) {
