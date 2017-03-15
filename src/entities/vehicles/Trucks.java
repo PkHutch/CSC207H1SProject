@@ -1,10 +1,11 @@
-package vehicles;
+package entities.vehicles;
 
-import stocking.Pallet;
+import entities.Pallet;
 import java.util.LinkedList;
-import stocking.Stock;
+import entities.Stock;
+import entities.Vehicle;
 
-public class Trucks extends Vehicles {
+public class Trucks extends Vehicle {
 	public Trucks() {
 		super(10000);
 	}

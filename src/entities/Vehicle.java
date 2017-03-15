@@ -2,12 +2,12 @@ package entities;
 
 import java.util.LinkedList;
 
-public abstract class Vehicles<T> {
+public abstract class Vehicle<T> {
 	protected int currentInventorySize;
 	protected int inventorySpace;
 	protected LinkedList<T> inventory;
 
-	public Vehicles(int inv) {
+	public Vehicle(int inv) {
 		this.inventorySpace = inv;
 		this.inventory = new LinkedList<T>();
 		this.currentInventorySize = 0;
