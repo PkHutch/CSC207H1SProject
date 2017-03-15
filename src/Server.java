@@ -20,6 +20,7 @@ public class Server {
      * @param warehouse the warehouse which this server belongs to.
      */
 //    public void Server(Warehouse warehouse) {
-        // Filler.
+//        this.warehouse = warehouse;
+//        parseTranslation();
 //    }
 }
