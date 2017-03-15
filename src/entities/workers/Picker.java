@@ -1,6 +1,8 @@
 package entities.workers;
 
 import java.util.*;
+
+import entities.stocking.Fascia;
 import warehouse.*;
 import vehicles.Forklift;
 import stocking.*;
