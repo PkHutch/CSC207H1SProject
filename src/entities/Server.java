@@ -22,6 +22,83 @@ import entities.workers.Sequencer;
  * issueTask methods.
  */
 public class Server {
+<<<<<<< HEAD
+	private ArrayList<String[]> translationArray;
+	// private ArrayList<Level> lowLevels;
+	public LinkedList<Loader> inactiveLoaders;
+	public LinkedList<Picker> inactivePickers;
+	// private LinkedList<int[]> inactivePickingRequests;
+	// private LinkedList<Integer> inactivePicks;
+	public LinkedList<Resupplier> inactiveResuppliers;
+	public LinkedList<Sequencer> inactiveSequencers;
+	// private Warehouse warehouse;
+
+	// Defines the constructor methods.
+	/**
+	 * The constructor for Server which doesn't any values to it's attributes
+	 * this should only be called by the Warehouse that it belongs to.
+	 *
+	 * @param warehouse
+	 *            the warehouse which this server belongs to.
+	 */
+	// public void Server(Warehouse warehouse) {
+	// this.warehouse = warehouse;
+	// parseTranslation();
+	// }
+
+	// Defines the helper methods.
+	/**
+	 * Parses the translation.csv file so that the server has a more readily
+	 * useable form for the sake of looking up SKU numbers of units, this is
+	 * more efficient than parsing the file every single time an SKU lookup is
+	 * required.
+	 *
+	 * @throws IllegalFormatException
+	 *             this is called when there are repeated SKUs in the
+	 *             translation.csv file.
+	 */
+	private void parseTranslation() {
+		BufferedReader bufferedReader = null;
+		String line;
+		final String translationFile = "./resources/translation.csv";
+		final String splitBy = ",";
+
+		try {
+			bufferedReader = new BufferedReader(new FileReader(translationFile));
+
+			// Skips the first line.
+			line = bufferedReader.readLine();
+
+			while ((line = bufferedReader.readLine()) != null) {
+				String[] translatedLine = line.split(splitBy);
+
+				for (int index = 0; index < this.translationArray.size(); index++) {
+					String[] currentTranslation = translationArray.get(index);
+
+					if (translatedLine[2] == currentTranslation[2] || translatedLine[2] == currentTranslation[3]
+							|| translatedLine[3] == currentTranslation[3] || translatedLine[3] == currentTranslation[2]
+							|| translatedLine[2] == translatedLine[3]) {
+						throw new IllegalArgumentException("The SKU " + translatedLine[2] + " or " + translatedLine[3]
+								+ " already exists in the translation source.");
+					} else {
+						this.translationArray.add(new String[] { translatedLine[0], translatedLine[1],
+								translatedLine[2], translatedLine[3] });
+					}
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (bufferedReader != null) {
+				try {
+					bufferedReader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+=======
     private ArrayList<String[]> translationArray;
 //  private ArrayList<Level> lowLevels;
     private LinkedList<Loader> inactiveLoaders;
@@ -94,6 +171,7 @@ public class Server {
                     bufferedReader.close();
                 } catch (IOException e) {
                     e.printStackTrace();
+>>>>>>> e93ae04cfbc58c7c92f37d97fa76d608267d10a2
 		}
             }
         }

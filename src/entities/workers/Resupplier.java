@@ -1,5 +1,11 @@
 package entities.workers;
 
+<<<<<<< HEAD
+import entities.*;
+import entities.Warehouse;
+import entities.Worker;
+import entities.stocking.*;
+=======
 import entities.Floor;
 import entities.Aisle;
 import entities.Zone;
@@ -8,6 +14,7 @@ import entities.Level;
 import entities.Warehouse;
 import entities.stocking.Fascia;
 import entities.Worker;
+>>>>>>> e93ae04cfbc58c7c92f37d97fa76d608267d10a2
 
 public class Resupplier extends Worker {
 
