@@ -1,12 +1,17 @@
 // Defines the package.
 package entities;
 
+// Imports necessary packages.
+//import entities.Warehouse;
+
 /**
  * This class defines the Server, which makes the majority of the logical decisions for a
  * warehouse. The specifics of the logical decisions that it makes are located in the
  * issueTask methods.
  */
 public class Server {
+//    private Warehouse warehouse;
+
     // Defines the constructor methods.
     /**
      * The constructor for Server which doesn't any values to it's attributes this should only be
