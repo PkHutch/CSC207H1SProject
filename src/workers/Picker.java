@@ -31,6 +31,7 @@ public class Picker extends Worker {
 				.removeItem(new Fascia(A[4]));
 		forklift.addItem(new Fascia(A[4]));
 		stack.push(new Fascia(A[4]));
+		System.out.println("Depicted");
 		if (this.warehouse.getFloor().getZone(c).getAisle().get(A[1]).getRacks().get(A[2]).getLevel().get(A[3])
 				.numItem() <= 5) {
 			throw new EmptyStackException();

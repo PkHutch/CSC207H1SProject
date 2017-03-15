@@ -4,10 +4,9 @@ public class Order {
 	private String model;
 	private String colour;
 
-	public Order(String input) {
-		String[] parsed = input.split(" ");
-		this.model = parsed[0];
-		this.colour = parsed[1];
+	public Order(String input1, String input2) {
+		this.model = input1;
+		this.colour = input2;
 	}
 
 	public String getModel() {

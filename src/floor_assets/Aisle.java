@@ -20,6 +20,7 @@ public class Aisle {
 	 * specs
 	 */
 	public Aisle(int a, int b, int c) {
+		this.rack = new ArrayList<Rack>();
 		for (int i = 0; i < a; i++) {
 			Rack x = new Rack(b, c);
 			this.rack.add(x);
