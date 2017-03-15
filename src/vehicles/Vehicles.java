@@ -1,14 +1,17 @@
 package vehicles;
 
 import stocking.*;
+import java.util.*;
 
-public class Vehicles {
-	private int inventorySpace;
-	private Fascia[] inventory;
+public abstract class Vehicles<T> {
+	protected int currentInventorySize;
+	protected int inventorySpace;
+	protected LinkedList<T> inventory;
 
 	public Vehicles(int inv) {
 		this.inventorySpace = inv;
-		this.inventory = new Fascia[inv];
+		this.inventory = new LinkedList<T>();
+		this.currentInventorySize = 0;
 
 	}
 
@@ -16,25 +19,14 @@ public class Vehicles {
 		return this.inventorySpace;
 	}
 
-	public Fascia[] getInventory() {
-		return inventory;
+	public abstract LinkedList<T> getInventory();
+	
+	public int getCurrentIntentorySize() {
+		return currentInventorySize;
 	}
 
-	public void addItem(Fascia item) {
-		for (int i = 0; i < this.inventorySpace; i++) {
-			if (this.inventory[i] == null) {
-				this.inventory[i] = item;
-				this.inventorySpace += 1;
-			} else if (this.inventory != null && i == this.inventory.length) {
-				System.out.println("This is full");
-			}
-		}
-	}
+	public abstract void addItem(T item);
 
-	public void removeItem(Fascia item) {
-		for (int i = 0; i < this.inventorySpace; i++) {
-			if (this.inventory[i] == item)
-				this.inventory[i] = null;
-		}
+	public abstract void removeItem(T item);
 	}
 }
