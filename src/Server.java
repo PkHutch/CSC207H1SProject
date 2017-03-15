@@ -26,6 +26,8 @@ public class Server {
     private ArrayList<String[]> translationArray;
     private LinkedList<Loader> inactiveLoaders;
     private LinkedList<Picker> inactivePickers;
+//    private LinkedList<int[]> inactivePickingRequests;
+//    private LinkedList<Integer> inactivePicks;
     private LinkedList<Resupplier> inactiveResuppliers;
     private LinkedList<Sequencer> inactiveSequencers;
 //    private Warehouse warehouse;
@@ -133,4 +135,48 @@ public class Server {
     public void addInactiveSequencers(Sequencer worker) {
         this.inactiveSequencers.add(worker);
     }
+
+//    /**
+//     * Reacts by the type of taskEntity, if the taskEntity is a TaskGiver, then the server takes 
+//     * the appropriate action depending on the kind of TaskGiver that the taskEntity is, or if the
+//     * taskEntity is a TaskExecutor, it reacts to the taskEntity by telling it what action it
+//     * should complete, and the parameters of the action, by the string in doTask of that
+//     * TaskExecutor.
+//     * If the taskEntity is a FaxMachine, it gets the
+//     *
+//     * @param taskEntity the entity that is either given the task or giving a task.
+//     * @throws IllegalArgumentException this is thrown whenever the TaskGiver doesn't have a
+//     *         defined result in the issueTask cases.
+//     */
+//    public void issueTask(TaskEntity taskEntity) {
+//        if(taskEntity instanceof FaxMachine) {
+//            Order faxOrder = FaxMachine.getFax();
+//
+//            // Looks up the order in the translation table, or translationArray, throws an error
+//            // if the stock specified in the order doesn't exist.
+//            for (int index = 0; index < this.translationArray.size(); index++) {
+//                if(faxOrder.colour == this.translationArray.get(index)[0] &&
+//                    faxOrder.model == this.translationArray.get(index)[1]) {
+//                    this.inactivePicks.add(Integer.parseInt(this.translationArray.get(index)[2]));
+//                    this.inactivePicks.add(Integer.parseInt(this.translationArray.get(index)[3]));
+//                } else {
+//                    throw new IllegalArgumentException("This order requires stock which does " +
+//                                  "not exist in the SKU lookup table.");
+//                }
+//
+//            // If four orders have been placed, then create a picking request.
+//            if(inactivePicks.size() == DEFAULT_PICKING_REQUEST_SIZE) {
+//                int[] newPickingRequest = new int[DEFAULT_PICKING_REQUEST_SIZE];
+//
+//                for(int index = 0; index >= 0; index--) {
+//                    newPickingRequest[index] = Integer.parseInt(inactivePicks.pop());
+//                }
+//
+//                inactivePickingRequests.add(newPickingRequest);
+//            }
+//        } else {
+//            throw new IllegalArgumentException("The TaskGiver does not have a defined result " +
+//                          "when calling issueTask of the Server.");
+//        }
+//    }
 }
