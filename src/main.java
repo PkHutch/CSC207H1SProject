@@ -59,9 +59,9 @@ public class main {
 						Floor f = wh.getFloor();
 						int zone = init[0].charAt(0) - 'A';
 						Zone z = f.getZones().get(zone);
-						Aisle aisle = z.getAisle().get(Integer.parseInt(init[1]));
+						Aisle aisle = z.getAisles().get(Integer.parseInt(init[1]));
 						Rack rack = aisle.getRacks().get(Integer.parseInt(init[2]));
-						Level level = rack.getLevel().get(Integer.parseInt(init[3]));
+						Level level = rack.getLevel(Integer.parseInt(init[3]));
 						for (int i = 0; i < Integer.parseInt(init[4]); i++) {
 							level.addItem(new Fascia(Integer.parseInt(traversaTable.get(j)[4])));
 						}
@@ -103,71 +103,68 @@ public class main {
 				b = true;
 				break;
 			case "picker":
-				if (par[2] == "ready") {
-					ArrayList<Worker> worksP = w.getWorkers();
-					for (int i = 0; i < worksP.size(); i++) {
-						if (worksP.get(i).getName() == par[1]) {
-							s.inactivePickers.add((Picker) worksP.get(i));
-						} else {
-							Picker p = new Picker(par[1], w);
-							w.addWorker(p);
-							s.inactivePickers.add(p);
-						}
-					}
-				} else if (par[2] == "pick") {
-					if (s.inactivePickers.contains(par[1])) {
-						for (int i = 0; i < s.inactivePickers.size(); i++) {
-							if (s.inactivePickers.get(i).getName() == par[1]) {
-								Picker p = s.inactivePickers.get(i);
-								p.doTask("A,1,1,1,1");
-							}
+				ArrayList<Worker> worksP = w.getWorkers();
+				for (int i = 0; i < worksP.size(); i++) {
+					if (worksP.get(i).getName() == par[1]) {
+						s.inactivePickers.add((Picker) worksP.get(i));
+					} else {
+						Picker p = new Picker(par[1], w);
+						w.addWorker(p);
+						s.inactivePickers.add(p);
+						if (par.length < 4) {
+							p.doTask(par[3]);
+						} else if (par.length < 5) {
+							p.doTask(par[3] + " " + par[4]);
 						}
 					}
 				}
+
 				break;
 			case "sequencer":
-				if (par[2] == "sequences") {
-					ArrayList<Worker> worksS = w.getWorkers();
-					for (int i = 0; i < worksS.size(); i++) {
-						if (worksS.get(i).getName() == par[1]) {
-							s.inactiveSequencers.add((Sequencer) worksS.get(i));
-						} else {
-							Sequencer seq = new Sequencer(par[1], w);
-							w.addWorker(seq);
-							s.inactiveSequencers.add(seq);
-							seq.doTask(par[2]);
-						}
+
+				ArrayList<Worker> worksS = w.getWorkers();
+				for (int i = 0; i < worksS.size(); i++) {
+					if (worksS.get(i).getName() == par[1]) {
+						s.inactiveSequencers.add((Sequencer) worksS.get(i));
+						worksS.get(i).doTask(par[2]);
+					} else {
+						Sequencer seq = new Sequencer(par[1], w);
+						w.addWorker(seq);
+						s.inactiveSequencers.add(seq);
+						seq.doTask(par[2]);
 					}
 				}
+
 				break;
 			case "loader":
-				if (par[2] == "loads") {
-					ArrayList<Worker> worksL = w.getWorkers();
-					for (int i = 0; i < worksL.size(); i++) {
-						if (worksL.get(i).getName() == par[1]) {
-							s.inactiveLoaders.add((Loader) worksL.get(i));
-						} else {
-							Loader load = new Loader(par[1], w);
-							w.addWorker(load);
-							load.doTask(par[2]);
-						}
+
+				ArrayList<Worker> worksL = w.getWorkers();
+				for (int i = 0; i < worksL.size(); i++) {
+					if (worksL.get(i).getName() == par[1]) {
+						s.inactiveLoaders.add((Loader) worksL.get(i));
+						worksL.get(i).doTask(par[2]);
+					} else {
+						Loader load = new Loader(par[1], w);
+						w.addWorker(load);
+						load.doTask(par[2]);
 					}
 				}
+
 				break;
 			case "replenisher":
-				if (par[2] == "replenish") {
-					ArrayList<Worker> worksR = w.getWorkers();
-					for (int i = 0; i < worksR.size(); i++) {
-						if (worksR.get(i).getName() == par[1]) {
-							s.inactiveResuppliers.add((Resupplier) worksR.get(i));
-						} else {
-							Resupplier re = new Resupplier(par[1], w);
-							w.addWorker(re);
-							s.inactiveResuppliers.add(re);
-							re.doTask();
-						}
+				ArrayList<Worker> worksR = w.getWorkers();
+				for (int i = 0; i < worksR.size(); i++) {
+					if (worksR.get(i).getName() == par[1]) {
+						s.inactiveResuppliers.add((Resupplier) worksR.get(i));
+						worksR.get(i).doTask(par[2]);
+					} else {
+						Resupplier re = new Resupplier(par[1], w);
+						w.addWorker(re);
+						s.inactiveResuppliers.add(re);
+						re.doTask(par[2]);
 					}
 				}
+
 				break;
 
 			default:
