@@ -10,6 +10,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.lang.IllegalArgumentException;
+import java.util.LinkedList;
+import workers.Loader;
+import workers.Picker;
+import workers.Resupplier;
+import workers.Sequencer;
+
 
 /**
  * This class defines the Server, which makes the majority of the logical decisions for a
@@ -18,6 +24,10 @@ import java.lang.IllegalArgumentException;
  */
 public class Server {
     private ArrayList<String[]> translationArray;
+    private LinkedList<Loader> inactiveLoaders;
+    private LinkedList<Picker> inactivePickers;
+    private LinkedList<Resupplier> inactiveResuppliers;
+    private LinkedList<Sequencer> inactiveSequencers;
 //    private Warehouse warehouse;
 
     // Defines the constructor methods.
@@ -85,5 +95,42 @@ public class Server {
 		}
             }
         }
+    }
+
+    // Defines the functional methods.
+    /**
+     * Adds the worker to the inactiveLoaders list.
+     *
+     * @param worker the Loader to be added to the inactiveLoaders list.
+     */
+    public void addInactiveLoader(Loader worker) {
+        this.inactiveLoaders.add(worker);
+    }
+
+    /**
+     * Adds the worker to the inactivePickerss list.
+     *
+     * @param worker the Picker to be added to the inactivePickers list.
+     */
+    public void addInactivePicker(Picker worker) {
+        this.inactivePickers.add(worker);
+    }
+
+    /**
+     * Adds the worker to the inactiveResuppliers list.
+     *
+     * @param worker the Resupplier to be added to the inactiveResuppliers list.
+     */
+    public void addInactiveResupplier(Resupplier worker) {
+        this.inactiveResuppliers.add(worker);
+    }
+
+    /**
+     * Adds the worker to the inactiveSequencers list.
+     *
+     * @param worker the Sequencer to be added to the inactiveSequencers list.
+     */
+    public void addInactiveSequencers(Sequencer worker) {
+        this.inactiveSequencers.add(worker);
     }
 }
