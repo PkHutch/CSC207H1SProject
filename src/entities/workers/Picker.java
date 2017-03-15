@@ -1,6 +1,18 @@
 // Defines the package.
 package entities.workers;
 
+<<<<<<< HEAD
+import java.util.*;
+
+import entities.Stock;
+import entities.Worker;
+import entities.stocking.Fascia;
+import entities.Warehouse;
+import entities.vehicles.Forklift;
+
+/*
+ * The Picker class, a worker in the warehouse
+=======
 // Defines the imports.
 import java.lang.IllegalArgumentException;
 import java.util.LinkedList;
@@ -13,6 +25,7 @@ import entities.Worker;
  * The Picker class extends the worker class and takes an arguement of String for it's doTask
  * method. The Pickers job to stock off the shelves and bring them to the marshalling area as
  * per the server's instructions.
+>>>>>>> e93ae04cfbc58c7c92f37d97fa76d608267d10a2
  */
 public class Picker extends Worker<String> {
     // Defines the Picker variables.

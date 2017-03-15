@@ -2,6 +2,8 @@ package entities.vehicles;
 
 import java.util.LinkedList;
 import entities.Stock;
+import entities.Vehicles;
+import entities.stocking.*;
 import entities.Vehicle;
 
 public class Forklift extends Vehicle {
@@ -27,17 +29,4 @@ public class Forklift extends Vehicle {
 	public void removeItem(Stock item) {
 		inventory.remove(item);
 	}
-
-	@Override
-	public void addItem(Object item) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void removeItem(Object item) {
-		// TODO Auto-generated method stub
-
-	}
-
 }
