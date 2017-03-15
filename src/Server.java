@@ -169,7 +169,7 @@ public class Server {
 //            if(inactivePicks.size() == DEFAULT_PICKING_REQUEST_SIZE) {
 //                int[] newPickingRequest = new int[DEFAULT_PICKING_REQUEST_SIZE];
 //
-//                for(int index = 0; index >= 0; index--) {
+//                for(int index = DEFAULT_PICKING_REQUEST_SIZE; index >= 0; index--) {
 //                    newPickingRequest[index] = Integer.parseInt(inactivePicks.pop());
 //                }
 //
