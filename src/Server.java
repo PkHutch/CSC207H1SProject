@@ -41,7 +41,29 @@ public class Server {
         final String splitBy = ",";
 
         try {
-            //Filler.
+            bufferedReader = new BufferedReader(new FileReader(translationFile));
+
+            // Skips the first line.
+            line = bufferedReader.readLine();
+
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] translatedLine = line.split(splitBy);
+
+                for(int index = 0; index < this.translationArray.size(); index++) {
+                    String[] currentTranslation = translationArray.get(index);
+
+                    if(translatedLine[2] == currentTranslation[2] ||
+                        translatedLine[2] == currentTranslation[3] ||
+                        translatedLine[3] == currentTranslation[3] ||
+                        translatedLine[3] == currentTranslation[2] ||
+                        translatedLine[2] == translatedLine[3]) {
+                        throw new IllegalArgumentException("The SKU " + translatedLine[2] + " or "
+                            + translatedLine[3] + " already exists in the translation source.");
+                    } else {
+                        this.translationArray.add(new String[]{translatedLine[0],
+                            translatedLine[1], translatedLine[2], translatedLine[3]});
+                    }
+                }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
