@@ -30,9 +30,13 @@ public class Zone {
 	/*
 	 * Returns a ArrayList of aisles
 	 */
-	public ArrayList<Aisle> getAisle() {
+	public ArrayList<Aisle> getAisles() {
 		return this.aisles;
 	}
+
+        public Aisle getAisle(int index) {
+                return this.aisles.get(index);
+        }
 
 	/*
 	 * Add an aisle a into the ArrayList

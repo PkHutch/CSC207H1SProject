@@ -15,8 +15,8 @@ public class Loader extends Worker {
 	}
 
 	public void doTask() {
-		Pallet front = warehouse.getMarshalling().removePallet(new Pallet());
-		Pallet back = warehouse.getMarshalling().removePallet(new Pallet());
+		Pallet front = this.getWarehouse().getMarshalling().removePallet(new Pallet());
+		Pallet back = this.getWarehouse().getMarshalling().removePallet(new Pallet());
 		truck.addItem(front);
 		truck.addItem(back);
 	}

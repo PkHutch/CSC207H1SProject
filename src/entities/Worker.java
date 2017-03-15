@@ -1,6 +1,6 @@
 package entities;
 
-public abstract class Worker {
+public abstract class Worker<T> {
 	private String name;
 	private Warehouse warehouse;
 
@@ -13,5 +13,9 @@ public abstract class Worker {
 		return this.name;
 	}
 
-	public abstract void doTask();
+        public Warehouse getWarehouse() {
+                return this.warehouse;
+        }
+
+	public abstract void doTask(T argument);
 }
