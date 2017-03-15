@@ -7,5 +7,14 @@ package entities;
  * issueTask methods.
  */
 public class Server {
-    // Filler.
+    // Defines the constructor methods.
+    /**
+     * The constructor for Server which doesn't any values to it's attributes this should only be
+     * called by the Warehouse that it belongs to.
+     *
+     * @param warehouse the warehouse which this server belongs to.
+     */
+//    public void Server(Warehouse warehouse) {
+        // Filler.
+//    }
 }
