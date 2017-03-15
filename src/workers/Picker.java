@@ -13,12 +13,10 @@ public class Picker extends Worker {
 	
 	private Stack<Stock> stack;
 	private Forklift forklift;
-	private Warehouse warehouse;
 
 	public Picker(String name, Warehouse warehouse) {
 		super(name, warehouse);
 		this.forklift = new Forklift();
-		this.warehouse = warehouse;
 	}
 
 	public void doTask(String location) {
