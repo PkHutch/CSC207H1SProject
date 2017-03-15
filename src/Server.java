@@ -1,3 +1,4 @@
+// *NOTE* All commented out things are because of lack of proper implementation.
 // Defines the package.
 package entities;
 
