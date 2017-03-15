@@ -1,6 +1,8 @@
 package entities.workers;
 
 import java.util.*;
+
+import entities.stocking.Fascia;
 import warehouse.*;
 import vehicles.Forklift;
 import stocking.*;
@@ -10,7 +12,7 @@ import stocking.*;
  */
 
 public class Picker extends Worker {
-	
+
 	private Stack<Stock> stack;
 	private Forklift forklift;
 
@@ -27,10 +29,13 @@ public class Picker extends Worker {
 		for (int j = 1; j < 5; j++) {
 			A[j] = Integer.parseInt(result[j]);
 		}
-		warehouse.floor.getZone()[c].getAisle()[A[1]].getRacks()[A[2]].getLevel()[A[3]].removeItem(new Stock(A[4]));
-		forklift.addItem(new Stock(A[4]));
-		stack.push(new Stock(A[4]));
-		if(warehouse.floor.getZone()[c].getAisle()[A[1]].getRacks()[A[2]].getLevel()[A[3]].numItem <= 5) {
+		this.warehouse.getFloor().getZone(c).getAisle().get(A[1]).getRacks().get(A[2]).getLevel().get(A[3])
+				.removeItem(new Fascia(A[4]));
+		forklift.addItem(new Fascia(A[4]));
+		stack.push(new Fascia(A[4]));
+		System.out.println("Depicted");
+		if (this.warehouse.getFloor().getZone(c).getAisle().get(A[1]).getRacks().get(A[2]).getLevel().get(A[3])
+				.numItem() <= 5) {
 			throw new EmptyStackException();
 		}
 	}
