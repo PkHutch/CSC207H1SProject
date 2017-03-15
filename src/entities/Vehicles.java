@@ -1,6 +1,5 @@
 package vehicles;
 
-import stocking.*;
 import java.util.LinkedList;
 
 public abstract class Vehicles<T> {

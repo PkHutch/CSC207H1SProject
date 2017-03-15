@@ -1,8 +1,6 @@
-package warehouse;
+package entities;
 
 import java.util.ArrayList;
-import workers.*;
-import floor_assets.*;
 
 /**
  * The warehouse class, which is where the simulation takes place.

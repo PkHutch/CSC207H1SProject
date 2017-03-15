@@ -1,4 +1,4 @@
-package workers;
+package entities.workers;
 
 import java.util.*;
 import warehouse.*;
