@@ -26,7 +26,7 @@ public class Server {
 //  private ArrayList<Level> lowLevels;
     private LinkedList<Loader> inactiveLoaders;
     private LinkedList<Picker> inactivePickers;
-//    private LinkedList<int[]> inactivePickingRequests;
+//    private LinkedList<String[]> inactivePickingRequests;
 //    private LinkedList<Integer> inactivePicks;
     private LinkedList<Resupplier> inactiveResuppliers;
     private LinkedList<Sequencer> inactiveSequencers;

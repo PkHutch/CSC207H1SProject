@@ -38,6 +38,19 @@ public class Zone {
                 return this.aisles.get(index);
         }
 
+    /**
+     * getLevel returns the Level at the given indices, it is for convenience instead of having
+     * to type a long chain of get functions.
+     *
+     * @param aisleInt the integer index of the aisle.
+     * @param rackInt the integer index of the aisle.
+     * @param levelInt the integer index of the aisle.
+     * @return the level object at the desired location.
+     */
+    public Level getLevel(int aisleInt, int rackInt, int levelInt) {
+       return this.aisles.get(aisleInt).getLevel(rackInt, levelInt);
+    }
+
 	/*
 	 * Add an aisle a into the ArrayList
 	 */

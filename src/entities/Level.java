@@ -4,6 +4,8 @@ package entities;
  * Levels of a Rack
  */
 public class Level {
+    // Defines the class variables.
+    private static final int DEFAULT_LEVEL_SIZE = 30;
 	private Stock[] items;
 
 	/*
@@ -62,6 +64,19 @@ public class Level {
 			}
 		}
 	}
+
+    /**
+     * Removes the non-null item of the largest index and returns it.
+     *
+     * @return the Stock which is the item with the largest index.
+     */
+    public Stock removeItem() {
+        for (int index = DEFAULT_LEVEL_SIZE - 1; index >= 0; index--) {
+            if(this.items[index] != null) {
+                return this.items[index];
+            }
+        }
+    }
 
 	public int numItem() {
 		int count = 0;

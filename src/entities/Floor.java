@@ -53,6 +53,20 @@ public class Floor {
 		this.zones.add(z);
 	}
 
+    /**
+     * getLevel returns the Level at the given indices, it is for convenience instead of having
+     * to type a long chain of get functions.
+     *
+     * @param zoneCharacter the character of the zone which the level is located in.
+     * @param aisleInt the integer index of the aisle.
+     * @param rackInt the integer index of the aisle.
+     * @param levelInt the integer index of the aisle.
+     * @return the level object at the desired location.
+     */
+    public Level getLevel(char zoneCharacter, int aisleInt, int rackInt, int levelInt) {
+       return this.zones.get(zoneCharacter - 'A').getLevel(aisleInt, rackInt, levelInt);
+    }
+
 	public Zone getZone(char c) {
 		return this.zones.get(c - 'A');
 	}

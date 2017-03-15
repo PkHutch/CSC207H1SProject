@@ -27,6 +27,18 @@ public class Aisle {
 		}
 	}
 
+    /**
+     * getLevel returns the Level at the given indices, it is for convenience instead of having
+     * to type a long chain of get functions.
+     *
+     * @param rackInt the integer index of the aisle.
+     * @param levelInt the integer index of the aisle.
+     * @return the level object at the desired location.
+     */
+    public Level getLevel(int rackInt, int levelInt) {
+       return this.racks.get(rackInt).getLevel(levelInt);
+    }
+
 	/*
 	 * Return an ArrayList, the shelf.
 	 */
