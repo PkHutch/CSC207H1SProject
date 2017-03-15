@@ -186,7 +186,7 @@ public class Server {
 //                taskEntity.setPickingRequest(this.warehouse.warehousePicking.optimize(this.
 //                    activePickingRequests.getLast()));
 //            }
-//        // If a Sequencer is calling the function then it needs the low levels of the racks.
+//        // If a Replenisher is calling the function then it needs the low levels of the racks.
 //        } else if(taskEntity instanceOf Replenisher) {
 //            taskEntity.addLowLevels(this.lowLevels);
 //            this.lowLevels = null;
