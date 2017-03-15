@@ -24,4 +24,17 @@ public class Server {
 //        this.warehouse = warehouse;
 //        parseTranslation();
 //    }
+
+    // Defines the helper methods.
+    /**
+     * Parses the translation.csv file so that the server has a more readily useable form
+     * for the sake of looking up SKU numbers of units, this is more efficient than parsing
+     * the file every single time an SKU lookup is required.
+     *
+     * @throws IllegalFormatException this is called when there are repeated SKUs in the
+     *         translation.csv file.
+     */
+    private void parseTranslation() {
+        // Filler.
+    }
 }
