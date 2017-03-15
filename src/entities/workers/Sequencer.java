@@ -1,4 +1,4 @@
-package workers;
+package entities.workers;
 
 public class Sequencer extends Worker {
 

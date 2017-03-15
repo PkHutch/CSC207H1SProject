@@ -1,6 +1,5 @@
-package warehouse;
+package entities;
 
-import stocking.*;
 import java.util.ArrayList;
 
 public class Marshalling {

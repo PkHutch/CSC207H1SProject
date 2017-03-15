@@ -1,4 +1,4 @@
-package warehouse;
+package entities;
 
 public class Order {
 	private String model;

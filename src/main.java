@@ -1,5 +1,14 @@
-package warehouse;
-
+import entities.Aisle;
+import entities.FaxMachine;
+import entities.Floor;
+import entities.Level;
+import entities.Order;
+import entities.Rack;
+import entities.Server;
+import entities.stocking.Fascia;
+import entities.Warehouse;
+import entities.Worker;
+import entities.Zone;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,9 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import floor_assets.*;
-import stocking.Fascia;
-import workers.*;
 
 public class main {
 	public static final String INITIAL_PATH = "./resources/initial.csv";

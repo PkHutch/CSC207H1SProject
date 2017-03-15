@@ -1,4 +1,4 @@
-package warehouse;
+package entities;
 
 import java.util.LinkedList;
 

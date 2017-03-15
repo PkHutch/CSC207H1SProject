@@ -1,6 +1,7 @@
-package stocking;
+package entities;
 
 import java.util.ArrayList;
+import entities.stocking.Fascia;
 
 public class Pallet {
 	private ArrayList<Fascia> content;

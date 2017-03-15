@@ -1,6 +1,4 @@
-package workers;
-
-import warehouse.*;
+package entities;
 
 public abstract class Worker {
 	private String name;
