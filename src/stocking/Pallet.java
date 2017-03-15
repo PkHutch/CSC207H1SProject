@@ -13,7 +13,6 @@ public class Pallet {
 		this.content.add(f);
 	}
 
-	@SuppressWarnings("unused")
 	public Fascia removeContent(Fascia f) {
 		for (int i = 0; i < this.content.size(); i++) {
 			if (this.content.get(i) == f) {
