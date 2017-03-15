@@ -23,4 +23,5 @@ public class Fascia extends Stock {
 	public String getModel() {
 		return model;
 	}
+
 }

@@ -2,7 +2,7 @@ package entities;
 
 public abstract class Worker<T> {
 	private String name;
-	private Warehouse warehouse;
+	protected Warehouse warehouse;
 
 	public Worker(String name, Warehouse warehouse) {
 		this.name = name;

@@ -16,7 +16,7 @@ public class Resupplier extends Worker {
 	}
 
 	public void doTask() {
-		for (int i = 0; i < warehouse.getFloor().size; i++) {
+		for (int i = 0; i < warehouse.getFloor().getZones().size(); i++) {
 			Zone z = warehouse.getFloor().getZone(i);
 			for (int j = 0; j < z.getAisle().size(); j++) {
 				Aisle a = z.getAisle().get(j);

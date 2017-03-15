@@ -28,4 +28,16 @@ public class Trucks extends Vehicle {
 		inventory.remove(item);
 	}
 
+	@Override
+	public void addItem(Object item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeItem(Object item) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
