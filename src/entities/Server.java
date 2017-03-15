@@ -11,10 +11,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.lang.IllegalArgumentException;
 import java.util.LinkedList;
-import workers.Loader;
-import workers.Picker;
-import workers.Resupplier;
-import workers.Sequencer;
+import entities.workers.Loader;
+import entities.workers.Picker;
+import entities.workers.Resupplier;
+import entities.workers.Sequencer;
 
 
 /**

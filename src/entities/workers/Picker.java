@@ -1,9 +1,10 @@
 package entities.workers;
 
 import java.util.*;
-import warehouse.*;
-import vehicles.Forklift;
-import stocking.*;
+import entities.Worker;
+import entities.vehicles.Forklift;
+import entities.Stock;
+import entities.Warehouse;
 
 /*
  * The Picker class, a worker in the warehouse

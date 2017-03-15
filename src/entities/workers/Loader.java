@@ -1,9 +1,10 @@
 package entities.workers;
 
-import warehouse.*;
-import stocking.Fascia;
-import stocking.Pallet;
-import vehicles.Trucks;
+import entities.Warehouse;
+import entities.stocking.Fascia;
+import entities.Pallet;
+import entities.vehicles.Trucks;
+import entities.Worker;
 
 public class Loader extends Worker {
 	private Trucks truck;
@@ -13,7 +14,7 @@ public class Loader extends Worker {
 		this.truck = new Trucks();
 	}
 
-	public void doTask(String location) {
+	public void doTask() {
 		Pallet front = warehouse.getMarshalling().removePallet(new Pallet());
 		Pallet back = warehouse.getMarshalling().removePallet(new Pallet());
 		truck.addItem(front);
