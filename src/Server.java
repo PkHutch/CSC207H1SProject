@@ -182,10 +182,19 @@ public class Server {
 //                throws new IllegalArgumentException(taskEntity.getName + " already has a " +
 //                               "picking request assigned to them.)
 //            } else {
-//                activePickingRequests.add(inactivePickingRequest.pop());
-//                taskEntity.setPickingRequest(this.warehouse.warehousePicking.optimize(this.
-//                    activePickingRequests.getLast()));
+//                // If the picking request is already active, that means that it has failed 
+//                // before.
+//                if(this.activePickingRequests.contains(
+//                    this.inactivePickingRequests.getFirst())) {
+//                    taskEntity.setPickingRequest(this.warehouse.warehousePicking.optimize(
+//                        this.inactivePickingRequests.pop()));
+//                } else {
+//                    taskEntity.setPickingRequest(this.warehouse.warehousePicking.optimize(
+//                        this.inactivePickingRequests.getFirst()));
+//                    activePickingRequests.add(this.inactivePickingRequests.pop());
+//                }
 //            }
+//        // If a Sequencer is calling issue task, then 
 //        // If a Replenisher is calling the function then it needs the low levels of the racks.
 //        } else if(taskEntity instanceOf Replenisher) {
 //            taskEntity.doTask(lowLevels);
