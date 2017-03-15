@@ -24,6 +24,7 @@ import workers.Sequencer;
  */
 public class Server {
     private ArrayList<String[]> translationArray;
+//  private ArrayList<Level> lowLevels;
     private LinkedList<Loader> inactiveLoaders;
     private LinkedList<Picker> inactivePickers;
 //    private LinkedList<int[]> inactivePickingRequests;
@@ -174,8 +175,7 @@ public class Server {
 //
 //                inactivePickingRequests.add(newPickingRequest);
 //            }
-//        // If a Picker is calling the function then there are one of two options, then it has yet
-//        // to be assigned an inactive picking request.
+//        // If a Picker is calling the function then it must need a picking request.
 //        } else if(taskEntity instanceOf Picker) {
 //            // A picker should not already have a picking request assigned.
 //            if(taskEntity.hasPickingRequest) {
@@ -186,6 +186,10 @@ public class Server {
 //                taskEntity.setPickingRequest(this.warehouse.warehousePicking.optimize(this.
 //                    activePickingRequests.getLast()));
 //            }
+//        // If a Sequencer is calling the function then it needs the low levels of the racks.
+//        } else if(taskEntity instanceOf Replenisher) {
+//            taskEntity.addLowLevels(this.lowLevels);
+//            this.lowLevels = null;
 //        } else {
 //            throw new IllegalArgumentException("The TaskGiver does not have a defined result " +
 //                          "when calling issueTask of the Server.");
