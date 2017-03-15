@@ -3,11 +3,12 @@
 package entities;
 
 // Imports necessary packages.
+import entities.arraylistcontainers.Level;
 import entities.FaxMachine;
 import entities.Warehouse;
 import entities.workers.Loader;
 import entities.workers.Picker;
-//import entities.workers.Resupplier;
+import entities.workers.Resupplier;
 //import entities.workers.Sequencer;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -131,7 +132,7 @@ public class Server {
     }
 
     public void issueTask(Level taskEntity) {
-        if(taskEntity.numItem() <= DEFAULT_REFILL_QUANTITY) {
+        if(taskEntity.getSize() <= DEFAULT_REFILL_QUANTITY) {
             this.lowLevels.add(taskEntity);
         }
     }
@@ -165,6 +166,11 @@ public class Server {
 
     public void issueTask(Loader taskEntity) {
         this.sequencedPickingRequests.clear();
+    }
+
+    public void issueTask(Resupplier taskEntity) {
+        taskEntity.addLowLevels(this.lowLevels);
+        this.lowLevels.clear();
     }
 
     public boolean needsRefill() {

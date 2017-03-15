@@ -4,7 +4,7 @@ package entities.workers;
 // Defines the imports.
 import java.lang.IllegalArgumentException;
 import java.util.LinkedList;
-import entities.Level;
+import entities.arraylistcontainers.Level;
 import entities.linkedlistcontainers.Forklift;
 import entities.Stock;
 import entities.taskentities.TaskExecutor;
