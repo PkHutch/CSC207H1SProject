@@ -1,7 +1,7 @@
 package vehicles;
 
+import stocking.Pallet;
 import java.util.LinkedList;
-
 import stocking.Stock;
 
 public class Trucks extends Vehicles {

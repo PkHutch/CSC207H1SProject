@@ -1,3 +1,5 @@
+package warehouse;
+
 import stocking.*;
 import java.util.ArrayList;
 
@@ -15,7 +17,7 @@ public class Marshalling {
 	}
 
 	public void addPallet(Pallet p) {
-		this.marshallingPallet(p);
+		this.marshallingPallet.add(p);
 	}
 
 	public Stock removeStock(Stock s) {
