@@ -1,6 +1,4 @@
-package floor_assets;
-
-import stocking.Stock;
+package entities;
 
 /*
  * Levels of a Rack

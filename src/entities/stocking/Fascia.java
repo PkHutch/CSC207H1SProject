@@ -1,4 +1,6 @@
-package stocking;
+package entities.stocking;
+
+import entities.Stock;
 
 public class Fascia extends Stock {
 	private String color;

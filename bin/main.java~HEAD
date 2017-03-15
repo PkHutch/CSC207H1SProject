@@ -13,7 +13,7 @@ import workers.*;
 
 public class main {
 	public static final String INITIAL_PATH = "./resources/initial.csv";
-	public static final String INITIAL_PATH2 = "./resources/traversal_table.csv";
+	public static final String INITIAL_PATH2 = "./resource/traversal_table.csv";
 	private static Scanner input;
 
 	public static void main(String[] args) {
@@ -77,23 +77,25 @@ public class main {
 		return wh;
 	}
 
+	public static String getInput() {
+		input = new Scanner(System.in);
+		return input.next();
+	}
+
 	public static void run(Warehouse w) {
 		boolean b = false;
 		while (b == false) {
 			Server s = w.getServer();
-			Scanner scan = new Scanner(System.in);
-			String command = scan.nextLine();
+			String command = getInput();
 			String[] par = command.split(" ");
 			switch (par[0].toLowerCase()) {
 			case "order":
-				ArrayList<FaxMachine> listOfFax = w.getFaxMachines();
-				FaxMachine fax = listOfFax.get(0);
-				Order o = new Order(par[1], par[2]);
-				fax.addOrder(o);
+				ArrayList<FaxMachine> faxes = w.getFaxMachines();
+				FaxMachine fax = faxes.get(0);
+				fax.addOrder(new Order(par[1] + par[2]));
 				break;
 			case "quit":
 				b = true;
-				break;
 			case "picker":
 				if (par[2] == "ready") {
 					ArrayList<Worker> worksP = w.getWorkers();
@@ -106,12 +108,13 @@ public class main {
 							s.inactivePickers.add(p);
 						}
 					}
+					break;
 				} else if (par[2] == "pick") {
 					if (s.inactivePickers.contains(par[1])) {
 						for (int i = 0; i < s.inactivePickers.size(); i++) {
 							if (s.inactivePickers.get(i).getName() == par[1]) {
 								Picker p = s.inactivePickers.get(i);
-								p.doTask("A,1,1,1,1");
+								p.doTask(par[4]);
 							}
 						}
 					}

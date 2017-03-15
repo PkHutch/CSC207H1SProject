@@ -1,4 +1,4 @@
-package floor_assets;
+package entities;
 
 import java.util.ArrayList;
 
