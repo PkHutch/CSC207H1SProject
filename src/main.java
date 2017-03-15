@@ -1,4 +1,3 @@
-package warehouse;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,6 +15,7 @@ import entities.Order;
 import entities.Rack;
 import entities.Server;
 import entities.Warehouse;
+import entities.Worker;
 import entities.Zone;
 import entities.workers.*;
 

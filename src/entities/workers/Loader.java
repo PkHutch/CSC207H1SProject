@@ -1,8 +1,9 @@
 package entities.workers;
 
-import warehouse.*;
-import stocking.Pallet;
-import vehicles.Trucks;
+import entities.Warehouse;
+import entities.Worker;
+import entities.Pallet;
+import entities.vehicles.Trucks;
 
 public class Loader extends Worker {
 	private Trucks truck;

@@ -23,12 +23,12 @@ import entities.workers.Sequencer;
 public class Server {
 	private ArrayList<String[]> translationArray;
 	// private ArrayList<Level> lowLevels;
-	LinkedList<Loader> inactiveLoaders;
-	LinkedList<Picker> inactivePickers;
+	public LinkedList<Loader> inactiveLoaders;
+	public LinkedList<Picker> inactivePickers;
 	// private LinkedList<int[]> inactivePickingRequests;
 	// private LinkedList<Integer> inactivePicks;
-	LinkedList<Resupplier> inactiveResuppliers;
-	LinkedList<Sequencer> inactiveSequencers;
+	public LinkedList<Resupplier> inactiveResuppliers;
+	public LinkedList<Sequencer> inactiveSequencers;
 	// private Warehouse warehouse;
 
 	// Defines the constructor methods.

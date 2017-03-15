@@ -1,7 +1,10 @@
 package entities.vehicles;
 
 import java.util.LinkedList;
-import stocking.*;
+
+import entities.Stock;
+import entities.Vehicles;
+import entities.stocking.*;
 
 public class Forklift extends Vehicles {
 

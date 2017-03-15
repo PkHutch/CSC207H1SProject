@@ -1,8 +1,9 @@
 package entities.workers;
 
-import floor_assets.*;
-import warehouse.*;
-import stocking.*;
+import entities.*;
+import entities.Warehouse;
+import entities.Worker;
+import entities.stocking.*;
 
 public class Resupplier extends Worker {
 

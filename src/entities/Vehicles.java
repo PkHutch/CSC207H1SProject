@@ -1,4 +1,4 @@
-package vehicles;
+package entities;
 
 import java.util.LinkedList;
 
