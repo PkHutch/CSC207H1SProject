@@ -35,6 +35,26 @@ public class Server {
      *         translation.csv file.
      */
     private void parseTranslation() {
-        // Filler.
+        BufferedReader bufferedReader = null;
+        String line;
+        final String translationFile = "./resources/translation.csv";
+        final String splitBy = ",";
+
+        try {
+            //Filler.
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+		}
+            }
+        }
     }
 }
