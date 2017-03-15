@@ -1,3 +1,4 @@
+package warehouse;
 
 public class Order {
 	private String model;

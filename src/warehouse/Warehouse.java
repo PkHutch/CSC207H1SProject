@@ -1,3 +1,5 @@
+package warehouse;
+
 import java.util.ArrayList;
 import workers.*;
 import floor_assets.*;
@@ -86,4 +88,9 @@ public class Warehouse {
 	public void addWorker(Worker w) {
 		this.workers.add(w);
 	}
+
+	public Marshalling getMarshalling() {
+		return marshalling;
+	}
+
 }

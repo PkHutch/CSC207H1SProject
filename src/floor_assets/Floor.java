@@ -53,6 +53,10 @@ public class Floor {
 		this.zones.add(z);
 	}
 
+	public Zone getZone(char c) {
+		return this.zones.get(c - 'A');
+	}
+
 	/*
 	 * Remove a Zone z from the floor
 	 */

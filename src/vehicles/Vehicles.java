@@ -1,7 +1,7 @@
 package vehicles;
 
 import stocking.*;
-import java.util.*;
+import java.util.LinkedList;
 
 public abstract class Vehicles<T> {
 	protected int currentInventorySize;
@@ -20,7 +20,7 @@ public abstract class Vehicles<T> {
 	}
 
 	public abstract LinkedList<T> getInventory();
-	
+
 	public int getCurrentIntentorySize() {
 		return currentInventorySize;
 	}
@@ -28,5 +28,4 @@ public abstract class Vehicles<T> {
 	public abstract void addItem(T item);
 
 	public abstract void removeItem(T item);
-	}
 }

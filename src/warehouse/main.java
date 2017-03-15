@@ -1,9 +1,12 @@
+package warehouse;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 import floor_assets.*;
 import stocking.Fascia;
 import workers.*;
@@ -38,10 +41,8 @@ public class main {
 			while ((line = br.readLine()) != null) {
 				String[] init = line.split(cvsSplitBy);
 				for (int j = 0; j < traversaTable.size(); j++) {
-					if (traversaTable.get(j)[0] == init[0] && 
-						traversaTable.get(j)[1] == init[1] && 
-						traversaTable.get(j)[2] == init[2] && 
-						traversaTable.get(j)[3] == init[3]) {
+					if (traversaTable.get(j)[0] == init[0] && traversaTable.get(j)[1] == init[1]
+							&& traversaTable.get(j)[2] == init[2] && traversaTable.get(j)[3] == init[3]) {
 
 						Floor f = wh.getFloor();
 						int zone = init[0].charAt(0) - 'A';

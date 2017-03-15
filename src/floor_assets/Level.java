@@ -13,6 +13,7 @@ public class Level {
 	 */
 	public Level() {
 		this.items = new Stock[30];
+
 	}
 
 	/*
@@ -62,5 +63,15 @@ public class Level {
 				this.items[i] = null;
 			}
 		}
+	}
+
+	public int numItem() {
+		int count = 0;
+		for (int i = 0; i < this.items.length; i++) {
+			if (this.items[i] != null) {
+				count += 1;
+			}
+		}
+		return count;
 	}
 }
