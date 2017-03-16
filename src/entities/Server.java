@@ -9,7 +9,7 @@ import entities.Warehouse;
 import entities.workers.Loader;
 import entities.workers.Picker;
 import entities.workers.Resupplier;
-//import entities.workers.Sequencer;
+import entities.workers.Sequencer;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -171,6 +171,10 @@ public class Server {
     public void issueTask(Resupplier taskEntity) {
         taskEntity.addLowLevels(this.lowLevels);
         this.lowLevels.clear();
+    }
+
+    public void issueTask(Sequencer taskEntity) {
+        taskEntity.addPickingRequests(this.activePickingRequests);
     }
 
     public boolean needsRefill() {
