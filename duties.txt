@@ -48,9 +48,13 @@ Project manager for the method of design
 Merged and reviewed pull requests
 Created issues to keep group on track
 Assisted in writing classes
-Developped the wiki page layout
+Developped the GitHub wiki page layout
 Created UML document
+https://www.gliffy.com/go/share/scw59ihprqs9ue843ngm
+
 The author of:
 	server.java
 
+
+https://github.com/PkHutch/CSC207H1SProject/graphs/contributors if you want.
 	
