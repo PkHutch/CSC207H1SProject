@@ -1,5 +1,6 @@
 package entities;
 
+import entities.arraylistcontainers.Floor;
 import java.util.ArrayList;
 
 /**
@@ -17,17 +18,8 @@ public class Warehouse {
 	 */
 	public Warehouse() {
 		this.faxMachines = new ArrayList<FaxMachine>();
-		this.floor = new Floor();
+		this.floor = new Floor(this);
 		this.server = new Server();
-		this.workers = new ArrayList<Worker>();
-		this.marshalling = new Marshalling();
-	}
-
-	public Warehouse(int a, int b, int c, int d, int e) {
-		this.server = new Server();
-		this.faxMachines = new ArrayList<FaxMachine>();
-		this.faxMachines.add(new FaxMachine());
-		this.floor = new Floor(a, b, c, d, e);
 		this.workers = new ArrayList<Worker>();
 		this.marshalling = new Marshalling();
 	}

@@ -1,28 +1,20 @@
 package entities.workers;
 
+import entities.linkedlistcontainers.Truck;
+import entities.Pallet;
+import entities.taskentities.TaskGiver;
 import entities.Warehouse;
 import entities.Worker;
-import entities.Pallet;
-import entities.vehicles.Trucks;
 
-public class Loader extends Worker {
-	private Trucks truck;
+public class Loader extends Worker implements TaskGiver {
+        private Truck truck;
 
-	public Loader(String name, Warehouse warehouse) {
-		super(name, warehouse);
-		this.truck = new Trucks();
-	}
+        public Loader(String name, Warehouse warehouse) {
+            super(name, warehouse);
+        }
 
-	public void doTask() {
-		Pallet front = this.getWarehouse().getMarshalling().removePallet(new Pallet());
-		Pallet back = this.getWarehouse().getMarshalling().removePallet(new Pallet());
-	}
-
-	public void doTask(String location) {
-		Pallet front = warehouse.getMarshalling().removePallet(warehouse.getMarshalling().marshallingPallet.get(0));
-		Pallet back = warehouse.getMarshalling().removePallet(warehouse.getMarshalling().marshallingPallet.get(0));
-
-		truck.addItem(front);
-		truck.addItem(back);
-	}
+        public void doTask() {
+            this.getWarehouse().getMarshalling().removePallets();
+            this.getWarehouse().getServer().issueTask(this);
+        }
 }
