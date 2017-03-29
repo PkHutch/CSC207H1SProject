@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 /**
  * A Floor is an ArrayContainer with the parent being Warehouse, and the child being Zone.
- * It contains a default quantity of two Zone objects.
  */
 public class Floor extends ArrayContainer<Warehouse, Zone> {
     // Defines the constructors.
