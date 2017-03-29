@@ -11,10 +11,10 @@ public class Aisle extends ArrayContainer<Zone, Rack> {
      * container, and according to the layout, creates the contained Rack.
      *
      * @param zone the Zone object which contains this Aisle object.
-     * @param layout the Integer[][][] which represents the layout, where the first dimension
-     *        is this Aisle, the second is the Racks, the third is the Level's SKU Integers.
+     * @param layout the Integer[][] which represents the layout, where the first dimension
+     *        is the Racks, and the second is the Level's SKU Integers.
      */
-    public Aisle(Zone zone, Integer[][][] layout) {
+    public Aisle(Zone zone, Integer[][] layout) {
         super(zone, new Rack[layout.length]);
         System.out.println("Constructing Aisle " + this.toString() + " with argument zone as " +
             zone.toString() + ", and argument layout as " + layout.toString() + ".");

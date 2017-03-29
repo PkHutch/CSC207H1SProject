@@ -14,11 +14,11 @@ public class Floor extends ArrayContainer<Warehouse, Zone> {
      * the container, and according to the layout, creates the contained Zones.
      *
      * @param warehouse the Warehouse object which contains this Floor object.
-     * @param layout the Integer[][][][][] which represents the layout, where the first dimension
-     *        is this Floor, the second is the Zones, the third is the Aisles, the fourth is the
-     *        the Racks, and the fifth is the Levels SKU Integers.
+     * @param layout the Integer[][][][] which represents the layout, where the first dimension
+     *        is the Zones, the second is the Aisles, the third is the the Racks, and the fourth
+     *        is the Levels SKU Integers.
      */
-    public Floor(Warehouse warehouse, Integer[][][][][] layout) {
+    public Floor(Warehouse warehouse, Integer[][][][] layout) {
         super(warehouse, new Zone[layout.length]);
         System.out.println("Constructing Floor " + this.toString() + " with argument " +
             " warehouse as " + warehouse.toString() + ", and argument layout as " +

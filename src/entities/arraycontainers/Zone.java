@@ -11,11 +11,10 @@ public class Zone extends ArrayContainer<Floor, Aisle> {
      * container, and according to the layout, creates the contained Aisles.
      *
      * @param floor the Floor object which contains this Zone object.
-     * @param layout the Integer[][][][] which represents the layout, where the first dimension
-     *        is this Zone, the second is the Aisles, the third is the Racks, the fourth is the
-     *        the Level's SKU Integers.
+     * @param layout the Integer[][][] which represents the layout, where the first dimension
+     *        is the Aisles, the second is the Racks, and the third the Level's SKU Integers.
      */
-    public Zone(Floor floor, Integer[][][][] layout) {
+    public Zone(Floor floor, Integer[][][] layout) {
         super(floor, new Aisle[layout.length]);
         System.out.println("Constructing Zone " + this.toString() + " with argument floor as " +
             floor.toString() + ", and argument layout as " + layout.toString() + ".");

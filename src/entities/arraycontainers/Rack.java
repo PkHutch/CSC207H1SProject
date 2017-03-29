@@ -14,10 +14,10 @@ public class Rack extends ArrayContainer<Aisle, Level> {
      * container, and according to the layout, creates the contained Levels.
      *
      * @param aisle the Aisle object which contains this Rack object.
-     * @param layout the Integer[][] which represents the layout, where the first dimension
-     *        is this Rack, and the second is the Level's SKU Integers.
+     * @param layout the Integer[] which represents the layout, where each element is a Level and
+     *        the respective Integer SKU.
      */
-    public Rack(Aisle aisle, Integer[][] layout) {
+    public Rack(Aisle aisle, Integer[] layout) {
         super(aisle, new Level[layout.length]);
         System.out.println("Constructing Rack " + this.toString() + " with argument aisle as " +
             aisle.toString() + ", and argument layout as " + layout.toString() + ".");
