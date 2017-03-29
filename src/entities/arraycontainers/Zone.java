@@ -16,7 +16,7 @@ public class Zone extends ArrayContainer<Floor, Aisle> {
      *        the Level's SKU Integers.
      */
     public Zone(Floor floor, Integer[][][][] layout) {
-        super(warehouse, new Aisle[layout.length]);
+        super(floor, new Aisle[layout.length]);
         System.out.println("Constructing Zone " + this.toString() + " with argument floor as " +
             floor.toString() + ", and argument layout as " + layout.toString() + ".");
         System.out.println("    Creating " + Integer.toString(layout.length) + " Aisles.");
