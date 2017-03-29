@@ -22,7 +22,7 @@ public class Zone extends ArrayContainer<Floor, Aisle> {
         super(warehouse, new Aisle[layout.length]);
         System.out.println("Constructing Zone " + this.toString() + " with argument floor as " +
             floor.toString() + ", and argument layout as " + layout.toString() + ".");
-        System.out.println("    Creating " + layout.length.toString() + " Aisles.");
+        System.out.println("    Creating " + Integer.toString(layout.length) + " Aisles.");
         for(int index = 0; index < layout.length; index++) {
             this.setItem(index, new Aisle(this, layout[index]));
         }
