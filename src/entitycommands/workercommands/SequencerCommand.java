@@ -19,7 +19,7 @@ public class SequencerCommand extends WorkerCommand<Sequencer> {
      * @param warehouse the Warehouse that is to be used in both the execution of executeCommand
      *        and given to WorkerCommand for lookupWorker.
      */
-    public PickerCommand(Warehouse warehouse) {
+    public SequencerCommand(Warehouse warehouse) {
         super(COMMAND, warehouse);
         // Add debug message.
         this.warehouse = warehouse;
