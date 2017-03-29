@@ -41,8 +41,8 @@ public class PickerCommand extends WorkerCommand<Picker> {
         // Then check the argument, split using the same method as in OrderCommand.
         // If "pick" then send to doTask of the Picker with the remaining String of the argument
         // stripped of "pick".
-        // If "ready" then addInactive of the server of the warehouse.
-        // If "to Marshaling" then dump the inventory in the marshalling inventory.
+        // If "ready" then setInactive of the Picker of the warehouse.
+        // If "to Marshaling" then call toMarshaling of Picker.
         // Otherwise IllegalArgumentException.
         // Don't forget debug prints.
     }
