@@ -1,9 +1,6 @@
 // Defines the package.
 package entities.arraycontainers;
 
-// Defines the imports.
-import java.util.ArrayList;
-
 /**
  * A Zone is an ArrayContainer with the parent being Floor, and the child being Aisle.
  */

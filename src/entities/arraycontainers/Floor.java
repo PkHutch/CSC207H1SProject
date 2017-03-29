@@ -3,7 +3,6 @@ package entities.arraycontainers;
 
 // Defines the imports.
 import entities.Warehouse;
-import java.util.ArrayList;
 
 /**
  * A Floor is an ArrayContainer with the parent being Warehouse, and the child being Zone.

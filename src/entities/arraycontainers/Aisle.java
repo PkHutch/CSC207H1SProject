@@ -1,9 +1,6 @@
 // Defines the package.
 package entities.arraycontainers;
 
-// Defines the imports.
-import java.util.ArrayList;
-
 /**
  * An Aisle is an ArrayContainer with the parent being Zone, and the child being Rack.
  */
