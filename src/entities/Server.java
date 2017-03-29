@@ -1,8 +1,6 @@
 // Defines the package.
 package entities;
 
-import entities.workers.Picker;
-
 /**
  * This class defines the Server, which keeps track of the different states of orders, and
  * effectively governs how the other entities interact in the warehouse.
@@ -56,7 +54,7 @@ public class Server {
      *         the String[] is the model, the second is the colour, the third is the front, the
      *         fourth is the back.
      */
-    @SuppressWarnings("unused")
+	
 	private String[][] parseTranslationFile() {
 		return null;
         // Already completed elsewhere.
