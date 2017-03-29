@@ -9,14 +9,16 @@ import entitycommands.workercommands.ArrayList;
  * acts as a container for the other entities.
  */
 public class Warehouse {
+    // Defines the instance variables.
+    private ArrayList<Worker> workers;
+    
     // Defines the constructors.
     /**
      * The default constructor for a Warehouse.
      */
-	private ArrayList<Worker> workers;
-	
     public Warehouse() {
         System.out.println("Constructing Warehouse" + this.toString() + ".");
+        this.workers = new ArrayList<>();
     }
 
     // Defines the functional methods.
