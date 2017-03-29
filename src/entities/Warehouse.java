@@ -48,7 +48,6 @@ public class Warehouse {
      *         SKU of each Level. The first dimension is the floor, then the zones, then the
      *         aisles, then the racks, then the levels.
      */
-    @SuppressWarnings("unused")
 	private Integer[][][][][] parseTraversalTableFile() {
 		return null;
         // Do not worry about this, already finished.
