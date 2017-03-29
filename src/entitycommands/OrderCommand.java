@@ -1,6 +1,8 @@
 // Defines the package.
 package entitycommands;
 
+import entities.FaxMachine;
+
 /**
  * A command class subclass, the Order class is used to create orders.
  */
@@ -9,7 +11,8 @@ public class OrderCommand extends EntityCommand {
     private static final String COMMAND = "Order";
 
     // Defines the instance variables.
-    private FaxMachine faxMachine;
+    @SuppressWarnings("unused")
+	private FaxMachine faxMachine;
 
     // Defines the constructors.
     /**

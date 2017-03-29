@@ -1,8 +1,8 @@
 // Defines the package.
 package entities;
 import java.util.ArrayList;
+import entities.arraycontainers.Floor;
 import entities.workers.Worker;
-import entitycommands.workercommands.ArrayList;
 
 /**
  * The warehouse class, which is where the simulation takes place, as the Warehouse effectively
@@ -11,7 +11,8 @@ import entitycommands.workercommands.ArrayList;
 public class Warehouse {
     // Defines the instance variables.
     private ArrayList<Worker> workers;
-    
+    private Floor floor;
+    private FaxMachine faxmachine;
     // Defines the constructors.
     /**
      * The default constructor for a Warehouse.
@@ -19,6 +20,11 @@ public class Warehouse {
     public Warehouse() {
         System.out.println("Constructing Warehouse" + this.toString() + ".");
         this.workers = new ArrayList<>();
+        this.floor = new Floor(this, new Integer[1][1][1][1]);
+        this.faxmachine = null;
+    }
+    public void AddFaxMachine(FaxMachine faxmachine){
+    	this.faxmachine = faxmachine;
     }
 
     // Defines the functional methods.
@@ -29,7 +35,7 @@ public class Warehouse {
      */
     public FaxMachine getFaxMachine() {
         System.out.println("Calling getFaxMachine of " + this.toString() + ".");
-        // Return the faxMachine.
+        return this.faxmachine;
     }
 
     // Defines the helper methods.
@@ -42,7 +48,9 @@ public class Warehouse {
      *         SKU of each Level. The first dimension is the floor, then the zones, then the
      *         aisles, then the racks, then the levels.
      */
-    private Integer[][][][][] parseTraversalTableFile() {
+    @SuppressWarnings("unused")
+	private Integer[][][][][] parseTraversalTableFile() {
+		return null;
         // Do not worry about this, already finished.
     }
 
@@ -53,4 +61,8 @@ public class Warehouse {
     public void addWorker(Worker newWorker) {
         this.workers.add(newWorker);
     }
+
+	public Floor getFloor() {
+		return this.floor;
+	}
 }
