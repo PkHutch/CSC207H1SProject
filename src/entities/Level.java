@@ -2,7 +2,7 @@
 package entities;
 
 // Defines the imports.
-import entities.arraylistcontainers.Rack;
+import entities.arraycontainers.Rack;
 
 /**
  * The Level class contains Stock of a single SKU and is contained by a Rack.
