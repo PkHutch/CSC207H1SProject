@@ -47,10 +47,10 @@ public class Warehouse {
     }
 
     public ArrayList<Worker> getWorkers() {
-		return workers;
-	}
+        return workers;
+    }
 
-	public void addWorker(Worker newWorker) {
-		this.workers.add(newWorker);
-	}
+    public void addWorker(Worker newWorker) {
+        this.workers.add(newWorker);
+    }
 }
