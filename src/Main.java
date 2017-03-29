@@ -180,17 +180,15 @@ public class Main {
 		int pointerA = 0;
 		int pointerB = 0;
 		if (init != null){
-			//HINT: use floors and not floor.getLevels()
-			//HINT: Change the whileloop condition relative to the pointers and not the length of the arrays.
-			while (init.length != 0 || levels.length != 0){
+			while (init.length >= pointerA && levels.length >= pointerB){
 				//the case where both array are still active, we would
 				//compare to two and decide how to fill it
-				if(init.length!=0 && levels.length!=0){
+				if(init.length>=pointerA || levels.length>=pointerB){
 					//if The current pointed Floor location is lexicographically 
 					//greater than the init location, we fill it to the MAX
 					if(init[pointerA].compareTo(levels[pointerB].getLocation())<0){
 						levels[pointerB].addStock(levels[pointerB].getMaxCapacity());
-						pointerA += 1;
+						pointerB += 1;
 						
 					//if the current location is equal to the init location
 					//lexicographically, we add the appropriate amount to it
@@ -212,7 +210,7 @@ public class Main {
 						break;
 					}
 				//if init.csv runs out of lines. We fill the rest to max Stock
-				}else if(init.length==0 && levels.length!=0){
+				}else if(init.length==pointerA && levels.length>=pointerB){
 						levels[pointerB].addStock(levels[pointerB].getMaxCapacity());
 						pointerB += 1;
 				}
