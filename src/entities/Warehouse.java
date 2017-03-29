@@ -46,12 +46,11 @@ public class Warehouse {
         // Do not worry about this, already finished.
     }
 
-	public ArrayList<Worker> getWorkers() {
+    public ArrayList<Worker> getWorkers() {
 		return workers;
 	}
 
 	public void addWorker(Worker newWorker) {
 		this.workers.add(newWorker);
-		
 	}
 }
