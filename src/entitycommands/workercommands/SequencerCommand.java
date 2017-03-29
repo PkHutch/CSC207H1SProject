@@ -9,20 +9,15 @@ public class SequencerCommand extends WorkerCommand<Sequencer> {
     // Defines the class constants.
     private static final String COMMAND = "Sequencer";
 
-    // Defines the instance variables.
-    private Warehouse warehouse;
-
     // Defines constructor methods.
     /**
      * The default SequencerCommand constructor, this is the only constructor for a SequencerCommand.
      *
-     * @param warehouse the Warehouse that is to be used in both the execution of executeCommand
-     *        and given to WorkerCommand for lookupWorker.
+     * @param warehouse the Warehouse that is to be used for lookupWorker.
      */
     public SequencerCommand(Warehouse warehouse) {
         super(COMMAND, warehouse);
         // Add debug message.
-        this.warehouse = warehouse;
     }
 
     /**
