@@ -15,4 +15,3 @@ public interface TaskGiver extends TaskEntity {
      */
     public abstract void doTask();
 }
-
