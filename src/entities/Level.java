@@ -2,7 +2,11 @@
 package entities;
 
 // Defines the imports.
+import entities.arraycontainers.Aisle;
+import entities.arraycontainers.ArrayContainer;
+import entities.arraycontainers.Floor;
 import entities.arraycontainers.Rack;
+import entities.arraycontainers.Zone;
 
 /**
  * The Level class contains Stock of a single SKU and is contained by a Rack.
@@ -29,5 +33,24 @@ public class Level {
             rack.toString() + ".");
         this.containedBy = rack;
         this.sku = sku;
+    }
+
+    // Defines the functional methods.
+    /**
+     * The getLocation method of Level returns the String need to access the Level.
+     *
+     * @return the String location of the Level in the form of "zone, aisle, rack, level" where
+     * zone is a character, and aisle, rack, and level are all string integers of the Level
+     * location.
+     */
+    public String getLocation() {
+        Rack rack = this.containedBy;
+        Aisle aisle = rack.getContainer();
+        Zone zone = aisle.getContainer();
+        Floor floor = zone.getContainer();
+        return Character.toString((char)((int) 'A' + floor.getIndex(zone))) + "," + 
+            Integer.toString(zone.getIndex(aisle)) + "," +
+            Integer.toString(aisle.getIndex(rack)) + "," +
+            Integer.toString(rack.getIndex(this));
     }
 }
