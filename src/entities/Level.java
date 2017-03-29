@@ -75,12 +75,18 @@ public class Level {
 		return this.max;
 	}
 
-	public void addStock(int parseInt) {
-		
+	public void addStock(int amount) {
+		this.stock += amount;
 	}
+	
+	public void addStock(){
+		this.stock += 1;
+	}
+	
 	public Integer getSku() {
 		return sku;
 	}
+	
 	public void setSku(Integer sku) {
 		this.sku = sku;
 	}
