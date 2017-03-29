@@ -1,10 +1,6 @@
 // Defines the package.
 package entitycommands.workercommands;
 
-// Defines the imports.
-import entities.Warehouse;
-import entities.workers.Sequencer;
-
 /**
  * A SequencerCommand is the class responsible for handling the execution of a Picker command given
  * by the console.
