@@ -1,6 +1,9 @@
 // Defines the package.
 package entities.arraycontainers;
 
+// Defines the imports.
+import entities.Level;
+
 /**
  * A Rack is an ArrayContainer with the parent being Aisle, and the child being Level.
  */
