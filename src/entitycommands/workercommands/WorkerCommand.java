@@ -61,6 +61,8 @@ public abstract class WorkerCommand<T extends Worker> extends EntityCommand {
         	}
         }
         Worker newWorker = new Worker(name,this.warehouse);
+        System.out.println("The Worker with the name " + name + " was not found, so a Worker " +
+            "has been created in their place.");
         this.warehouse.addWorker(newWorker);
         return newWorker;
     }
