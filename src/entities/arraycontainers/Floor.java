@@ -6,7 +6,7 @@ import entities.Warehouse;
 import java.util.ArrayList;
 
 /**
- * A floor is an ArrayContainer with the parent being Warehouse, and the child being Zone.
+ * A Floor is an ArrayContainer with the parent being Warehouse, and the child being Zone.
  * It contains a default quantity of two Zone objects.
  */
 public class Floor extends ArrayContainer<Warehouse, Zone> {
