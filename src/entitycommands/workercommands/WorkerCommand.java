@@ -2,7 +2,6 @@
 package entitycommands.workercommands;
 
 import java.util.ArrayList;
-
 import entities.Warehouse;
 import entities.workers.Worker;
 // Defines the imports.
