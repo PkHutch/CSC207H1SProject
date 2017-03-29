@@ -80,41 +80,29 @@ public class Main {
 				}
 			}
 		}
-		//closes the Scanner.
 		inputScanner.close();
 
-		// Saves the final state into final.csv
-		try {
-			saveFinalState(warehouse.getFloor());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		// Would want to save.
+		// saveFinalState(warehouse);
 	}
 
 	/**
 	 * The method for saving final.csv, . . . . .
 	 */
 	private static void saveFinalState(Floor floor) throws IOException {
-		// Check every level, calling, floor.getItems() to get the floor.
+        	// Check every level, calling, floor.getItems() to get the floor.
 		// Then get each level, by calling getLevel() on floor.
 		// Then check if the Level is at max capacity, if it is
 		// Then get each path to the level by calling, getLocation() on the
 		// level.
 		// Then write the resulting new line to the file if the line exists.
 		System.out.println("The current state of warehouse has been saved");
-		String[] floors = floor.getLevels();
+		String[] levels = floor.getLevels();
 		//goes through each possible location in the warehouse
-		for (int i = 0; i < floors.length; i++) {
-			//gets a specific location according to the String location
-			//provided by String[] floors
-			Level level = floor.getLevel(
-					floors[i].charAt(0), 
-					Integer.parseInt(floors[i].substring(2, 3)),
-					Integer.parseInt(floors[i].substring(4, 5)), 
-					Integer.parseInt(floors[i].substring(6, 7)));
-			if (!level.atMaxCapacity()) {
+		for (int i = 0; i < levels.length; i++) {
+			if (!levels[i].atMaxCapacity()) {
 				//writes to the file
-				writeFile(floors[i]);
+				writeFile(levels[i].getLocation());
 			}
 		}
 	}
@@ -129,6 +117,7 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
+
 	private static String[] checkForDup(){
 		String line;
 		ArrayList<String> initFile = new ArrayList<String>();
@@ -152,7 +141,7 @@ public class Main {
 				ex.printStackTrace();
 			}
 			//converts the Arraylist to an array to provide efficiency. 
-			String[] sortedInitFile = (String[]) initFile.toArray();
+			String[] sortedInitFile = initFile.toArray(new String[]);
 			//sorts the array for maximum search efficiency
 			Arrays.sort(sortedInitFile);
 			for(int i=0;i<sortedInitFile.length-1;i++){
@@ -175,6 +164,8 @@ public class Main {
 			}
 
 	}
+
+
 	//Adderall code, if remove, fix loadInitialState according.
 	//this pops an element of the array
 	//HINT: Read loadInitialState for further instruction.
@@ -188,34 +179,34 @@ public class Main {
 		// Parse initial.csv into an ArrayList, with each line being an element.
 		// This will reference one line at a time
 		String[] init = checkForDup();
-		String[] floors = floor.getLevels().clone();
+		String[] levels = floor.getLevels().clone();
 		//HINT: Change these to non-final variables if we do not pop them
 		final int POINTERA = 0;
 		final int POINTERB = 0;
 		if (init != null){
-			//HINT: 
-			while (init.length != 0 && floor.getLevels().length != 0){
+			//HINT: use floors and not floor.getLevels()
+			//HINT: Change the whileloop condition relative to the pointers and not the length of the arrays.
+			while (init.length != 0 || levels.length != 0){
 				//the case where both array are still active, we would
 				//compare to two and decide how to fill it
-				if(init.length!=0 || floor.getLevels().length!=0){
+				if(init.length!=0 && levels.length!=0){
 					//if The current pointed Floor location is lexicographically 
 					//greater than the init location, we fill it to the MAX
-					if(init[POINTERA].compareTo(floors[POINTERB])<0){
+					if(init[POINTERA].compareTo(levels[POINTERB])<0){
 						String location = init[POINTERA];
 						char zone = location.charAt(0);
-						int aisle = Integer.parseInt(location.substring(2, 3));					
+						int aisle = Integer.parseInt(location.substring(2, 3));
 						int rack  = Integer.parseInt(location.substring(4, 5));
 						int level = Integer.parseInt(location.substring(6, 7));
 						Level theLevel = floor.getLevel(zone,aisle,rack,level);
-						theLevel.addStock(Integer.parseInt(location.substring(8, 9)));
 						theLevel.addStock(theLevel.getMaxCapacity());
 						//pops from level(x)
 						//HINT: change to pointerA += 1 
-						removeElement(floors,POINTERB);
+						removeElement(levels,POINTERB);
 					//if the current location is equal to the init location
 					//lexicographically, we add the appropriate amount to it
 					//which should be stored at location.substring(8,9)
-					}else if(init[POINTERA].compareTo(floors[POINTERB])==0){
+					}else if(init[POINTERA].compareTo(levels[POINTERB])==0){
 						String location = init[POINTERA];
 						char zone = location.charAt(0);
 						int aisle = Integer.parseInt(location.substring(2, 3));					
@@ -226,7 +217,7 @@ public class Main {
 						//pops both locations for further searching.
 						//HINT: change to pointerA+=1 and pointerB+=1
 						removeElement(init,POINTERA);
-						removeElement(floors,POINTERB);
+						removeElement(levels,POINTERB);
 					 //if current pointed Floor location is lexicographically
 					 //less than the init location, it shouldn't happen
 					 //So we give an Error message and essentially quit.
@@ -238,8 +229,8 @@ public class Main {
 						break;
 					}
 				//if init.csv runs out of lines. We fill the rest to max Stock
-				}else if(init.length==0 && floor.getLevels().length!=0){
-						String location = init[POINTERA];
+				}else if(init.length==0 && levels.length!=0){
+						String location = levels[POINTERA];
 						char zone = location.charAt(0);
 						int aisle = Integer.parseInt(location.substring(2, 3));					
 						int rack  = Integer.parseInt(location.substring(4, 5));
@@ -248,7 +239,7 @@ public class Main {
 						theLevel.addStock(Integer.parseInt(location.substring(8, 9)));
 						theLevel.addStock(theLevel.getMaxCapacity());
 						//Change to pointerB += 1 here
-						removeElement(floors,POINTERB);	
+						removeElement(levels,POINTERB);	
 				}
 			}
 		}
