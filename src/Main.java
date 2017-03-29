@@ -31,11 +31,10 @@ public class Main {
      */
     private static void saveFinalState(Floor floor) {
         System.out.println("Calling saveFinalState of Main.");
-        // Check every level, calling, floor.getItems() to get the floor.
-        // Then get each level, by calling getLevel() on floor.
-        // Then check if the Level is at max capacity, if it is
-        // Then get each path to the level by calling, getLocation() on the level.
-        // Then write the resulting new line to the file if the line exists.
+        // Check every Level, calling, floor.getLevels() to get the levels contained in the Floor.
+        // Then check each Level for whether or not it is at max capacity, if it is not
+        // hen get the path to the Level by calling, getLocation() on the level.
+        // Then write the resulting new line to the file if the previous was true.
     }
 
     /**
