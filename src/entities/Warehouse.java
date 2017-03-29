@@ -1,17 +1,24 @@
 // Defines the package.
 package entities;
+import java.util.ArrayList;
+import entities.workers.Worker;
+import entitycommands.workercommands.ArrayList;
 
 /**
  * The warehouse class, which is where the simulation takes place, as the Warehouse effectively
  * acts as a container for the other entities.
  */
 public class Warehouse {
+    // Defines the instance variables.
+    private ArrayList<Worker> workers;
+    
     // Defines the constructors.
     /**
      * The default constructor for a Warehouse.
      */
     public Warehouse() {
         System.out.println("Constructing Warehouse" + this.toString() + ".");
+        this.workers = new ArrayList<>();
     }
 
     // Defines the functional methods.
@@ -37,5 +44,13 @@ public class Warehouse {
      */
     private Integer[][][][][] parseTraversalTableFile() {
         // Do not worry about this, already finished.
+    }
+
+    public ArrayList<Worker> getWorkers() {
+        return workers;
+    }
+
+    public void addWorker(Worker newWorker) {
+        this.workers.add(newWorker);
     }
 }

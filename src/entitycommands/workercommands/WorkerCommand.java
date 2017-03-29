@@ -1,6 +1,9 @@
 // Defines the package.
 package entitycommands.workercommands;
 
+import java.util.ArrayList;
+import entities.Warehouse;
+import entities.workers.Worker;
 // Defines the imports.
 import entitycommands.EntityCommand;
 
@@ -12,7 +15,7 @@ public abstract class WorkerCommand<T extends Worker> extends EntityCommand {
     // Defines the instance methods.
     private Warehouse warehouse;
 
-    // Defines contructor methods.
+    // Defines constructor methods.
     /**
      * The default constructor, a worker command must have a Warehouse so that the lookupWorker
      * is properly implemented.
@@ -48,6 +51,19 @@ public abstract class WorkerCommand<T extends Worker> extends EntityCommand {
         // Use the warehouse to find the worker with the name and instanceof T.
         // Then if the worker with the given name doesn't exist, create the worker and notify the
         // console.
-        return new Worker("test", this.warehouse);
+    	ArrayList<Worker> workers = this.warehouse.getWorkers();
+        for(int i=0;i<workers.size();i++){
+        	Worker currWorker = workers.get(i);
+        	if(currWorker instanceof Worker){
+        		if(currWorker.getName()==name){
+        			return currWorker;
+        		}        		
+        	}
+        }
+        Worker newWorker = new Worker(name,this.warehouse);
+        System.out.println("The Worker with the name " + name + " was not found, so a Worker " +
+            "has been created in their place.");
+        this.warehouse.addWorker(newWorker);
+        return newWorker;
     }
 }
