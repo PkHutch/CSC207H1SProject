@@ -2,7 +2,9 @@
 package entities.arraycontainers;
 
 // Defines the imports.
+import entities.Level;
 import entities.Warehouse;
+import java.util.ArrayList;
 
 /**
  * A Floor is an ArrayContainer with the parent being Warehouse, and the child being Zone.
@@ -43,15 +45,27 @@ public class Floor extends ArrayContainer<Warehouse, Zone> {
     }*/
 
     /**
-     * The getLevel method of Floor returns a level object specified by the parameters given.
+     * The getLevels method of Floor returns the Level objects contained by the objects which the
+     * Floor contains.
      *
-     * @param zone the capital letter char which determines which Zone is accessed.
-     * @param aisle the int which determines which Aisle is accessed.
-     * @param rack the int which determines which Rack is accessed.
-     * @param level the int which determines which Level is accessed.
-     * @return the Level which was specified by the parameters.
+     * @return the array of Level objects which are contained by the objects contained by the
+     *         Floor.
      */
-    /*public Level getLevel(char zone, int aisle, int rack, int level) {
-        return this.getItem(zone).getItem(aisle).getItem(rack).getItem(level);
-    }*/
+    public Level[] getLevels() {
+        ArrayList<Level> returnedArrayList = new ArrayList<>();
+        Zone[] zones = this.getItems();
+        for(int zoneIndex = 0; zoneIndex < zones.length; zoneIndex++) {
+            Aisle[] aisles = zones[zoneIndex].getItems();
+            for(int aisleIndex = 0; aisleIndex < aisles.length; aisleIndex++) {
+                Rack[] racks = aisles[aisleIndex].getItems();
+                for(int rackIndex = 0; rackIndex < racks.length; rackIndex++) {
+                    Level[] levels = racks[rackIndex].getItems();
+                    for(int levelIndex = 0; levelIndex < levels.length; levelIndex++) {
+                        returnedArrayList.add(levels[levelIndex]);
+                    }
+                }
+            }
+        }
+        return returnedArrayList.toArray(new Level[returnedArrayList.size()]);
+    }
 }
