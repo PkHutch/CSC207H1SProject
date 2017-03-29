@@ -45,10 +45,27 @@ public abstract class ArrayContainer<S, T> {
      * @return the array of T objects that the ArrayContainer contains, where T is the type of
      *         object that the ArrayContainer contains.
      */
-    public T[] getItems() {
+    protected T[] getItems() {
         System.out.println("Calling getItems of ArrayContainer " + this.toString() + ".");
         System.out.println("    Returning " + this.items.toString() + ".");
         return this.items;
+    }
+
+    /**
+     * The getIndex method of ArrayContainer returns the index of the Object contained in
+     * the ArrayContainer. It should be noted this uses == for comparison.
+     *
+     * @param object the object to be searched for.
+     * @return the index of the object, if it exists, otherwise it will return negative one.
+     */
+    public int getIndex(T object) {
+        for(int index = 0; index < this.items.length; index++) {
+            if(this.items[index] == object) {
+                return index;
+            }
+        }
+
+        return -1;
     }
 
     /**
@@ -61,7 +78,7 @@ public abstract class ArrayContainer<S, T> {
      * @return the object which is stored at index, of the type T, which is the type of object
      *         that the ArrayContainer contains.
      */
-    public T getItem(int index) {
+    protected T getItem(int index) {
         System.out.println("Calling getItem of ArrayContainer " + this.toString() + " with " +
             "argument index as " + Integer.toString(index) + ".");
         System.out.println("    Returning " + this.items[index].toString() + ".");
@@ -74,7 +91,7 @@ public abstract class ArrayContainer<S, T> {
      *
      * @return the int, which represents the amount of objects that ArrayContainer contains.
      */
-    public int getSize() {
+    protected int getSize() {
         System.out.println("Calling getSize of ArrayContainer " + this.toString() + ".");
         System.out.println("    Returning " + Integer.toString(this.items.length) + ".");
         return this.items.length;
