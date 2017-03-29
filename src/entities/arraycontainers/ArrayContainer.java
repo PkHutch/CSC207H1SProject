@@ -87,7 +87,7 @@ public abstract class ArrayContainer<S, T> {
      * @param index the int at which the item is to be set.
      * @param item the T object to be set.
      */
-    public void setItem(int index, T item) {
+    protected void setItem(int index, T item) {
         System.out.println("Calling getSize of ArrayContainer " + this.toString() + ".");
         System.out.println("    Returning " + Integer.toString(this.items.length) + ".");
         this.items[index] = item;
