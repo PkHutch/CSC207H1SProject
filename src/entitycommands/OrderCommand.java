@@ -11,7 +11,6 @@ public class OrderCommand extends EntityCommand {
     private static final String COMMAND = "Order";
 
     // Defines the instance variables.
-    @SuppressWarnings("unused")
 	private FaxMachine faxMachine;
 
     // Defines the constructors.
