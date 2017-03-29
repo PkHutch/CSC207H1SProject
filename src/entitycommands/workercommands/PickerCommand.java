@@ -9,9 +9,6 @@ public class PickerCommand extends WorkerCommand<Picker> {
     // Defines the class constants.
     private static final String COMMAND = "Picker";
 
-    // Defines the instance variables.
-    private Warehouse warehouse;
-
     // Defines constructor methods.
     /**
      * The default PickerCommand constructor, this is the only constructor for a PickerCommand.
@@ -22,7 +19,6 @@ public class PickerCommand extends WorkerCommand<Picker> {
     public PickerCommand(Warehouse warehouse) {
         super(COMMAND, warehouse);
         // Add debug message.
-        this.warehouse = warehouse;
     }
 
     /**
