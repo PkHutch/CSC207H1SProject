@@ -13,8 +13,7 @@ public class PickerCommand extends WorkerCommand<Picker> {
     /**
      * The default PickerCommand constructor, this is the only constructor for a PickerCommand.
      *
-     * @param warehouse the Warehouse that is to be used in both the execution of executeCommand
-     *        and given to WorkerCommand for lookupWorker.
+     * @param warehouse the Warehouse that is to be used in the nameLookup.
      */
     public PickerCommand(Warehouse warehouse) {
         super(COMMAND, warehouse);
