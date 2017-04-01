@@ -39,7 +39,7 @@ public class Warehouse {
      */
     public FaxMachine getFaxMachine() {
         System.out.println("Calling getFaxMachine of " + this.toString() + ".");
-        return this.faxmachine;
+        return this.faxMachine;
     }
 
     // Defines the helper methods.
