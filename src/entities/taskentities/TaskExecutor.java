@@ -1,4 +1,4 @@
-// Defines the package.
+// Defines the imports
 package entities.taskentities;
 
 /**
