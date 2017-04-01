@@ -1,8 +1,5 @@
-
 // Defines imports.
-import entities.FaxMachine;
 import entities.Level;
-import entities.Server;
 import entities.Warehouse;
 import entities.arraycontainers.Floor;
 import entitycommands.EntityCommand;
@@ -38,10 +35,8 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		Warehouse warehouse = new Warehouse();
-		Server server = new Server(warehouse);
-		FaxMachine faxmachine = new FaxMachine(server);
-		warehouse.AddFaxMachine(faxmachine);
-		EntityCommand[] commands = new EntityCommand[] { new OrderCommand(faxmachine), new PickerCommand(warehouse) };
+		EntityCommand[] commands = new EntityCommand[] { new OrderCommand(warehouse.getFaxMachine()),
+				                                         new PickerCommand(warehouse) };
 		loadInitialState(warehouse.getFloor());
 		// Defines the variables that need to be used for user input.
 		String currentInput = "";

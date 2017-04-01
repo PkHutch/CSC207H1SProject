@@ -59,6 +59,5 @@ public class Server {
     @SuppressWarnings("unused")
 	private String[][] parseTranslationFile() {
 		return null;
-        // Already completed elsewhere.
     }
 }

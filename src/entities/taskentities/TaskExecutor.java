@@ -1,7 +1,13 @@
+// Defines the imports
 package entities.taskentities;
 
-public interface TaskExecutor<T>extends TaskEntity {
-	// Defines the abstract methods.
+/**
+ * A TaskExecutor is a TaskEntity who implements a doTask method. The purpose is to show that a
+ * TaskExecutor executes a task, and needs context on how to execute it's task, in otherwords it
+ * takes commands, whereas a TaskGiver gives the tasks, and needs no context.
+ */
+public interface TaskExecutor<T> extends TaskEntity{
+    // Defines the abstract methods.
     /**
      * The doTask method of a TaskExecutor should implement the task that the TaskExecutor
      * preforms, because a TaskExector doesn't give tasks, but instead it only executes, a

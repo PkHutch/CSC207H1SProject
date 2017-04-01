@@ -74,9 +74,17 @@ public class Level {
 	public int getMaxCapacity(){
 		return this.max;
 	}
+	
+	public int getStock(){
+		return this.stock;
+	}
 
 	public void addStock(int parseInt) {
-		
+		if(this.stock + parseInt < this.max){
+			this.stock += parseInt;
+		}else{
+			System.out.println("You've added too much to the level");
+		}
 	}
 	public Integer getSku() {
 		return sku;
