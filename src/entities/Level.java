@@ -101,7 +101,12 @@ public class Level {
 	}
 
 	public int removeStock() {
-		this.stock -= 1;
-		return this.sku;
+		if (this.stock - 1 > 0) {
+			this.stock -= 1;
+			return this.sku;
+		} else {
+			System.out.println("You are taking 1 stock out of " + this.stock + " Items.");
+			return -1;
+		}
 	}
 }
