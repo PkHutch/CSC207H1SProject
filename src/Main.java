@@ -37,7 +37,8 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		Warehouse warehouse = new Warehouse();
-		EntityCommand[] commands = new EntityCommand[] { new OrderCommand(faxmachine), new PickerCommand(warehouse) };
+		EntityCommand[] commands = new EntityCommand[] { new OrderCommand(warehouse.getfaxmachine())
+			                                       , new PickerCommand(warehouse) };
 		loadInitialState(warehouse.getFloor());
 		// Defines the variables that need to be used for user input.
 		String currentInput = "";
