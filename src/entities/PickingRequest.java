@@ -49,7 +49,7 @@ public class PickingRequest {
      */
     public int getStatus() {
         System.out.println("Calling getStatus of PickingRequest " + this.toString() + ".");
-        System.out.println("    Returning " + this.status.toString() + ".");
+        System.out.println("    Returning " + this.status + ".");
         return status;
     }
 
@@ -63,7 +63,7 @@ public class PickingRequest {
      */
     public void setStatus(int status) {
         System.out.println("Calling setStatus of PickingRequest " + this.toString() + ", " +
-            "where argument status as " + status.toString() + ".");
+            "where argument status as " + this.status + ".");
         this.status = status;
     }
 }
