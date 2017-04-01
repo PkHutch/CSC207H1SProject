@@ -3,12 +3,33 @@ package entities;
 
 // Defines the imports.
 import entities.workers.Picker;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.lang.IllegalArgumentException;
+import java.lang.IllegalStateException;
+import java.lang.Integer;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * This class defines the Server, which keeps track of the different states of orders, and
  * effectively governs how the other entities interact in the warehouse.
  */
 public class Server {
+    // Defines the constants.
+    private final static int DEFAULT_REFILL_QUANTITY = 5;
+    private final static int DEFAULT_PICKING_REQUEST_SIZE = 8;
+
+    // Defines instance variables.
+    private final LinkedList<Picker> inactivePickers;
+    private final LinkedList<Integer> partialPickingRequest;
+    private final ArrayList<PickingRequest> pickingRequests;
+    private final String[][] orderArray;
+    private final Warehouse warehouse;
+
     // Defines the constructor methods.
     /**
      * The only contructor for Server.
@@ -18,7 +39,11 @@ public class Server {
     public Server(Warehouse warehouse) {
         System.out.println("Constructing Server " + this.toString() + " with argument " +
             "warehouse as " + warehouse.toString() + ".");
-        // Already completed elsewhere.
+        this.inactivePickers = new LinkedList<>();
+        this.partialPickingRequest = new LinkedList<>();
+        this.pickingRequests = new ArrayList<>();
+        this.orderArray = this.parseTranslationFile();
+        this.warehouse = warehouse;
     }
 
     /**
@@ -47,6 +72,15 @@ public class Server {
     }
 
     // Defines the helper methods.
+    /**
+     * The assignPicker method of Server assigns the Picker a PickingRequest.
+     *
+     * @param picker the Picker to be assigned a PickingRequest.
+     */
+    private void assignPicker(Picker picker) {
+        
+    }
+
     /**
      * Parses the translation.csv file so that the server has a more readily useable form
      * for the sake of looking up SKU numbers of units, this is more efficient than parsing
