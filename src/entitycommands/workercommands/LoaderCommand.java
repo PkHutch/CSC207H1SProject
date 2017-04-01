@@ -1,6 +1,9 @@
 // Defines the package.
 package entitycommands.workercommands;
 
+import entities.Warehouse;
+import entities.workers.Loader;
+
 /**
  * A LoaderCommand is the class responsible for handling the execution of a Loader command given
  * by the console.
@@ -35,5 +38,12 @@ public class LoaderCommand extends WorkerCommand<Loader> {
         // If "loads" then doTask of the Loader.
         // Otherwise IllegalArgumentException.
         // Don't forget debug prints.
+    	String[] command = argument.split(" ");
+    	Loader loader = (Loader) this.lookupWorker(command[0]);
+    	if(command[1].toLowerCase().equals("loads")){
+    		loader.doTask(command[1]);
+    	}else{
+    		System.out.println("No such command was found");
+    	}
     }
 }

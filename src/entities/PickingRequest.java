@@ -72,7 +72,7 @@ public class PickingRequest {
      */
     public void setStatus(int status) {
         System.out.println("Calling setStatus of PickingRequest " + this.toString() + ", " +
-            "where argument status as " + status + ".");
+            "where argument status as " + this.status + ".");
         this.status = status;
     }
 }

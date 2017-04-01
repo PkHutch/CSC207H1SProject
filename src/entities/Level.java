@@ -3,7 +3,6 @@ package entities;
 
 // Defines the imports.
 import entities.arraycontainers.Aisle;
-import entities.arraycontainers.ArrayContainer;
 import entities.arraycontainers.Floor;
 import entities.arraycontainers.Rack;
 import entities.arraycontainers.Zone;
@@ -18,7 +17,8 @@ public class Level {
     // Defines the instance variables.
     private Rack containedBy;
     private Integer sku;
-
+    private int stock;
+    private int max;
     // Defines the constructors.
     /**
      * The default Level constructor, constructs the Level according to the DEFAULT_MAX_QUANTITY
@@ -33,6 +33,16 @@ public class Level {
             rack.toString() + ".");
         this.containedBy = rack;
         this.sku = sku;
+        this.stock = 0;
+        this.max = DEFAULT_MAX_QUANTITY;
+    }
+    public Level(Rack rack, Integer sku, int maxSize){
+    	System.out.println("Constructing Level " + this.toString() + " with argument rack as " +
+                rack.toString() + ".");
+        this.containedBy = rack;
+        this.sku = sku;
+        this.stock = 0; 
+        this.max = maxSize;
     }
 
     // Defines the functional methods.
@@ -53,4 +63,33 @@ public class Level {
             Integer.toString(aisle.getIndex(rack)) + "," +
             Integer.toString(rack.getIndex(this));
     }
+
+	public boolean atMaxCapacity() {
+		if (this.stock == this.max){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	public int getMaxCapacity(){
+		return this.max;
+	}
+	
+	public int getStock(){
+		return this.stock;
+	}
+
+	public void addStock(int parseInt) {
+		if(this.stock + parseInt < this.max){
+			this.stock += parseInt;
+		}else{
+			System.out.println("You've added too much to the level");
+		}
+	}
+	public Integer getSku() {
+		return sku;
+	}
+	public void setSku(Integer sku) {
+		this.sku = sku;
+	}
 }
