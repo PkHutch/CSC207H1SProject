@@ -12,7 +12,6 @@ public class Loader extends Worker implements TaskGiver{
 		
 	}
 
-	@Override
 	public void doTask() {
 		this.getWarehouse().getMarshalling.removePallets();
 		System.out.println("Pallets were successfully loaded onto the truck");
