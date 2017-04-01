@@ -47,5 +47,4 @@ public class ReplenisherCommand extends WorkerCommand<Replenisher> {
     		System.out.println("You issued the task to a wrong Worker");
     	}
     }
-    
 }

@@ -32,7 +32,7 @@ public class Level {
         System.out.println("Constructing Level " + this.toString() + " with argument rack as " +
             rack.toString() + ".");
         this.containedBy = rack;
-        this.setSku(sku);
+        this.sku = sku;
         this.stock = 0;
         this.max = DEFAULT_MAX_QUANTITY;
     }
@@ -40,7 +40,7 @@ public class Level {
     	System.out.println("Constructing Level " + this.toString() + " with argument rack as " +
                 rack.toString() + ".");
         this.containedBy = rack;
-        this.setSku(sku);
+        this.sku = sku;
         this.stock = 0; 
         this.max = maxSize;
     }

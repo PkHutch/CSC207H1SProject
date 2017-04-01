@@ -26,9 +26,10 @@ public class Warehouse {
     public Warehouse() {
         System.out.println("Constructing Warehouse" + this.toString() + ".");
         this.server = new Server(this);
-        this.workers = new ArrayList<>();         
-        this.floor = new Floor(this, parseTraversalTableFile());
+        this.workers = new ArrayList<>();
         this.faxMachine = new FaxMachine(this.server);
+        this.floor = new Floor(this, parseTraversalTableFile());
+ 
 
     }
 

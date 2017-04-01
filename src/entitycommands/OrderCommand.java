@@ -11,7 +11,6 @@ public class OrderCommand extends EntityCommand {
     private static final String COMMAND = "Order";
 
     // Defines the instance variables.
-    @SuppressWarnings("unused")
 	private FaxMachine faxMachine;
 
     // Defines the constructors.
@@ -23,10 +22,10 @@ public class OrderCommand extends EntityCommand {
      *        current only one faxmachine exists at a time, meaning that the commands will only
      *        act on one FaxMachine.
      */
-    public OrderCommand(FaxMachine faxmachine) {
+    public OrderCommand(FaxMachine faxMachine) {
         super(COMMAND);
         System.out.println("Constructing OrderCommand " + this.toString() + " with argument " + 
-            "faxmachine as " + faxmachine.toString() + ".");
+            "faxmachine as " + faxMachine.toString() + ".");
         // This is implemented elsewhere, do not worry.
     }
 

@@ -1,6 +1,6 @@
 // Defines the package.
 package entities;
-
+// Defines the imports.
 import entities.workers.Picker;
 
 /**
@@ -56,7 +56,7 @@ public class Server {
      *         the String[] is the model, the second is the colour, the third is the front, the
      *         fourth is the back.
      */
-    @SuppressWarnings("unused")
+
 	private String[][] parseTranslationFile() {
 		return null;
     }
