@@ -9,9 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.lang.IllegalArgumentException;
-import java.lang.IllegalStateException;
 import java.lang.Integer;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -21,7 +19,7 @@ import java.util.LinkedList;
  */
 public class Server {
 	// Defines the constants.
-	private final static int DEFAULT_REFILL_QUANTITY = 5;
+	// private final static int DEFAULT_REFILL_QUANTITY = 5;
 	private final static int DEFAULT_PICKING_REQUEST_SIZE = 8;
 
 	// Defines instance variables.
@@ -48,6 +46,10 @@ public class Server {
 		this.warehouse = warehouse;
 	}
 
+	public Warehouse getWarehouse() {
+		return this.warehouse;
+	}
+
 	/**
 	 * Adds the worker to the inactivePickers list.
 	 *
@@ -59,15 +61,18 @@ public class Server {
 			throw new IllegalArgumentException(
 					"The Picker " + picker.getName() + " already " + "has a PickingRequest assigned.");
 		} else {
-			for (int index = 0; index < this.pickingRequests.size(); index++) {
+			boolean pickingRequestFound = false;
+			for (int index = 0; index < this.pickingRequests.size() && !(pickingRequestFound); index++) {
+				if (this.pickingRequests.get(index).getStatus() == 0) {
+					pickingRequestFound = true;
+					this.assignPicker(picker, this.pickingRequests.get(index));
+				}
+			}
+
+			if (pickingRequestFound == false) {
+				this.inactivePickers.add(picker);
 			}
 		}
-		// See the legacy code, but also check that the picker is inactive when
-		// this is called.
-		// If the picker isn't inactive, throw exception.
-		// Otherwise, double check that an inactivePickingRequest can't be
-		// assigned, if it can
-		// Then assign it to the Picker, notifying the console.
 	}
 
 	/**
@@ -82,7 +87,56 @@ public class Server {
 	 *            attributes exist in the Server's translationArray.
 	 */
 	public void addOrder(Order order) {
-		// Already completed elsewhere.
+		System.out.println("Calling addOrder of Server " + this.toString() + " with argument " + "order as "
+				+ order.toString() + ".");
+		// This is used to check when the server has looked up the order's SKU.
+		boolean foundOrder = false;
+
+		System.out.println("    Checking if the translationArray contains the model and colour.");
+		for (int index = 0; (!(foundOrder) && index < this.orderArray.length); index++) {
+			System.out.println("    Checking if orderArray[" + Integer.toString(index) + "][0] is equal to "
+					+ order.getColour() + " and orderArray[" + Integer.toString(index) + "][1] is equal to "
+					+ order.getModel() + ".");
+			if (order.getColour().equals(this.orderArray[index][0])
+					&& order.getModel().equals(this.orderArray[index][1])) {
+				System.out.println("The colour " + order.getColour() + " and model " + order.getModel()
+						+ " exist in the translationArray.");
+				foundOrder = true;
+				this.partialPickingRequest.add(Integer.parseInt(this.orderArray[index][2]));
+				this.partialPickingRequest.add(Integer.parseInt(this.orderArray[index][3]));
+			}
+		}
+
+		if (foundOrder == false) {
+			throw new IllegalArgumentException("The order given with colour \"" + order.getColour() + "\" and model \""
+					+ order.getModel() + "\" does " + "not exist in the Server's translationArray.");
+		}
+
+		System.out.println("    Checking if there are enough inactivePicks to create a " + "picking request.");
+		// If four orders have been placed, then creates a picking request.
+		if (partialPickingRequest.size() == DEFAULT_PICKING_REQUEST_SIZE) {
+			System.out.println("    There are enough, creating a new picking request.");
+			PickingRequest newPickingRequest = new PickingRequest(
+					this.partialPickingRequest.toArray(new Integer[DEFAULT_PICKING_REQUEST_SIZE]));
+			pickingRequests.add(newPickingRequest);
+			this.partialPickingRequest.clear();
+			if (this.inactivePickers.size() > 0) {
+				this.assignPicker(inactivePickers.pop(), newPickingRequest);
+			}
+		}
+	}
+
+	/**
+	 * The getPickingRequests method of Server returns the PickingRequests of
+	 * the server.
+	 *
+	 * @return the ArrayList<PickingRequest> which is the PickingRequests that
+	 *         the Server is keeping track of.
+	 */
+	public ArrayList<PickingRequest> getPickingRequests() {
+		System.out.println("Calling getPickingRequests of Server " + this.toString() + ".");
+		System.out.println("    Returning " + this.pickingRequests.toString() + ".");
+		return this.pickingRequests;
 	}
 
 	// Defines the helper methods.
@@ -92,13 +146,12 @@ public class Server {
 	 * @param picker
 	 *            the Picker to be assigned a PickingRequest.
 	 */
-	private void assignPicker(Picker picker) {
-
+	private void assignPicker(Picker picker, PickingRequest pickingRequest) {
+		System.out.println("The Picker " + picker.getName() + " has been assigned a picking " + "request.");
+		// picker.setPickingLocations(this.getWarehouse().getWarehousePicking().optimize(
+		// this.pickingRequests.get(index).getSKUs()));
+		// picker.setPickingRequest(this.pickingRequests.get(index));
 	}
-
-	public getPickingRequest(){
-    	
-    }
 
 	/**
 	 * Parses the translation.csv file so that the server has a more readily
