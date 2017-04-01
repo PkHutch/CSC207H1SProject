@@ -3,31 +3,30 @@ package entities;
 import java.util.ArrayList;
 
 public class PickingRequest {
-	
     private final Integer[] skus;
 	private int status;
-	 /*
-	  * For status, the following are the possible values:
-	  * 0 : unassigned
-	  * 1 : assigned
-	  * 2 : awaiting sequencing
-	  * 3 : sequenceable
-	  */
-	
-	public PickingRequest(Integer[] skus) {
-		this.skus = skus;
-		this.status = 0;
-	}
+     /*
+      * For status, the following are the possible values:
+      * 0 : unassigned
+      * 1 : assigned
+      * 2 : awaiting sequencing
+      * 3 : sequenceable
+      */
 
-	public Integer[] getSkus() {
-		return this.skus;
-	}
+    public PickingRequest(Integer[] skus) {
+        this.skus = skus;
+        this.status = 0;
+    }
 
-	public int getStatus() {
-		return status;
-	}
+    public Integer[] getSkus() {
+        return this.skus;
+    }
 
-	public void setStatus(int status) {
-		this.status = status;
-	}
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 }
