@@ -1,14 +1,13 @@
 // Defines the package.
 package entities;
-
-// Defines the imports.
+// Defines the input.
+import java.util.ArrayList;
 import entities.arraycontainers.Floor;
 import entities.workers.Worker;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * The warehouse class, which is where the simulation takes place, as the Warehouse effectively
@@ -20,7 +19,6 @@ public class Warehouse {
     private final Floor floor;
     private final Server server;
     private final ArrayList<Worker> workers;
-    
     // Defines the constructors.
     /**
      * The default constructor for a Warehouse.
@@ -31,6 +29,8 @@ public class Warehouse {
         this.workers = new ArrayList<>();
         this.faxMachine = new FaxMachine(this.server);
         this.floor = new Floor(this, parseTraversalTableFile());
+ 
+
     }
 
     // Defines the functional methods.
@@ -54,6 +54,8 @@ public class Warehouse {
      *         SKU of each Level. The first dimension is the zones, then the aisles, then the
      *         racks, then the levels.
      */
+
+        // Do not worry about this, already finished.
     private Integer[][][][] parseTraversalTableFile() {
         System.out.println("Calling parseTraversalTableFile of Warehouse " + this.toString() +
             ".");
@@ -209,4 +211,8 @@ public class Warehouse {
             "argument newWorker as " + newWorker.toString() + ".");
         this.workers.add(newWorker);
     }
+
+	public Floor getFloor() {
+		return this.floor;
+	}
 }

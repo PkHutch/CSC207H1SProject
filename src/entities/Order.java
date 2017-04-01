@@ -6,8 +6,8 @@ package entities;
  */
 public class Order {
     // Defines the instance variables.
-    private String colour;
-    private String model;
+	private String colour;
+	private String model;
 
     // Defines constructors.
     /**
@@ -17,7 +17,10 @@ public class Order {
      * @param model the String which is the model of the Order.
      */
     public Order(String colour, String model) {
-        // Already completed elsewhere.
+        System.out.println("Constructing Order " + this.toString() + " with argument colour " +
+            "as " + colour + ", and argument model as " + model + ".");
+        this.colour = colour;
+        this.model = model;
     }
 
     // Defines the functional methods.
@@ -28,8 +31,9 @@ public class Order {
      * @return the String which is the colour of the car that the fascia is intended for.
      */
     public String getColour() {
-        // Already completed elsewhere.
-        return "Filler";
+        System.out.println("Calling getColour of " + this.toString() + ".");
+        System.out.println("    Returning " + this.colour + ".");
+        return this.colour;
     }
 
     /**
@@ -39,7 +43,8 @@ public class Order {
      * @return the String which is the model of the car that the fascia is intended for.
      */
     public String getModel() {
-        // Already completed elsewhere.
-        return "Filler";
+        System.out.println("Calling getModel of " + this.toString() + ".");
+        System.out.println("    Returning " + this.model + ".");
+        return this.model;
     }
 }

@@ -1,6 +1,9 @@
 // Defines the package.
 package entitycommands.workercommands;
 
+import entities.Warehouse;
+import entities.workers.Picker;
+
 /**
  * A PickerCommand is the class responsible for handling the execution of a Picker command given
  * by the console.
@@ -40,5 +43,15 @@ public class PickerCommand extends WorkerCommand<Picker> {
         // If "to Marshaling" then call toMarshaling of Picker.
         // Otherwise IllegalArgumentException.
         // Don't forget debug prints.
+    	String[] command = argument.split(" ");
+    	Picker picker = (Picker) this.lookupWorker(command[0]);
+    	if(command[1].toLowerCase().equals("pick")){    		
+    	    picker.doTask(command[2]);
+    	}else if(command[1].toLowerCase().equals("to") &&
+    			 command[2].toLowerCase().equals("marshaling")){
+    	    picker.toMarshalling();
+    	}else{
+    		System.out.println("You issued the task to a wrong worker");
+    	}
     }
 }

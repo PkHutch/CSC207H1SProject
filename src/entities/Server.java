@@ -1,6 +1,5 @@
 // Defines the package.
 package entities;
-
 // Defines the imports.
 import entities.workers.Picker;
 import java.io.BufferedReader;
