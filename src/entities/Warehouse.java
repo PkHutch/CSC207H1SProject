@@ -2,7 +2,12 @@
 package entities;
 
 // Defines the imports.
+import entities.arraycontainers.Floor;
 import entities.workers.Worker;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -12,6 +17,7 @@ import java.util.ArrayList;
 public class Warehouse {
     // Defines the instance variables.
     private final FaxMachine faxMachine;
+    private final Floor floor;
     private final Server server;
     private final ArrayList<Worker> workers;
     
@@ -24,6 +30,7 @@ public class Warehouse {
         this.server = new Server(this);
         this.workers = new ArrayList<>();
         this.faxMachine = new FaxMachine(this.server);
+        this.floor = new Floor(this, parseTraversalTableFile());
     }
 
     // Defines the functional methods.
@@ -43,13 +50,132 @@ public class Warehouse {
      * for the sake of looking up SKU numbers of levels, this is more efficient than parsing
      * the file every single time an SKU lookup is required.
      *
-     * @return the Integer[][][][][] which "models" the Warehouse in the sense that it describes
-     *         SKU of each Level. The first dimension is the floor, then the zones, then the
-     *         aisles, then the racks, then the levels.
+     * @return the Integer[][][][] which "models" the Warehouse in the sense that it describes
+     *         SKU of each Level. The first dimension is the zones, then the aisles, then the
+     *         racks, then the levels.
      */
-    private Integer[][][][][] parseTraversalTableFile() {
-        // Do not worry about this, already finished.
-        return new Integer[0][0][0][0][0];
+    private Integer[][][][] parseTraversalTableFile() {
+        System.out.println("Calling parseTraversalTableFile of Warehouse " + this.toString() +
+            ".");
+        // Defines constants.
+        final String TRANSLATION_FILE = "./resources/traversal_table.csv";
+        final String SPLIT_BY = ",";
+
+        // Defines variables for reading the file.
+        BufferedReader bufferedReader = null;
+        String line;
+
+        // Defines the ArrayList that will be converted to an array.
+        ArrayList<Integer[][][]> parsedTraversalFile = new ArrayList<>();
+
+        try {
+            bufferedReader = new BufferedReader(new FileReader(TRANSLATION_FILE));
+            char currentZone = 'A';
+            char currentAisle = '0';
+            char currentRack = '0';
+            char currentLevel = '0';
+            ArrayList<Integer> parsedRack = new ArrayList<>();
+            ArrayList<Integer[]> parsedAisle = new ArrayList<>();
+            ArrayList<Integer[][]> parsedZone = new ArrayList<>();
+
+            line = bufferedReader.readLine();
+            String[] translatedLine = line.split(SPLIT_BY);
+            char translatedZone = translatedLine[0].charAt(0);
+            char translatedAisle = translatedLine[1].charAt(0);
+            char translatedRack = translatedLine[2].charAt(0);
+            char translatedLevel = translatedLine[3].charAt(0);
+
+            if(currentZone == translatedZone && currentAisle == translatedAisle &&
+               currentRack == translatedRack && currentLevel == translatedLevel) {
+                System.out.println("    First line is correct, adding: " + line + ".");
+                parsedRack.add(Integer.valueOf(translatedLine[4]));
+            } else {
+                throw new IllegalArgumentException("The first line is not of the form " +
+                              "\"A,0,0,0,X\" where X is the SKU that the level contains.");
+            }
+
+            // Operating on all remaining lines.
+            while ((line = bufferedReader.readLine()) != null) {
+                System.out.println("    Parsing line: " + line + ".");
+                translatedLine = line.split(SPLIT_BY);
+                translatedZone = translatedLine[0].charAt(0);
+                translatedAisle = translatedLine[1].charAt(0);
+                translatedRack = translatedLine[2].charAt(0);
+                translatedLevel = translatedLine[3].charAt(0);
+
+                if(currentZone == translatedZone) {
+                    System.out.println("    Zone is the same as current.");
+                    if(currentAisle == translatedAisle) {
+                        System.out.println("    Aisle is the same as current.");
+                        if(currentRack == translatedRack) {
+                            System.out.println("    Rack is the same as current.");
+                            System.out.println("    " + Character.toString(((char)((int)currentLevel + 1))) + ".");
+                            if(translatedLevel == ((char)((int)currentLevel + 1))) {
+                                System.out.println("    Level is not, adding new level to " +
+                                    "Rack.");
+                                currentLevel = translatedLevel;
+                                parsedRack.add(Integer.valueOf(translatedLine[4]));
+                            } else {
+                                throw new IllegalArgumentException("A line in the " +
+                                              "traversal_table.csv is not valid.");
+                            }
+                        } else if(translatedRack == ((char)((int)currentRack + 1))) {
+                            currentLevel = '0';
+                            currentRack = translatedRack;
+                            parsedAisle.add(parsedRack.toArray(new Integer[parsedRack.size()]));
+                            parsedRack.clear();
+                        } else {
+                            throw new IllegalArgumentException("A line in the " +
+                                              "traversal_table.csv is not valid.");
+                        }
+                    } else if(translatedAisle == ((char)((int)currentAisle + 1))) {
+                        currentLevel = '0';
+                        currentRack = '0';
+                        currentAisle = translatedAisle;
+                        parsedAisle.add(parsedRack.toArray(new Integer[parsedRack.size()]));
+                        parsedRack.clear();
+                        parsedZone.add(parsedAisle.toArray(new Integer[parsedAisle.size()][]));
+                        parsedAisle.clear();
+                    } else {
+                        throw new IllegalArgumentException("A line in the traversal_table.csv " +
+                                      "is not valid.");
+                    }
+                } else if(translatedZone == ((char)((int)currentZone + 1))) {
+                    currentLevel = '0';
+                    currentRack = '0';
+                    currentAisle = '0';
+                    currentZone = translatedZone;
+                    parsedAisle.add(parsedRack.toArray(new Integer[parsedRack.size()]));
+                    parsedRack.clear();
+                    parsedZone.add(parsedAisle.toArray(new Integer[parsedAisle.size()][]));
+                    parsedAisle.clear();
+                    parsedTraversalFile.add(parsedZone.toArray(
+                        new Integer[parsedZone.size()][][]));
+                    parsedZone.clear();
+                } else {
+                    throw new IllegalArgumentException("A line in the traversal_table.csv is " +
+                                  "not valid.");
+                }
+            }
+
+            parsedAisle.add(parsedRack.toArray(new Integer[parsedRack.size()]));
+            parsedZone.add(parsedAisle.toArray(new Integer[parsedAisle.size()][]));
+            parsedTraversalFile.add(parsedZone.toArray(new Integer[parsedZone.size()][][]));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+		}
+            }	
+        }
+
+        return parsedTraversalFile.toArray(new Integer[parsedTraversalFile.size()][][][]);
     }
 
     /**
