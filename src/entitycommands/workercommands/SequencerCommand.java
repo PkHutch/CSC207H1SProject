@@ -65,7 +65,7 @@ public class SequencerCommand extends WorkerCommand<Sequencer> {
 		String[] command = argument.split(" ");
 		Sequencer sequencer = (Sequencer) this.lookupWorker(command[0]);
 		if (command[1].toLowerCase().equals("sequences")) {
-			sequencer.doTask(command[1]);
+			sequencer.doTask();
 		} else {
 			System.out.println("No such command was found.");
 		}

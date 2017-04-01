@@ -19,7 +19,7 @@ public class Pallet {
      * @param content the Stock[] that is to be added to / create the Pallet.
      */
     public Pallet(Stock[] content) {
-        Sytem.out.println("Constructing Pallet " + this.toString() + " with argument content " +
+        System.out.println("Constructing Pallet " + this.toString() + " with argument content " +
             " as " + content.toString() + ".");
         if(content.length != DEFAULT_PALLET_SIZE) {
             throw new IllegalArgumentException("Attempted construction of Pallet using content " +

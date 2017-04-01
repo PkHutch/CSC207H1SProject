@@ -66,7 +66,7 @@ public class LoaderCommand extends WorkerCommand<Loader> {
 		String[] command = argument.split(" ");
 		Loader loader = this.lookupWorker(command[0]);
 		if (command[1].toLowerCase().equals("loads")) {
-			loader.doTask(command[1]);
+			loader.doTask();
 		} else {
 			System.out.println("No such command was found");
 		}
