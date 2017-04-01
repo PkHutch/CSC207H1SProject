@@ -39,11 +39,11 @@ public class SequencerCommand extends WorkerCommand<Sequencer> {
         // Otherwise IllegalArgumentException.
         // Don't forget debug prints.
     	String[] command = argument.split(" ");
-    	if (command[0].equals(COMMAND)){
-    		Sequencer sequencer = (Sequencer) this.lookupWorker(command[1]);
-    		sequencer.doTask(argument);
+    	Sequencer sequencer = (Sequencer) this.lookupWorker(command[0]);
+    	if(command[1].toLowerCase().equals("sequences")){
+    	    sequencer.doTask(command[1]);
     	}else{
-    		System.out.println("You issued the task to a wrong Worker");
+    		System.out.println("No such command was found.");
     	}
     }
 }

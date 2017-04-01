@@ -39,11 +39,11 @@ public class LoaderCommand extends WorkerCommand<Loader> {
         // Otherwise IllegalArgumentException.
         // Don't forget debug prints.
     	String[] command = argument.split(" ");
-    	if (command[0].equals(COMMAND)){
-    		Loader loader = (Loader) this.lookupWorker(command[1]);
-    		loader.doTask(argument);
+    	Loader loader = (Loader) this.lookupWorker(command[0]);
+    	if(command[1].toLowerCase().equals("loads")){
+    		loader.doTask(command[1]);
     	}else{
-    		System.out.println("You issued the task to a wrong Worker");
+    		System.out.println("No such command was found");
     	}
     }
 }

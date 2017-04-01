@@ -39,12 +39,12 @@ public class ReplenisherCommand extends WorkerCommand<Replenisher> {
         // stripped of "replenish".
         // Otherwise IllegalArgumentException.
         // Don't forget debug prints.
-    	String[] command = argument.split(" ");
-    	if (command[0].equals(COMMAND)){
-    		Replenisher replenisher = (Replenisher) this.lookupWorker(command[1]);
-    		replenisher.doTask(argument);
-    	}else{
-    		System.out.println("You issued the task to a wrong Worker");
+    	String[] command = argument.split(" ",4);
+    	Replenisher replenisher = (Replenisher) this.lookupWorker(command[0]);
+    	if(command[1].toLowerCase().equals("replenish")){
+    		replenisher.doTask(command[1]);
+    	}else{    	
+    		System.out.println("No such command was found");
     	}
     }
 }

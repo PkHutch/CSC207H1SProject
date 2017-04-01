@@ -44,9 +44,11 @@ public class PickerCommand extends WorkerCommand<Picker> {
         // Otherwise IllegalArgumentException.
         // Don't forget debug prints.
     	String[] command = argument.split(" ");
-    	if(command[0].equals(COMMAND)){
-    		Picker picker = (Picker) this.lookupWorker(command[1]);
-    		picker.doTask(argument);
+    	Picker picker = (Picker) this.lookupWorker(command[0]);
+    	if(command[1].toLowerCase().equals("pick")){    		
+    		picker.doTask(command[2]);
+    	}else if(command[1].toLowerCase().equals("to")){
+    		picker.toMarshalling();
     	}else{
     		System.out.println("You issued the task to a wrong worker");
     	}
