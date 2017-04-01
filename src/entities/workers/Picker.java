@@ -1,8 +1,12 @@
 // Defines the package.
 package entities.workers;
 
-import java.util.LinkedList;
+
+// Defines the imports.
+import entities.taskentities.TaskExecutor;
 import entities.Warehouse;
+import java.util.LinkedList;
+
 
 /**
  * The Picker class extends the worker class and takes an arguement of String
@@ -62,6 +66,7 @@ public class Picker extends Worker {
 			
 	}
 
+
 	/**
 	 * The hasPickingRequest method for a Picker returns whether or not the
 	 * Picker has been assigned to a picking request by the Server, and they are
@@ -74,6 +79,7 @@ public class Picker extends Worker {
 		return isActive;
 		// Already implemented.
 	}
+
 
 	/**
 	 * The setPickingRequest method of Picker sets the picking request of the

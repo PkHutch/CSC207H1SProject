@@ -5,6 +5,7 @@ package entities.workers;
 import entities.Warehouse;
 import entities.taskentities.TaskExecutor;
 
+
 /**
  * The Worker class is mostly just a class that has a name, and warehouse, but the children of
  * workers should implement either TaskExecutor, or TaskGiver.
@@ -12,8 +13,8 @@ import entities.taskentities.TaskExecutor;
  */
 public class Worker implements TaskExecutor<String>{
     // Defines the instance variables.
-    private String name;
-    private Warehouse warehouse;
+    private final String name;
+    private final Warehouse warehouse;
 
     // Defines the constructors.
     /**
@@ -39,8 +40,8 @@ public class Worker implements TaskExecutor<String>{
     public String getName() {
         System.out.println("Calling getName of " + this.toString() + ".");
         System.out.println("    Returning \"" + this.name + "\".");
-        // Don't worry about this.
-		return name;
+        return this.name;
+
     }
 
     /**
@@ -51,8 +52,7 @@ public class Worker implements TaskExecutor<String>{
     public Warehouse getWarehouse() {
         System.out.println("Calling getWarehouse of " + this.toString() + ".");
         System.out.println("    Returning " + this.warehouse.toString() + ".");
-        // Don't worry about this.
-		return warehouse;
+        return this.warehouse;
     }
 
 	public void doTask(String argument) {
