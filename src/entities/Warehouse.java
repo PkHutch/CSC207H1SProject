@@ -1,8 +1,9 @@
 // Defines the package.
 package entities;
-import java.util.ArrayList;
+
+// Defines the imports.
 import entities.workers.Worker;
-import entitycommands.workercommands.ArrayList;
+import java.util.ArrayList;
 
 /**
  * The warehouse class, which is where the simulation takes place, as the Warehouse effectively
@@ -10,7 +11,9 @@ import entitycommands.workercommands.ArrayList;
  */
 public class Warehouse {
     // Defines the instance variables.
-    private ArrayList<Worker> workers;
+    private final FaxMachine faxMachine;
+    private final Server server;
+    private final ArrayList<Worker> workers;
     
     // Defines the constructors.
     /**
@@ -18,7 +21,9 @@ public class Warehouse {
      */
     public Warehouse() {
         System.out.println("Constructing Warehouse" + this.toString() + ".");
+        this.server = new Server(this);
         this.workers = new ArrayList<>();
+        this.faxMachine = new FaxMachine(this.server);
     }
 
     // Defines the functional methods.
@@ -29,7 +34,7 @@ public class Warehouse {
      */
     public FaxMachine getFaxMachine() {
         System.out.println("Calling getFaxMachine of " + this.toString() + ".");
-        // Return the faxMachine.
+        return this.faxMachine;
     }
 
     // Defines the helper methods.
@@ -44,6 +49,7 @@ public class Warehouse {
      */
     private Integer[][][][][] parseTraversalTableFile() {
         // Do not worry about this, already finished.
+        return new Integer[0][0][0][0][0];
     }
 
     public ArrayList<Worker> getWorkers() {
