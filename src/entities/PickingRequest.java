@@ -1,6 +1,9 @@
 // Defines the package.
 package entities;
 
+// Defines the imports.
+import java.lang.IllegalArgumentException;
+
 /**
  * The PickingRequest class handles a single picking request, which consists of eight orders by
  * default. If the status is zero, the picking request is unassigned. If the status is one, the
@@ -22,6 +25,12 @@ public class PickingRequest {
     public PickingRequest(Integer[] skus) {
         System.out.println("Constructing PickingRequest " + this.toString() + " with argument" +
             " skus as " + skus.toString() + ".");
+
+        if(skus.length != DEFAULT_PICKING_REQUEST_SIZE) {
+            throw new IllegalArgumentException("An attempt was made to make a PickingRequest " +
+                          "with an incorrect size of SKUs.");
+        }
+
         this.skus = skus;
         this.status = 0;
     }
@@ -49,7 +58,7 @@ public class PickingRequest {
      */
     public int getStatus() {
         System.out.println("Calling getStatus of PickingRequest " + this.toString() + ".");
-        System.out.println("    Returning " + this.status.toString() + ".");
+        System.out.println("    Returning " + this.status + ".");
         return status;
     }
 
@@ -63,7 +72,7 @@ public class PickingRequest {
      */
     public void setStatus(int status) {
         System.out.println("Calling setStatus of PickingRequest " + this.toString() + ", " +
-            "where argument status as " + status.toString() + ".");
+            "where argument status as " + status + ".");
         this.status = status;
     }
 }
