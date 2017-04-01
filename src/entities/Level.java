@@ -80,10 +80,10 @@ public class Level {
 	}
 
 	public void addStock(int parseInt) {
-		if(this.stock + parseInt < this.max){
+		if(this.stock + parseInt <= this.max){
 			this.stock += parseInt;
 		}else{
-			System.out.println("You've added too much to the level");
+			System.out.println("You tried adding " + parseInt + " items to a " + this.stock + " level");
 		}
 	}
 	public Integer getSku() {
