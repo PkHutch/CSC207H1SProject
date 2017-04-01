@@ -58,8 +58,8 @@ public class Warehouse {
         System.out.println("Calling parseTraversalTableFile of Warehouse " + this.toString() +
             ".");
         // Defines constants.
-        final String TRANSLATION_FILE = "./resources/traversal_table.csv";
         final String SPLIT_BY = ",";
+        final String TRANSLATION_FILE = "./resources/traversal_table.csv";
 
         // Defines variables for reading the file.
         BufferedReader bufferedReader = null;
