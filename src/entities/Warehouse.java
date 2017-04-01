@@ -52,11 +52,25 @@ public class Warehouse {
         return new Integer[0][0][0][0][0];
     }
 
+    /**
+     * The getWorkers function of Warehouse returns the workers that belong to that Warehouse.
+     *
+     * @return the ArrayList of Workers that belong to the Warehouse.
+     */
     public ArrayList<Worker> getWorkers() {
-        return workers;
+        System.out.println("Calling getWorkers() of Warehouse " + this.toString() + ".");
+        System.out.println("    Returning " + this.workers.toString() + ".");
+        return this.workers;
     }
 
+    /**
+     * The addWorker function of Warehouse adds a Worker to the Warehouse workers ArrayList.
+     *
+     * @param newWorker the Worker to be added to the Warehouse.
+     */
     public void addWorker(Worker newWorker) {
+        System.out.println("Calling addWorker of Warehouse " + this.toString() + ", with " +
+            "argument newWorker as " + newWorker.toString() + ".");
         this.workers.add(newWorker);
     }
 }
