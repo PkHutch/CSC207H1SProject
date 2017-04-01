@@ -22,7 +22,7 @@ public class Main {
 	// Defines instance variables.
 	private static final String QUIT_COMMAND = "Quit";
 	private static final String SAVE_FILE = "./resources/final.csv";
-	private static final String INITIAL_FILE = "./resources/traversal_table.csv";
+	private static final String INITIAL_FILE = "./resources/initial.csv";
 
 	/**
 	 * The main method, if the project is finished, this will have the text
@@ -148,11 +148,12 @@ public class Main {
 				//compares the i'th index location to the i+1'th index location
 				//to check for duplicates since they are sorted
 				//if they are duplicates they must be adjacent to each other.
-				if(sortedInitFile[i] == sortedInitFile[i+1]){
+				if(sortedInitFile[i].equals(sortedInitFile[i+1])){
 					System.out.println("There exists a duplicate in Floor location");
 					//fails the dup test and should return null and notify the user
 					//this initializing has failed.
 					bool = false;
+					break;
 				}
 			}
 			//returns the array of locations if no duplicates
@@ -170,32 +171,31 @@ public class Main {
 		// Parse initial.csv into an ArrayList, with each line being an element.
 		// This will reference one line at a time
 		String[] init = checkForDup();
-		Level[] levels = floor.getLevels().clone();
+		Level[] levels = floor.getLevels();
 		//HINT: Change these to non-final variables if we do not pop them
 		int pointerA = 0;
 		int pointerB = 0;
 		if (init != null){
 			//HINT: use floors and not floor.getLevels()
 			//HINT: Change the whileloop condition relative to the pointers and not the length of the arrays.
-			while (init.length != 0 || levels.length != 0){
+			while (init.length > pointerA || levels.length >pointerB){
 				//the case where both array are still active, we would
 				//compare to two and decide how to fill it
-				if(init.length!=0 && levels.length!=0){
+				if(init.length > pointerA && levels.length > pointerB){
+					String compare = init[pointerA].substring(0, 7);
 					//if The current pointed Floor location is lexicographically 
 					//greater than the init location, we fill it to the MAX
-					if(init[pointerA].compareTo(levels[pointerB].getLocation())<0){
+					if(compare.compareTo(levels[pointerB].getLocation())>0){
 						levels[pointerB].addStock(levels[pointerB].getMaxCapacity());
-						pointerA += 1;
-						
+						pointerB += 1;
 					//if the current location is equal to the init location
 					//lexicographically, we add the appropriate amount to it
 					//which should be stored at location.substring(8,9)
-					}else if(init[pointerA].compareTo(levels[pointerB].getLocation())==0){
+					}else if(compare.compareTo(levels[pointerB].getLocation())==0){
 						String location = init[pointerA];
 						levels[pointerB].addStock(Integer.parseInt(location.substring(8, 9)));
 						pointerA += 1 ;
 						pointerB += 1 ;
-					
 					 //if current pointed Floor location is lexicographically
 					 //less than the init location, it shouldn't happen
 					 //So we give an Error message and essentially quit.
@@ -207,7 +207,7 @@ public class Main {
 						break;
 					}
 				//if init.csv runs out of lines. We fill the rest to max Stock
-				}else if(init.length==0 && levels.length!=0){
+				}else if(init.length == pointerA && levels.length<pointerB){
 						levels[pointerB].addStock(levels[pointerB].getMaxCapacity());
 						pointerB += 1;
 				}
