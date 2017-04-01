@@ -52,8 +52,4 @@ public class Worker implements TaskEntity{
         System.out.println("    Returning " + this.warehouse.toString() + ".");
         return this.warehouse;
     }
-
-	public void doTask(String argument) {
-		
-	}
 }
