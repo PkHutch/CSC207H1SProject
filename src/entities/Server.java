@@ -50,7 +50,14 @@ public class Server {
      *
      * @param worker the Picker to be added to the inactivePickers list.
      */
-    public void addInactivePicker(Picker worker) {
+    public void addInactivePicker(Picker picker) {
+        if(picker.hasPickingRequest()) {
+            throw new IllegalArgumentException("The Picker " + picker.getName() + " already " + 
+                          "has a PickingRequest assigned.");
+        } else {
+            for(int index = 0; index < this.pickingRequests.size(); index++) {
+            }
+        }
         // See the legacy code, but also check that the picker is inactive when this is called.
         // If the picker isn't inactive, throw exception.
         // Otherwise, double check that an inactivePickingRequest can't be assigned, if it can
