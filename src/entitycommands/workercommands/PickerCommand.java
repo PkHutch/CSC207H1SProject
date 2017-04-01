@@ -1,8 +1,9 @@
 // Defines the package.
 package entitycommands.workercommands;
-
+// Defines the imports
 import entities.Warehouse;
 import entities.workers.Picker;
+import entities.workers.Worker;
 
 /**
  * A PickerCommand is the class responsible for handling the execution of a Picker command given
@@ -22,7 +23,22 @@ public class PickerCommand extends WorkerCommand<Picker> {
         super(COMMAND, warehouse);
         // Add debug message.
     }
-
+	protected Picker lookupWorker(String name) {
+		// Use the warehouse to find the worker with the name and instanceof T.
+		// Then if the worker with the given name doesn't exist, create the
+		// worker and notify the
+		// console.
+		Worker worker = super.lookupWorker(name);
+		if (worker instanceof Picker) {
+			return (Picker) worker;
+		} else {
+			Picker newWorker = new Picker(name, this.getWarehouse());
+			System.out.println("The Worker with the name " + name + " was not found, so a Picker"
+					+ "has been created in their place.");
+			this.getWarehouse().addWorker(newWorker);
+			return newWorker;
+		}
+	}
     /**
      * The executeCommand method of PickerCommand does one of three things, it tells the picker to
      * pick, it makes them ready and available to the server, or it sends them to marshalling of
