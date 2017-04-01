@@ -95,7 +95,6 @@ public class Warehouse {
             if(currentZone == translatedZone && currentAisle == translatedAisle &&
                currentRack == translatedRack && currentLevel == translatedLevel) {
                 System.out.println("    First line is correct, adding: " + line + ".");
-                parsedRack.add(Integer.valueOf(translatedLine[4]));
             } else {
                 throw new IllegalArgumentException("The first line is not of the form " +
                               "\"A,0,0,0,X\" where X is the SKU that the level contains.");
@@ -130,6 +129,7 @@ public class Warehouse {
                             (translatedLevel == STARTING_LEVEL)) {
                             currentLevel = STARTING_LEVEL;
                             currentRack = translatedRack;
+                            parsedRack.add(Integer.valueOf(translatedLine[4]));
                             parsedAisle.add(parsedRack.toArray(new Integer[parsedRack.size()]));
                             parsedRack.clear();
                         } else {
@@ -142,6 +142,7 @@ public class Warehouse {
                         currentLevel = STARTING_LEVEL;
                         currentRack = STARTING_RACK;
                         currentAisle = translatedAisle;
+                        parsedRack.add(Integer.valueOf(translatedLine[4]));
                         parsedAisle.add(parsedRack.toArray(new Integer[parsedRack.size()]));
                         parsedRack.clear();
                         parsedZone.add(parsedAisle.toArray(new Integer[parsedAisle.size()][]));
@@ -157,6 +158,7 @@ public class Warehouse {
                     currentRack = STARTING_RACK;
                     currentAisle = STARTING_AISLE;
                     currentZone = translatedZone;
+                    parsedRack.add(Integer.valueOf(translatedLine[4]));
                     parsedAisle.add(parsedRack.toArray(new Integer[parsedRack.size()]));
                     parsedRack.clear();
                     parsedZone.add(parsedAisle.toArray(new Integer[parsedAisle.size()][]));
@@ -169,7 +171,7 @@ public class Warehouse {
                                   "not valid.");
                 }
             }
-
+            parsedRack.add(Integer.valueOf(translatedLine[4]));
             parsedAisle.add(parsedRack.toArray(new Integer[parsedRack.size()]));
             parsedZone.add(parsedAisle.toArray(new Integer[parsedAisle.size()][]));
             parsedTraversalFile.add(parsedZone.toArray(new Integer[parsedZone.size()][][]));
