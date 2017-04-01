@@ -1,8 +1,6 @@
 // Defines the package.
 package entities.linkedlistcontainers;
 
-// Defines the imports.
-import java.util.LinkedList;
 import entities.Stock;
 
 /**
