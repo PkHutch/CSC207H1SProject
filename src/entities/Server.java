@@ -57,7 +57,9 @@ public class Server {
      *         the String[] is the model, the second is the colour, the third is the front, the
      *         fourth is the back.
      */
-    private String[][] parseTranslationFile() {
+	
+	private String[][] parseTranslationFile() {
+		return null;
         // Already completed elsewhere.
         return new String[0][0];
     }

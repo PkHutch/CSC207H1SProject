@@ -7,3 +7,4 @@ package entities.taskentities;
  */
 public interface TaskEntity {
 }
+

@@ -1,9 +1,10 @@
 // Defines the package.
 package entities;
 
-// Defines the imports.
-import entities.workers.Worker;
 import java.util.ArrayList;
+import entities.arraycontainers.Floor;
+import entities.workers.Worker;
+
 
 /**
  * The warehouse class, which is where the simulation takes place, as the Warehouse effectively
@@ -11,10 +12,12 @@ import java.util.ArrayList;
  */
 public class Warehouse {
     // Defines the instance variables.
+
+    private ArrayList<Worker> workers;
+    private Floor floor;
     private final FaxMachine faxMachine;
     private final Server server;
-    private final ArrayList<Worker> workers;
-    
+
     // Defines the constructors.
     /**
      * The default constructor for a Warehouse.
@@ -23,7 +26,9 @@ public class Warehouse {
         System.out.println("Constructing Warehouse" + this.toString() + ".");
         this.server = new Server(this);
         this.workers = new ArrayList<>();
+        this.floor = new Floor(this, new Integer[1][1][1][1]);
         this.faxMachine = new FaxMachine(this.server);
+
     }
 
     // Defines the functional methods.
@@ -34,7 +39,7 @@ public class Warehouse {
      */
     public FaxMachine getFaxMachine() {
         System.out.println("Calling getFaxMachine of " + this.toString() + ".");
-        return this.faxMachine;
+        return this.faxmachine;
     }
 
     // Defines the helper methods.
@@ -47,7 +52,8 @@ public class Warehouse {
      *         SKU of each Level. The first dimension is the floor, then the zones, then the
      *         aisles, then the racks, then the levels.
      */
-    private Integer[][][][][] parseTraversalTableFile() {
+	private Integer[][][][][] parseTraversalTableFile() {
+		return null;
         // Do not worry about this, already finished.
         return new Integer[0][0][0][0][0];
     }
@@ -73,4 +79,8 @@ public class Warehouse {
             "argument newWorker as " + newWorker.toString() + ".");
         this.workers.add(newWorker);
     }
+
+	public Floor getFloor() {
+		return this.floor;
+	}
 }

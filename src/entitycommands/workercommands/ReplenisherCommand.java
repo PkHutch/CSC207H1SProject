@@ -1,6 +1,9 @@
 // Defines the package.
 package entitycommands.workercommands;
 
+import entities.Warehouse;
+import entities.workers.Replenisher;
+
 /**
  * A ReplenisherCommand is the class responsible for handling the execution of a Replenisher
  * command given by the console.
@@ -36,5 +39,13 @@ public class ReplenisherCommand extends WorkerCommand<Replenisher> {
         // stripped of "replenish".
         // Otherwise IllegalArgumentException.
         // Don't forget debug prints.
+    	String[] command = argument.split(" ");
+    	if (command[0].equals(COMMAND)){
+    		Replenisher replenisher = (Replenisher) this.lookupWorker(command[1]);
+    		replenisher.doTask(argument);
+    	}else{
+    		System.out.println("You issued the task to a wrong Worker");
+    	}
     }
+    
 }

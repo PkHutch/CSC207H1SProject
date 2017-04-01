@@ -1,8 +1,10 @@
 
 // Defines imports.
+import entities.FaxMachine;
 import entities.Level;
+import entities.Server;
 import entities.Warehouse;
-import entities.arraylistcontainers.Floor;
+import entities.arraycontainers.Floor;
 import entitycommands.EntityCommand;
 import entitycommands.OrderCommand;
 import entitycommands.workercommands.PickerCommand;
@@ -36,7 +38,10 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		Warehouse warehouse = new Warehouse();
-		EntityCommand[] commands = new EntityCommand[] { new OrderCommand(warehouse), new PickerCommand(warehouse) };
+		Server server = new Server(warehouse);
+		FaxMachine faxmachine = new FaxMachine(server);
+		warehouse.AddFaxMachine(faxmachine);
+		EntityCommand[] commands = new EntityCommand[] { new OrderCommand(faxmachine), new PickerCommand(warehouse) };
 		loadInitialState(warehouse.getFloor());
 		// Defines the variables that need to be used for user input.
 		String currentInput = "";
@@ -97,7 +102,7 @@ public class Main {
 		// level.
 		// Then write the resulting new line to the file if the line exists.
 		System.out.println("The current state of warehouse has been saved");
-		String[] levels = floor.getLevels();
+		Level[] levels = floor.getLevels();
 		//goes through each possible location in the warehouse
 		for (int i = 0; i < levels.length; i++) {
 			if (!levels[i].atMaxCapacity()) {
@@ -141,7 +146,7 @@ public class Main {
 				ex.printStackTrace();
 			}
 			//converts the Arraylist to an array to provide efficiency. 
-			String[] sortedInitFile = initFile.toArray(new String[]);
+			String[] sortedInitFile = initFile.toArray(new String[initFile.size()]);
 			//sorts the array for maximum search efficiency
 			Arrays.sort(sortedInitFile);
 			for(int i=0;i<sortedInitFile.length-1;i++){
@@ -165,59 +170,35 @@ public class Main {
 
 	}
 
-
-	//Adderall code, if remove, fix loadInitialState according.
-	//this pops an element of the array
-	//HINT: Read loadInitialState for further instruction.
-	private static void removeElement(String[]a,int del){
-		System.arraycopy(a, del+1, a, del, a.length-1-del);
-	}
-	
-	
 	private static void loadInitialState(Floor floor) {
 		System.out.println("Loading the initial state of the warehouse");
 		// Parse initial.csv into an ArrayList, with each line being an element.
 		// This will reference one line at a time
 		String[] init = checkForDup();
-		String[] levels = floor.getLevels().clone();
+		Level[] levels = floor.getLevels().clone();
 		//HINT: Change these to non-final variables if we do not pop them
-		final int POINTERA = 0;
-		final int POINTERB = 0;
+		int pointerA = 0;
+		int pointerB = 0;
 		if (init != null){
-			//HINT: use floors and not floor.getLevels()
-			//HINT: Change the whileloop condition relative to the pointers and not the length of the arrays.
-			while (init.length != 0 || levels.length != 0){
+			while (init.length >= pointerA && levels.length >= pointerB){
 				//the case where both array are still active, we would
 				//compare to two and decide how to fill it
-				if(init.length!=0 && levels.length!=0){
+				if(init.length>=pointerA || levels.length>=pointerB){
 					//if The current pointed Floor location is lexicographically 
 					//greater than the init location, we fill it to the MAX
-					if(init[POINTERA].compareTo(levels[POINTERB])<0){
-						String location = init[POINTERA];
-						char zone = location.charAt(0);
-						int aisle = Integer.parseInt(location.substring(2, 3));
-						int rack  = Integer.parseInt(location.substring(4, 5));
-						int level = Integer.parseInt(location.substring(6, 7));
-						Level theLevel = floor.getLevel(zone,aisle,rack,level);
-						theLevel.addStock(theLevel.getMaxCapacity());
-						//pops from level(x)
-						//HINT: change to pointerA += 1 
-						removeElement(levels,POINTERB);
+					if(init[pointerA].compareTo(levels[pointerB].getLocation())<0){
+						levels[pointerB].addStock(levels[pointerB].getMaxCapacity());
+						pointerB += 1;
+						
 					//if the current location is equal to the init location
 					//lexicographically, we add the appropriate amount to it
 					//which should be stored at location.substring(8,9)
-					}else if(init[POINTERA].compareTo(levels[POINTERB])==0){
-						String location = init[POINTERA];
-						char zone = location.charAt(0);
-						int aisle = Integer.parseInt(location.substring(2, 3));					
-						int rack  = Integer.parseInt(location.substring(4, 5));
-						int level = Integer.parseInt(location.substring(6, 7));
-						Level theLevel = floor.getLevel(zone,aisle,rack,level);
-						theLevel.addStock(Integer.parseInt(location.substring(8, 9)));
-						//pops both locations for further searching.
-						//HINT: change to pointerA+=1 and pointerB+=1
-						removeElement(init,POINTERA);
-						removeElement(levels,POINTERB);
+					}else if(init[pointerA].compareTo(levels[pointerB].getLocation())==0){
+						String location = init[pointerA];
+						levels[pointerB].addStock(Integer.parseInt(location.substring(8, 9)));
+						pointerA += 1 ;
+						pointerB += 1 ;
+					
 					 //if current pointed Floor location is lexicographically
 					 //less than the init location, it shouldn't happen
 					 //So we give an Error message and essentially quit.
@@ -229,17 +210,9 @@ public class Main {
 						break;
 					}
 				//if init.csv runs out of lines. We fill the rest to max Stock
-				}else if(init.length==0 && levels.length!=0){
-						String location = levels[POINTERA];
-						char zone = location.charAt(0);
-						int aisle = Integer.parseInt(location.substring(2, 3));					
-						int rack  = Integer.parseInt(location.substring(4, 5));
-						int level = Integer.parseInt(location.substring(6, 7));
-						Level theLevel = floor.getLevel(zone,aisle,rack,level);
-						theLevel.addStock(Integer.parseInt(location.substring(8, 9)));
-						theLevel.addStock(theLevel.getMaxCapacity());
-						//Change to pointerB += 1 here
-						removeElement(levels,POINTERB);	
+				}else if(init.length==pointerA && levels.length>=pointerB){
+						levels[pointerB].addStock(levels[pointerB].getMaxCapacity());
+						pointerB += 1;
 				}
 			}
 		}

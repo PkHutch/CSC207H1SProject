@@ -6,8 +6,8 @@ package entities;
  */
 public class Order {
     // Defines the instance variables.
-    private String colour;
-    private String model;
+	private String colour;
+	private String model;
 
     // Defines constructors.
     /**

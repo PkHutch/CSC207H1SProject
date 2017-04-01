@@ -8,6 +8,7 @@ package entities.taskentities;
  */
 public interface TaskExecutor<T> extends TaskEntity{
     // Defines the abstract methods.
+
     /**
      * The doTask method of a TaskExecutor should implement the task that the TaskExecutor
      * preforms, because a TaskExector doesn't give tasks, but instead it only executes, a
@@ -19,3 +20,4 @@ public interface TaskExecutor<T> extends TaskEntity{
      */
     public abstract void doTask(T argument);
 }
+

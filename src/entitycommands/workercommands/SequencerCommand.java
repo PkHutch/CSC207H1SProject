@@ -1,6 +1,9 @@
 // Defines the package.
 package entitycommands.workercommands;
 
+import entities.Warehouse;
+import entities.workers.Sequencer;
+
 /**
  * A SequencerCommand is the class responsible for handling the execution of a Picker command given
  * by the console.
@@ -35,5 +38,12 @@ public class SequencerCommand extends WorkerCommand<Sequencer> {
         // If "sequence" then doTask of the Sequencer
         // Otherwise IllegalArgumentException.
         // Don't forget debug prints.
+    	String[] command = argument.split(" ");
+    	if (command[0].equals(COMMAND)){
+    		Sequencer sequencer = (Sequencer) this.lookupWorker(command[1]);
+    		sequencer.doTask(argument);
+    	}else{
+    		System.out.println("You issued the task to a wrong Worker");
+    	}
     }
 }
