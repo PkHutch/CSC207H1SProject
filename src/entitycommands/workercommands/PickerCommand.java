@@ -48,7 +48,12 @@ public class PickerCommand extends WorkerCommand<Picker> {
     	if(command[1].toLowerCase().equals("pick")){    		
     		picker.doTask(command[2]);
     	}else if(command[1].toLowerCase().equals("to")){
-    		picker.toMarshalling();
+    		String x = command[1] + " " + command[2];
+    		if(x.toLowerCase().equals("to marshalling")){
+    			picker.toMarshalling();
+    		}else{
+    			System.out.println("Pickles");
+    		}
     	}else{
     		System.out.println("You issued the task to a wrong worker");
     	}
