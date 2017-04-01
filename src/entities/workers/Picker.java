@@ -1,6 +1,11 @@
 // Defines the package.
 package entities.workers;
 
+// Defines the imports.
+import entities.taskentities.TaskExecutor;
+import entities.Warehouse;
+import java.util.LinkedList;
+
 /**
  * The Picker class extends the worker class and takes an arguement of String for it's doTask
  * method. The Pickers job to stock off the shelves and bring them to the marshalling area as
@@ -50,7 +55,7 @@ public class Picker extends Worker implements TaskExecutor<String> {
      *         otherwise.
      */
     public boolean hasPickingRequest() {
-        // Already implemented.
+        return false;
     }
 
     /**

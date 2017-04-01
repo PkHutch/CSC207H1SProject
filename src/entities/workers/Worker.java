@@ -3,6 +3,7 @@ package entities.workers;
 
 // Defines the imports.
 import entities.Warehouse;
+import entities.taskentities.TaskEntity;
 
 /**
  * The Worker class is mostly just a class that has a name, and warehouse, but the children of
@@ -10,8 +11,8 @@ import entities.Warehouse;
  */
 public class Worker implements TaskEntity{
     // Defines the instance variables.
-    private String name;
-    private Warehouse warehouse;
+    private final String name;
+    private final Warehouse warehouse;
 
     // Defines the constructors.
     /**
@@ -24,7 +25,8 @@ public class Worker implements TaskEntity{
     public Worker(String name, Warehouse warehouse) {
         System.out.println("Constructing Worker (" + this.toString() + "), with argument name" +
             "\"" + name + "\", and Warehouse " + warehouse.toString() + ".");
-        // Don't worry about this.
+        this.name = name;
+        this.warehouse = warehouse;
     }
 
     // Defines the functional methods.
@@ -36,7 +38,7 @@ public class Worker implements TaskEntity{
     public String getName() {
         System.out.println("Calling getName of " + this.toString() + ".");
         System.out.println("    Returning \"" + this.name + "\".");
-        // Don't worry about this.
+        return this.name;
     }
 
     /**
@@ -47,6 +49,6 @@ public class Worker implements TaskEntity{
     public Warehouse getWarehouse() {
         System.out.println("Calling getWarehouse of " + this.toString() + ".");
         System.out.println("    Returning " + this.warehouse.toString() + ".");
-        // Don't worry about this.
+        return this.warehouse;
     }
 }
