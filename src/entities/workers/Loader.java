@@ -5,17 +5,15 @@ package entities.workers;
 import entities.Warehouse;
 import entities.taskentities.TaskGiver;
 
-public class Loader extends Worker implements TaskGiver{
+public class Loader extends Worker implements TaskGiver {
 
 	public Loader(String name, Warehouse warehouse) {
 		super(name, warehouse);
-		
+
 	}
 
 	public void doTask() {
-		this.getWarehouse().getMarshalling.removePallets();
+		this.getWarehouse().getMarshalling().clearPallets();
 		System.out.println("Pallets were successfully loaded onto the truck");
-		
 	}
-
 }

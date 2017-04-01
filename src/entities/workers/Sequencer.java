@@ -15,15 +15,15 @@ import java.util.LinkedList;
 import entities.taskentities.TaskGiver;
 import entities.Stock;
 
-public class Sequencer extends Worker implements TaskGiver{
+public class Sequencer extends Worker implements TaskGiver {
 
-    public Sequencer(String name, Warehouse warehouse) {
+	public Sequencer(String name, Warehouse warehouse) {
         super(name, warehouse);
     }
 
-    public void doTask() {
+	public void doTask() {
     	ArrayList<PickingRequest> pickingRequests = this.getWarehouse().getServer().getPickingRequests();
-    	ArrayList<Stock> stock = this.getWarehouse().getMarshalling.getMarshallingStock();
+    	ArrayList<Stock> stock = this.getWarehouse().getMarshalling().getMarshallingStock();
     	for (int i = 0; i < pickingRequests.size(); i++) {
     		if (pickingRequests.get(i).getStatus() == 2) {
     			int keep = 0;
