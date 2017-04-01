@@ -97,7 +97,7 @@ public class Main {
 		// Then get each path to the level by calling, getLocation() on the
 		// level.
 		// Then write the resulting new line to the file if the line exists.
-		System.out.println("The current state of warehouse has been saved");
+		System.out.println("Saving the current state of warehouse");
 		Level[] levels = floor.getLevels();
 		//goes through each possible location in the warehouse
 		for (int i = 0; i < levels.length; i++) {
