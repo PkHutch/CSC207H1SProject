@@ -1,18 +1,31 @@
+// Defines the package.
 package entities;
 
-import java.util.ArrayList;
+// Defines the imports.
 import entities.Stock;
+import java.lang.IllegalArgumentException;
 
+/**
+ * The Pallet class is responsible for carrying four fascia.
+ */
 public class Pallet {
-	private ArrayList<Integer> content;
+    // Defines the instance variables.
+    private final static int DEFAULT_PALLET_SIZE = 4;
+    private final Stock[] content;
 
-	public Pallet() {
-		this.content = new ArrayList<Integer>();
-	}
-
-	public void addContent(Integer[] items) {
-		for(int i = 0; i < items.length; i++) {
-			this.content.add(items[i]);
-		}
-	}
+    /**
+     * The default and only constructor of a Pallet.
+     *
+     * @param content the Stock[] that is to be added to / create the Pallet.
+     */
+    public Pallet(Stock[] content) {
+        Sytem.out.println("Constructing Pallet " + this.toString() + " with argument content " +
+            " as " + content.toString() + ".");
+        if(content.length != DEFAULT_PALLET_SIZE) {
+            throw new IllegalArgumentException("Attempted construction of Pallet using content " +
+                          " of size " + content.length + " but required " + DEFAULT_PALLET_SIZE +
+                          ".");
+        }
+        this.content = content;
+    }
 }
