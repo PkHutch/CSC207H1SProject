@@ -92,7 +92,80 @@ public class Server {
      *         fourth is the back.
      */
     private String[][] parseTranslationFile() {
-        // Already completed elsewhere.
-        return new String[0][0];
+        System.out.println("Calling parseTranslationArray of Server " + this.toString() +
+            ".");
+        // Defines constants.
+        final String TRANSLATION_FILE = "./resources/translation.csv";
+        final String SPLIT_BY = ",";
+
+        // Defines variables for reading the file.
+        BufferedReader bufferedReader = null;
+        String line;
+
+        // Defines the ArrayList that will be converted to an array.
+        ArrayList<String[]> parsedArrayList = new ArrayList<>();
+
+        try {
+            bufferedReader = new BufferedReader(new FileReader(TRANSLATION_FILE));
+            // Skips the first line.
+            line = bufferedReader.readLine();
+
+            // Operating on all remaining lines.
+            System.out.println("    Reading remaining contents of translation.csv.");
+            while ((line = bufferedReader.readLine()) != null) {
+                System.out.println("    Parsing the line reading: " + line);
+                String[] translatedLine = line.split(SPLIT_BY);
+
+                System.out.println("    Checking if the line is valid.");
+                if(translatedLine[2].equals(translatedLine[3])){
+                    throw new IllegalArgumentException("The SKU " + translatedLine[2] + " is " +
+                                  "equal to " + translatedLine[3] + " and can't have the same " +
+                                  "SKU.");
+                } else {
+                    // Checks that the SKUs do not exist in the table.
+                    System.out.println("    Checking the SKU doesn't already exist in the " +
+                        "parsedTranslationArray.");
+                    for(int index = 0; index < parsedArrayList.size(); index++) {
+                        String[] currentTranslation = parsedArrayList.get(index);
+
+                        System.out.println("    Checking if " + currentTranslation[2] + " and" +
+                            " " + currentTranslation[3] + " are equal to " + translatedLine[2] +
+                            " or " + translatedLine[3] + ".");
+                        if(translatedLine[2].equals(currentTranslation[2]) ||
+                            translatedLine[2].equals(currentTranslation[3])) {
+                            throw new IllegalArgumentException("The SKU " + translatedLine[2] + 
+                                          " already exists in the translation table.");
+                        } else if(translatedLine[3].equals(currentTranslation[2]) || 
+                            translatedLine[3].equals(currentTranslation[3])) {
+                            throw new IllegalArgumentException("The SKU " + translatedLine[3] + 
+                                          " already exists in the translation table.");
+                        } else if(translatedLine[0].equals(currentTranslation[0]) &&
+                            translatedLine[1].equals(currentTranslation[1])) {
+                            throw new IllegalArgumentException("The colour and model " +
+                                          translatedLine[0] + " and " + translatedLine[1] +
+                                          " already have been defined.");
+                        }
+                    }
+
+                    System.out.println("    They are not, adding to the translationArray.");
+                    parsedArrayList.add(new String[]{translatedLine[0], translatedLine[1],
+                        translatedLine[2], translatedLine[3]});
+                }
+            }
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        } catch(IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+		}
+            }
+        }
+
+        return parsedArrayList.toArray(new String[parsedArrayList.size()][4]);
     }
 }
