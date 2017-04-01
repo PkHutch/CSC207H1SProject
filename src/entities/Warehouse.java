@@ -19,6 +19,7 @@ public class Warehouse {
     private final Floor floor;
     private final Server server;
     private final ArrayList<Worker> workers;
+    private final Marshalling marshalling;
     // Defines the constructors.
     /**
      * The default constructor for a Warehouse.
@@ -29,6 +30,7 @@ public class Warehouse {
         this.workers = new ArrayList<>();
         this.faxMachine = new FaxMachine(this.server);
         this.floor = new Floor(this, parseTraversalTableFile());
+        this.marshalling = new Marshalling();
  
 
     }
@@ -216,5 +218,9 @@ public class Warehouse {
 
 	public Floor getFloor() {
 		return this.floor;
+	}
+	
+	public Marshalling getMarshalling(){
+		return this.marshalling;
 	}
 }

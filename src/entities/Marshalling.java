@@ -1,9 +1,9 @@
 package entities;
 
 import java.util.ArrayList;
-import entities.LinkedListContainer;
 import entities.Stock;
 import entities.Pallet;
+import entities.linkedlistcontainers.*;
 
 public class Marshalling {
 	public ArrayList<Stock> marshallingStock;
@@ -14,9 +14,9 @@ public class Marshalling {
 		this.marshallingPallet = new ArrayList<Pallet>();
 	}
 
-	public void addStock(ArrayList<Stock> stock) {
-		while (stock.isEmpty()) {
-			this.marshallingStock.add(stock.remove(0));
+	public void addStock(LinkedListContainer<Stock> stock) {
+		while (!(stock.isEmpty())) {
+			this.marshallingStock.add(stock.removeItem());
 		}
 	}
 

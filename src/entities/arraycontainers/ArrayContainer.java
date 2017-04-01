@@ -78,7 +78,7 @@ public abstract class ArrayContainer<S, T> {
      * @return the object which is stored at index, of the type T, which is the type of object
      *         that the ArrayContainer contains.
      */
-    protected T getItem(int index) {
+    public T getItem(int index) {
         System.out.println("Calling getItem of ArrayContainer " + this.toString() + " with " +
             "argument index as " + Integer.toString(index) + ".");
         System.out.println("    Returning " + this.items[index].toString() + ".");
