@@ -9,7 +9,7 @@ public class Replenisher extends Worker implements TaskExecutor<String>{
 		super(name, warehouse);
 	}
 	
-	public void doTask(){
+	public void doTask(String argument){
 		//replenishes
 	}
 
