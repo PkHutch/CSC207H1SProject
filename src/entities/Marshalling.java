@@ -24,7 +24,7 @@ public class Marshalling {
 		this.marshallingPallet.add(p);
 	}
 	
-	public void removeStock() {
+	public void clearStock() {
 		this.marshallingStock.clear();
 	}
 
@@ -32,16 +32,7 @@ public class Marshalling {
 		return this.marshallingStock;
 	}
 
-	public void removePallets() {
+	public void clearPallets() {
 		this.marshallingPallet.clear();
-	}
-
-	public boolean checkInv(int SKU) {
-		for (int i = 0; i < this.marshallingStock.size(); i++) {
-			if (this.marshallingStock.get(i).getSKU() == SKU) {
-				return true;
-			}
-		}
-		return false;
 	}
 }
