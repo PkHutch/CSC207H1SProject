@@ -3,15 +3,14 @@ package entities.workers;
 
 // Defines the imports.
 import entities.Warehouse;
-import entities.taskentities.TaskExecutor;
-
+import entities.taskentities.TaskEntity;
 
 /**
  * The Worker class is mostly just a class that has a name, and warehouse, but the children of
  * workers should implement either TaskExecutor, or TaskGiver.
  * @param <T>
  */
-public class Worker implements TaskExecutor<String>{
+public class Worker implements TaskEntity{
     // Defines the instance variables.
     private final String name;
     private final Warehouse warehouse;
@@ -53,8 +52,4 @@ public class Worker implements TaskExecutor<String>{
         System.out.println("    Returning " + this.warehouse.toString() + ".");
         return this.warehouse;
     }
-
-	public void doTask(String argument) {
-		
-	}
 }

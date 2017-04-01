@@ -1,8 +1,9 @@
 // Defines the package.
 package entitycommands.workercommands;
-
+// Defines the imports.
 import entities.Warehouse;
 import entities.workers.Replenisher;
+import entities.workers.Worker;
 
 /**
  * A ReplenisherCommand is the class responsible for handling the execution of a Replenisher
@@ -23,7 +24,22 @@ public class ReplenisherCommand extends WorkerCommand<Replenisher> {
         super(COMMAND, warehouse);
         // Add debug message.
     }
-
+	protected Replenisher lookupWorker(String name) {
+		// Use the warehouse to find the worker with the name and instanceof T.
+		// Then if the worker with the given name doesn't exist, create the
+		// worker and notify the
+		// console.
+		Worker worker = super.lookupWorker(name);
+		if (worker instanceof Replenisher) {
+			return (Replenisher) worker;
+		} else {
+			Replenisher newWorker = new Replenisher(name, this.getWarehouse());
+			System.out.println("The Worker with the name " + name + " was not found, so a Replenshier"
+					+ "has been created in their place.");
+			this.getWarehouse().addWorker(newWorker);
+			return newWorker;
+		}
+	}
     /**
      * The executeCommand method of ReplenisherCommand tells the Replenisher to replenish, and
      * which Level to replenish.
