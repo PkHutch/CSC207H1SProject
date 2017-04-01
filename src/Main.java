@@ -82,8 +82,11 @@ public class Main {
 		}
 		inputScanner.close();
 
-		// Would want to save.
-		// saveFinalState(warehouse);
+		try {
+			saveFinalState(warehouse.getFloor());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -102,7 +105,7 @@ public class Main {
 		for (int i = 0; i < levels.length; i++) {
 			if (!levels[i].atMaxCapacity()) {
 				//writes to the file
-				writeFile(levels[i].getLocation());
+				writeFile(levels[i].getLocation()+","+levels[i].getStock());
 			}
 		}
 	}
@@ -192,8 +195,8 @@ public class Main {
 					//lexicographically, we add the appropriate amount to it
 					//which should be stored at location.substring(8,9)
 					}else if(compare.compareTo(levels[pointerB].getLocation())==0){
-						String location = init[pointerA];
-						levels[pointerB].addStock(Integer.parseInt(location.substring(8, 9)));
+						String[] location = init[pointerA].split(",");
+						levels[pointerB].addStock(Integer.parseInt(location[4]));
 						pointerA += 1 ;
 						pointerB += 1 ;
 					 //if current pointed Floor location is lexicographically
@@ -203,11 +206,10 @@ public class Main {
 						System.out.println("ERROR: This Poisition does not exist on the floor");
 						System.out.println("Please check the files for duplicates or non-existant");
 						System.out.println("locations");
-						//Raise an exception here
 						break;
 					}
 				//if init.csv runs out of lines. We fill the rest to max Stock
-				}else if(init.length == pointerA && levels.length<pointerB){
+				}else if(init.length == pointerA && levels.length>pointerB){
 						levels[pointerB].addStock(levels[pointerB].getMaxCapacity());
 						pointerB += 1;
 				}
