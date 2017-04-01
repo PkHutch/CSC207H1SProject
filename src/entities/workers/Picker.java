@@ -2,9 +2,15 @@
 package entities.workers;
 
 // Defines the imports.
+import java.lang.IllegalArgumentException;
+import java.util.LinkedList;
+import entities.Forklift;
+import entities.Level;
+import entities.LinkedListContainers.*;
+import entities.Stock;
 import entities.taskentities.TaskExecutor;
 import entities.Warehouse;
-import java.util.LinkedList;
+import entities.PickingRequest;
 
 /**
  * The Picker class extends the worker class and takes an arguement of String for it's doTask
@@ -12,9 +18,14 @@ import java.util.LinkedList;
  * per the server's instructions.
  */
 public class Picker extends Worker implements TaskExecutor<String> {
-    // Defines the Picker instance variables.
-    private boolean isActive;
-    private LinkedList<String[]> currentPickingRequest;
+	// Defines the Picker variables.
+    private boolean isActive = false;
+    private int currentPick = 0;
+    private Forklift forklift = new Forklift();
+    private LinkedList<String[]> PickingLocations;
+    private PickingRequest pickingRequest;
+    private static int DEFAULT_PICK_START = 0;
+    private static int DEFAULT_PICK_END = 8;
 
     // Defines the constructor methods.
     /**
@@ -27,24 +38,47 @@ public class Picker extends Worker implements TaskExecutor<String> {
      */
     public Picker(String name, Warehouse warehouse) {
         super(name, warehouse);
-        // Implemented.
+        System.out.println("Constructing Picker (" + this.toString() + "), with String name \"" +
+            name + "\" and Warehouse " + warehouse.toString());
+        this.isActive = false;
+        this.PickingLocations = new LinkedList<>();
     }
 
-    // Defines the functional methods.
+	// Defines the functional methods.
     /**
      * The doTask method for a Picker specifically serves to take in the String argument from a
      * command given in the console. 
      *
-     * @param argument The valid commands are "x", where "x" is a String number between 1 and
-     * 8 inclusive, and must be called in order from 1 to 8, for it to pick the "x"th item in
-     * it's picking request.
+     * @param argument The valid commands are "pick x", where "x" is a String number between 1 and
+     * 8 inclusive, and must be called in order from 1 to 8.
      */
-    public void doTask(String argument) {
-        System.out.println("Calling doTask of " + this.toString() + " with String argument \"" +
-            argument + "\".");
-        // Look at the legacy code for help, but the picker should pick the next item in the list
-        // from it's currentPickingRequest, make sure to pop so that the size of LinkedList can
-        // be used.
+    public void doTask(String pickNumber) {
+        System.out.println("Calling doTask of " + this.toString() + " with Location argument \"" +
+            location + "\".");
+        
+        
+        
+
+        // IE currentPick == x, where x is the int in "pick x" of the argument.
+        if(currentPick == Integer.parseInt(pickNumber) - 1) {
+            String[] nextLocation = PickingLocations.pop();
+
+            Level nextLevel = this.getWarehouse().getFloor().getLevel(
+                                 nextLocation[0].charAt(0), Integer.parseInt(nextLocation[1]),
+                                 Integer.parseInt(nextLocation[2]),
+                                 Integer.parseInt(nextLocation[3]));
+
+            this.forklift.addItem(nextLevel.removeItem());
+            currentPick++;
+            
+        // Otherwise the picker is not on the specified pick.
+        } else {
+            throw new IllegalArgumentException("The Picker " + this.getName() + " is not " +
+                           "on the given picking number, " + this.getName() + " is on " +
+                           Integer.toString(this.currentPick));
+        }
+        
+        
     }
 
     /**
@@ -55,7 +89,9 @@ public class Picker extends Worker implements TaskExecutor<String> {
      *         otherwise.
      */
     public boolean hasPickingRequest() {
-        return false;
+        System.out.println("Calling hasPickingRequest of " + this.toString() + ".");
+        System.out.println("    Returning " + this.isActive + ".");
+    	return this.isActive;
     }
 
     /**
@@ -66,17 +102,36 @@ public class Picker extends Worker implements TaskExecutor<String> {
      *        the zone, then the aisle, rack, and level. It does not concern the SKU of the item.
      *        This should only be called if the Picker doesn't already have a picking request.
      */
-    public void setPickingRequest(LinkedList<String[]> pickingRequest) {
-        // Already implemented.
+    public void setPickingLoactions(LinkedList<String[]> pickingLocations) {
+        System.out.println("Calling setPickingRequest of " + this.toString() + " with " +
+            pickingLocations.toArray() + " as the pickingRequest argument.");
+        System.out.println("    Checking if " + this.toString() + " has a current picking " +
+            "request of size zero, which is currently " + pickingLocations.toArray() + ".");
+        if(PickingLocations.size() == 0) {
+            this.PickingLocations = pickingLocations;
+        } else {
+            throw new IllegalArgumentException("The picking request of Picker " + 
+                          super.getName() + "(" + this.toString() + ") is already set.");
+        }
+    }
+    
+    public void setPickingRequest(PickingRequest newPickingRequest) {
+    	this.pickingRequest = newPickingRequest;
     }
 
-    /**
-     * The toMarshalling method of Picker is called once the Picker has picked all of their fascia
-     * and dumps the inventory of the Picker Forklift into the Marshalling inventory. It then sets
-     * the Picker to inactive.
-     */
-    public void toMarshalling() {
+    public void toMarshalling(Object Boolean) {
         // Make the picker no longer active and dump the inventory into the Marshalling inventory.
         // This should also notify the server, and add this to the activePicking requests.
+    	if(currentPick == DEFAULT_PICK_END) {
+    		this.isActive = false;
+    		this.getWarehouse().getMarshalling().addStock(forklift.getInventory().clear());
+    		currentPick = DEFAULT_PICK_START;
+    		pickingRequest.setStatus(2);
+    	} else {
+    		throw new IllegalStateException("The Marshalling request of Picker" + 
+    	                 super.getName() + "(" + this.toString() + ") must complete picking before instructed to Marshalling");
+    	}
+    	
+    	
     }
 }
