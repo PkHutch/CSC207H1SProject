@@ -1,10 +1,8 @@
 package entities;
 
-import java.util.ArrayList;
-
 public class PickingRequest {
     private final Integer[] skus;
-	private int status;
+    private int status;
      /*
       * For status, the following are the possible values:
       * 0 : unassigned
