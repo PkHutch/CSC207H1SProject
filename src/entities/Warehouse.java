@@ -59,7 +59,12 @@ public class Warehouse {
             ".");
         // Defines constants.
         final String SPLIT_BY = ",";
+        final char STARTING_ZONE = 'A';
+        final char STARTING_AISLE = '0';
+        final char STARTING_RACK = '0';
+        final char STARTING_LEVEL = '0';
         final String TRANSLATION_FILE = "./resources/traversal_table.csv";
+
 
         // Defines variables for reading the file.
         BufferedReader bufferedReader = null;
@@ -70,10 +75,10 @@ public class Warehouse {
 
         try {
             bufferedReader = new BufferedReader(new FileReader(TRANSLATION_FILE));
-            char currentZone = 'A';
-            char currentAisle = '0';
-            char currentRack = '0';
-            char currentLevel = '0';
+            char currentZone = STARTING_ZONE;
+            char currentAisle = STARTING_AISLE;
+            char currentRack = STARTING_RACK;
+            char currentLevel = STARTING_LEVEL;
             ArrayList<Integer> parsedRack = new ArrayList<>();
             ArrayList<Integer[]> parsedAisle = new ArrayList<>();
             ArrayList<Integer[][]> parsedZone = new ArrayList<>();
@@ -119,8 +124,9 @@ public class Warehouse {
                                 throw new IllegalArgumentException("A line in the " +
                                               "traversal_table.csv is not valid.");
                             }
-                        } else if(translatedRack == ((char)((int)currentRack + 1))) {
-                            currentLevel = '0';
+                        } else if(translatedRack == ((char)((int)currentRack + 1)) && 
+                            (translatedLevel == STARTING_LEVEL)) {
+                            currentLevel = STARTING_LEVEL;
                             currentRack = translatedRack;
                             parsedAisle.add(parsedRack.toArray(new Integer[parsedRack.size()]));
                             parsedRack.clear();
@@ -128,9 +134,11 @@ public class Warehouse {
                             throw new IllegalArgumentException("A line in the " +
                                               "traversal_table.csv is not valid.");
                         }
-                    } else if(translatedAisle == ((char)((int)currentAisle + 1))) {
-                        currentLevel = '0';
-                        currentRack = '0';
+                    } else if(translatedAisle == ((char)((int)currentAisle + 1)) &&
+                        (translatedRack == STARTING_RACK) &&
+                        (translatedLevel == STARTING_LEVEL)) {
+                        currentLevel = STARTING_LEVEL;
+                        currentRack = STARTING_RACK;
                         currentAisle = translatedAisle;
                         parsedAisle.add(parsedRack.toArray(new Integer[parsedRack.size()]));
                         parsedRack.clear();
@@ -140,10 +148,12 @@ public class Warehouse {
                         throw new IllegalArgumentException("A line in the traversal_table.csv " +
                                       "is not valid.");
                     }
-                } else if(translatedZone == ((char)((int)currentZone + 1))) {
-                    currentLevel = '0';
-                    currentRack = '0';
-                    currentAisle = '0';
+                } else if(translatedZone == ((char)((int)currentZone + 1)) &&
+                    (translatedAisle == STARTING_AISLE) && (translatedRack == STARTING_RACK) &&
+                    (translatedLevel == STARTING_LEVEL)) {
+                    currentLevel = STARTING_LEVEL;
+                    currentRack = STARTING_RACK;
+                    currentAisle = STARTING_AISLE;
                     currentZone = translatedZone;
                     parsedAisle.add(parsedRack.toArray(new Integer[parsedRack.size()]));
                     parsedRack.clear();
