@@ -1,5 +1,5 @@
 // Defines the package.
-package entities;
+package entities.linkedlistcontainers;
 
 // Defines the imports.
 import java.util.LinkedList;
