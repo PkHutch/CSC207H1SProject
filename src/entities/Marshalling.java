@@ -1,38 +1,38 @@
 package entities;
 
-import java.util.ArrayList;
-import entities.Stock;
+import entities.linkedlistcontainers.LinkedListContainer;
 import entities.Pallet;
-import entities.linkedlistcontainers.*;
+import entities.Stock;
+import java.util.ArrayList;
 
 public class Marshalling {
-	public ArrayList<Stock> marshallingStock;
-	public ArrayList<Pallet> marshallingPallet;
+    public ArrayList<Pallet> marshallingPallet;
+    public ArrayList<Stock> marshallingStock;
 
-	public Marshalling() {
-		this.marshallingStock = new ArrayList<Stock>();
-		this.marshallingPallet = new ArrayList<Pallet>();
-	}
+    public Marshalling() {
+        this.marshallingPallet = new ArrayList<Pallet>();
+        this.marshallingStock = new ArrayList<Stock>();
+    }
 
-	public void addStock(LinkedListContainer<Stock> stock) {
-		while (!(stock.isEmpty())) {
-			this.marshallingStock.add(stock.removeItem());
-		}
-	}
+    public void addPallet(Pallet p) {
+        this.marshallingPallet.add(p);
+    }
 
-	public void addPallet(Pallet p) {
-		this.marshallingPallet.add(p);
-	}
-	
-	public void clearStock() {
-		this.marshallingStock.clear();
-	}
+    public void addStock(LinkedListContainer<Stock> stock) {
+        while (!(stock.isEmpty())) {
+            this.marshallingStock.add(stock.removeItem());
+        }
+    }
 
-	public ArrayList<Stock> getMarshallingStock() {
-		return this.marshallingStock;
-	}
+    public void clearPallets() {
+        this.marshallingPallet.clear();
+    }
 
-	public void clearPallets() {
-		this.marshallingPallet.clear();
-	}
+    public void clearStock() {
+        this.marshallingStock.clear();
+    }
+
+    public ArrayList<Stock> getMarshallingStock() {
+        return this.marshallingStock;
+    }
 }
