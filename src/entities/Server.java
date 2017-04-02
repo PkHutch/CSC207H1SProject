@@ -19,10 +19,11 @@ import java.util.LinkedList;
  */
 public class Server {
     // Defines the constants.
-    // private final static int DEFAULT_REFILL_QUANTITY = 5;
+    private final static int DEFAULT_REFILL_QUANTITY = 5;
     private final static int DEFAULT_PICKING_REQUEST_SIZE = 8;
     // Defines instance variables.
     private final LinkedList<Picker> inactivePickers;
+    private final ArrayList<Level> lowLevels;
     private final LinkedList<Integer> partialPickingRequest;
     private final ArrayList<PickingRequest> pickingRequests;
     private final String[][] orderArray;
@@ -35,9 +36,8 @@ public class Server {
      * @param warehouse the warehouse which this server belongs to.
      */
     public Server(Warehouse warehouse) {
-        System.out.println("Constructing Server " + this.toString() + " with argument warehouse" +
-            " as "+ warehouse.toString() + ".");
         this.inactivePickers = new LinkedList<>();
+        this.lowLevels = new ArrayList<>();
         this.partialPickingRequest = new LinkedList<>();
         this.pickingRequests = new ArrayList<>();
         this.orderArray = this.parseTranslationFile();
@@ -75,20 +75,12 @@ public class Server {
      *        translationArray.
      */
     public void addOrder(Order order) {
-        System.out.println("Calling addOrder of Server " + this.toString() + " with argument " +
-            "order as " + order.toString() + ".");
         // This is used to check when the server has looked up the order's SKU.
         boolean foundOrder = false;
 
-        System.out.println("    Checking if the translationArray contains the model and colour.");
         for(int index = 0; (!(foundOrder) && index < this.orderArray.length); index++) {
-            System.out.println("    Checking if orderArray[" + Integer.toString(index) + "][0]" +
-                " is equal to " + order.getColour() + " and orderArray[" + 
-                Integer.toString(index) + "][1] is equal to " + order.getModel() + ".");
             if(order.getColour().equals(this.orderArray[index][0]) &&
                 order.getModel().equals(this.orderArray[index][1])) {
-                System.out.println("The colour " + order.getColour() + " and model " +
-                    order.getModel() + " exist in the translationArray.");
                 foundOrder = true;
                 this.partialPickingRequest.add(Integer.parseInt(this.orderArray[index][2]));
                 this.partialPickingRequest.add(Integer.parseInt(this.orderArray[index][3]));
@@ -101,11 +93,8 @@ public class Server {
                           "not exist in the Server's translationArray.");
         }
 
-        System.out.println("    Checking if there are enough inactivePicks to create a " +
-            "picking request.");
         // If four orders have been placed, then creates a picking request.
         if(partialPickingRequest.size() == DEFAULT_PICKING_REQUEST_SIZE) {
-            System.out.println("    There are enough, creating a new picking request.");
             PickingRequest newPickingRequest = new PickingRequest(
                                                        this.partialPickingRequest.toArray(
                                                        new Integer[
@@ -117,6 +106,40 @@ public class Server {
             }
         } else {
             System.out.println("Not enough!");
+        }
+    }
+
+    public void checkLevel(Level level) {
+        if(level.getStock() <= DEFAULT_REFILL_QUANTITY) {
+            boolean foundLevel = false;
+            for(int index = 0; index < this.lowLevels.size() && foundLevel == false; index++) {
+                if(level == this.lowLevels.get(index)) {
+                    foundLevel = true;
+                }
+            }
+            if(foundLevel = false) {
+                this.lowLevels.add(level);
+            } else {
+                throw new IllegalArgumentException("The level at location " +
+                              level.getLocation() + " is being checked for low quantity, this " +
+                              "should never occur because it has already been checked.");
+            }
+        }
+    }
+
+    public boolean hasLowLevels() {
+        return this.lowLevels.size() != 0;
+    }
+
+    public void updateLevel(Level level) {
+        if(level.getStock() > DEFAULT_REFILL_QUANTITY) {
+            boolean foundLevel = false;
+            for(int index = 0; index < this.lowLevels.size() && foundLevel == false; index++) {
+                if(level == this.lowLevels.get(index)) {
+                    foundLevel = true;
+                    this.lowLevels.remove(level);
+                }
+            }
         }
     }
 
