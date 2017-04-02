@@ -43,7 +43,6 @@ public class PickerCommand extends WorkerCommand<Picker> {
     public void executeCommand(String argument) {
         // The first part is the name, then the command, then the argument for the command.
         String[] splitArgument = argument.split(" ", 2);
-        System.out.println(splitArgument[0] + splitArgument[1]);
         try {
             if(splitArgument[1].startsWith("pick")) {
                 try {
