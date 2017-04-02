@@ -29,8 +29,6 @@ public class Level {
      *        the Server that the Level belongs to, but this is not inforced.
      */
     public Level(Rack rack, Integer sku) {
-        System.out.println("Constructing Level " + this.toString() + " with argument rack as " +
-            rack.toString() + ".");
         this.containedBy = rack;
         this.sku = sku;
         this.stock = 0;
@@ -62,7 +60,6 @@ public class Level {
      *         Level location.
      */
     public String getLocation() {
-        System.out.println("Calling getLocation of " + this.toString() + ".");
         Rack rack = this.containedBy;
         Aisle aisle = rack.getContainer();
         Zone zone = aisle.getContainer();

@@ -160,7 +160,6 @@ public class Server {
      *         fourth is the back.
      */
     private String[][] parseTranslationFile() {
-        System.out.println("Calling parseTranslationArray of Server " + this.toString() + ".");
         // Defines constants.
         final String TRANSLATION_FILE = "./resources/translation.csv";
         final String SPLIT_BY = ",";
@@ -178,26 +177,16 @@ public class Server {
             line = bufferedReader.readLine();
 
             // Operating on all remaining lines.
-            System.out.println("    Reading remaining contents of translation.csv.");
             while ((line = bufferedReader.readLine()) != null) {
-                System.out.println("    Parsing the line reading: " + line);
                 String[] translatedLine = line.split(SPLIT_BY);
 
-                System.out.println("    Checking if the line is valid.");
                 if (translatedLine[2].equals(translatedLine[3])) {
                     throw new IllegalArgumentException("The SKU " + translatedLine[2] + " is " +
                                   "equal to " + translatedLine[3] + " and can't have the same " +
                                   "SKU.");
                 } else {
-                    // Checks that the SKUs do not exist in the table.
-                    System.out.println("    Checking the SKU doesn't already exist in the " +
-                        "parsedTranslationArray.");
                     for (int index = 0; index < parsedArrayList.size(); index++) {
                         String[] currentTranslation = parsedArrayList.get(index);
-
-                        System.out.println("    Checking if " + currentTranslation[2] + " and " +
-                            currentTranslation[3] + " are equal to " + translatedLine[2] + " or" +
-                            " " + translatedLine[3] + ".");
                         if (translatedLine[2].equals(currentTranslation[2]) ||
                             translatedLine[2].equals(currentTranslation[3])) {
                             throw new IllegalArgumentException("The SKU " + translatedLine[2] + 
@@ -213,8 +202,6 @@ public class Server {
                                           " already have been defined.");
                         }
                     }
-
-                    System.out.println("    They are not, adding to the translationArray.");
                     parsedArrayList.add(new String[]{translatedLine[0], translatedLine[1],
                                                 translatedLine[2], translatedLine[3]});
                 }

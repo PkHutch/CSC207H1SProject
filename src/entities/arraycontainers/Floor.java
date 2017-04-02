@@ -22,9 +22,6 @@ public class Floor extends ArrayContainer<Warehouse, Zone> {
      */
     public Floor(Warehouse warehouse, Integer[][][][] layout) {
         super(warehouse, new Zone[layout.length]);
-        System.out.println("Constructing Floor " + this.toString() + " with argument warehouse " +
-            "as " + warehouse.toString() + ", and argument layout as " + layout.toString() + ".");
-        System.out.println("    Creating " + Integer.toString(layout.length) + " Zones.");
         for (int index = 0; index < layout.length; index++) {
             this.setItem(index, new Zone(this, layout[index]));
         }

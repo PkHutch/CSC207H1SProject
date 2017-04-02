@@ -48,7 +48,6 @@ public class Warehouse {
      * @return the FaxMachine of this Warehouse.
      */
     public FaxMachine getFaxMachine() {
-        System.out.println("Calling getFaxMachine of " + this.toString() + ".");
         return this.faxMachine;
     }
 
@@ -109,7 +108,7 @@ public class Warehouse {
 
 			if (currentZone == translatedZone && currentAisle == translatedAisle && currentRack == translatedRack
 					&& currentLevel == translatedLevel) {
-				System.out.println("    First line is correct, adding: " + line + ".");
+                                parsedRack.add(Integer.valueOf(translatedLine[4]));
 			} else {
 				throw new IllegalArgumentException("The first line is not of the form "
 						+ "\"A,0,0,0,X\" where X is the SKU that the level contains.");

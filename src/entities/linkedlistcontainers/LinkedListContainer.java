@@ -64,18 +64,22 @@ public abstract class LinkedListContainer<T> {
     }
 
     /**
-     * The method which returns whether or not the LinkedListContainer is empty.
+     * The removeItems method of LinkedListContainer pops all items from the inventory.
      *
-     * @return the first item in the LinkedListContainer.
-     * @throws IllegalArgumentException the exception is thrown when the container is empty yet
-     *         something attempts to remove an item.
+     * @return the LinkedList<T> of the inventory that will no longer be contained in the
+     *         LinkedListContainers inventory.
      */
-    public T removeItem() {
+    public LinkedList<T> popItems() {
         if(this.isEmpty()) {
             throw new IllegalArgumentException("A LinkedListContainer is empty but something is" +
                           " attempting to remove an item from it.");
         } else {
-            return this.inventory.pop();
+            LinkedList<T> returnedList = new LinkedList<>();
+            while(this.inventory.size() > 0) {
+                returnedList.add(this.inventory.pop());
+                this.currentInventorySize--;
+            }
+            return returnedList;
         }
     }
 }

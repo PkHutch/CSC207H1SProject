@@ -19,9 +19,9 @@ public class Sequencer extends Worker implements TaskGiver {
             this.getWarehouse().getServer().getPickingRequests();
         Marshalling marshalling = this.getWarehouse().getMarshalling();
         ArrayList<Stock> stock = marshalling.getMarshallingStock();
-        for (int pickingRequestIndex = 0; pickingRequestIndex < pickingRequests.size();
+        for(int pickingRequestIndex = 0; pickingRequestIndex < pickingRequests.size();
             pickingRequestIndex++) {
-            if (pickingRequests.get(pickingRequestIndex).getStatus() == 2) {
+            if(pickingRequests.get(pickingRequestIndex).getStatus() == 2) {
                 PickingRequest potentialPickingRequest = pickingRequests.get(pickingRequestIndex);
                 Integer[] potentiallySequenceableSKUs = potentialPickingRequest.getSKUs();
                 ArrayList<Stock> potentiallySequenceableStock = new ArrayList<>();
