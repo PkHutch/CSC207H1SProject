@@ -10,8 +10,8 @@ import java.util.LinkedList;
 public abstract class LinkedListContainer<T> {
     // Defines variables.
     private int currentInventorySize;
-    private LinkedList<T> inventory;
-    private int maxInventorySize;
+    private final LinkedList<T> inventory;
+    private final int maxInventorySize;
 
     // Defines contructor methods.
     /**
@@ -21,6 +21,7 @@ public abstract class LinkedListContainer<T> {
      * @param inventorySize the integer which will be assigned to the max inventory size.
      */
     public LinkedListContainer(int inventorySize) {
+        this.inventory = new LinkedList<>();
         this.maxInventorySize = inventorySize;
     }
 
@@ -33,6 +34,8 @@ public abstract class LinkedListContainer<T> {
      *         LinkedListContainer is at max capacity.
      */
     public void addItem(T item) {
+        System.out.println("Calling addItem of LinkedListContainer " + this.toString() + " with" +
+            " argument item as " + item.toString() + ".");
         if(this.currentInventorySize == this.maxInventorySize) {
             throw new IllegalArgumentException("A LinkedListContainer is at max capacity but " +
                           "something is trying to add to it.");

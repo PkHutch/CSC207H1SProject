@@ -11,41 +11,56 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * The warehouse class, which is where the simulation takes place, as the
- * Warehouse effectively acts as a container for the other entities.
+ * The warehouse class, which is where the simulation takes place, as the Warehouse effectively
+ * acts as a container for the other entities.
  */
 public class Warehouse {
-	// Defines the instance variables.
-	private final FaxMachine faxMachine;
-	private final Floor floor;
-	private final Server server;
-	private final ArrayList<Worker> workers;
-	private final Marshalling marshalling;
+    // Defines the instance variables.
+    private final FaxMachine faxMachine;
+    private final Floor floor;
+    private final Marshalling marshalling;
+    private final Server server;
+    private final WarehousePicking warehousePicking;
+    private final ArrayList<Worker> workers;
 
-	// Defines the constructors.
-	/**
-	 * The default constructor for a Warehouse.
-	 */
-	public Warehouse() {
-		System.out.println("Constructing Warehouse" + this.toString() + ".");
-		this.server = new Server(this);
-		this.workers = new ArrayList<>();
-		this.faxMachine = new FaxMachine(this.server);
-		this.floor = new Floor(this, parseTraversalTableFile());
-		this.marshalling = new Marshalling();
 
-	}
+    // Defines the constructors.
+    /**
+     * The default constructor for a Warehouse.
+     */
+    public Warehouse() {
+        System.out.println("Constructing Warehouse" + this.toString() + ".");
+        this.floor = new Floor(this, parseTraversalTableFile());
+        this.marshalling = new Marshalling();
+        this.server = new Server(this);
+        this.workers = new ArrayList<>();
 
-	// Defines the functional methods.
-	/**
-	 * The getFaxMachine method returns the FaxMachine of the Warehouse.
-	 *
-	 * @return the FaxMachine of this Warehouse.
-	 */
-	public FaxMachine getFaxMachine() {
-		System.out.println("Calling getFaxMachine of " + this.toString() + ".");
-		return this.faxMachine;
-	}
+        // These instance variables are assigned after, because they require the creation of the
+        // instance variables prior to them.
+	this.faxMachine = new FaxMachine(this.server);
+        this.warehousePicking = new WarehousePicking(this.floor.getLevels());
+    }
+
+    // Defines the functional methods.
+    /**
+     * The getFaxMachine method returns the FaxMachine of the Warehouse.
+     *
+     * @return the FaxMachine of this Warehouse.
+     */
+    public FaxMachine getFaxMachine() {
+        System.out.println("Calling getFaxMachine of " + this.toString() + ".");
+        return this.faxMachine;
+    }
+
+    /**
+     * The getWarehousePicking method of Warehouse returns the WarehousePicking class of this
+     * Warehouse, which contains the optimize method.
+     *
+     * @return the WarehousePicking of this Warehouse.
+     */
+    public WarehousePicking getWarehousePicking() {
+        return this.warehousePicking;
+    }
 
 	// Defines the helper methods.
 	/**
@@ -58,8 +73,6 @@ public class Warehouse {
 	 *         that it describes SKU of each Level. The first dimension is the
 	 *         zones, then the aisles, then the racks, then the levels.
 	 */
-
-	// Do not worry about this, already finished.
 	private Integer[][][][] parseTraversalTableFile() {
 		System.out.println("Calling parseTraversalTableFile of Warehouse " + this.toString() + ".");
 		// Defines constants.
