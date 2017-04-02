@@ -4,6 +4,7 @@ import entities.linkedlistcontainers.LinkedListContainer;
 import entities.Pallet;
 import entities.Stock;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Marshalling {
     private final ArrayList<Pallet> marshallingPallet;
