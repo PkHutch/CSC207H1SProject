@@ -123,6 +123,8 @@ public class Server {
 			if (this.inactivePickers.size() > 0) {
 				this.assignPicker(inactivePickers.pop(), newPickingRequest);
 			}
+		} else {
+			System.out.println("Not enough!");
 		}
 	}
 
