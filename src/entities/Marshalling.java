@@ -46,6 +46,10 @@ public class Marshalling {
         return this.sequenceableStock;
     }
 
+    public Stock popStock(int index) {
+        return this.marshallingStock.remove(index);
+    }
+
     public Stock popSequenceableStock(int index) {
         return this.sequenceableStock.remove(index);
     }
