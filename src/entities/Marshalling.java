@@ -6,8 +6,8 @@ import entities.Stock;
 import java.util.ArrayList;
 
 public class Marshalling {
-    public ArrayList<Pallet> marshallingPallet;
-    public ArrayList<Stock> marshallingStock;
+    private final ArrayList<Pallet> marshallingPallet;
+    private final ArrayList<Stock> marshallingStock;
 
     public Marshalling() {
         this.marshallingPallet = new ArrayList<Pallet>();
