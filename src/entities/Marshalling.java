@@ -49,6 +49,10 @@ public class Marshalling {
         return this.marshallingStock;
     }
 
+    public ArrayList<Pallet> getMarshallingPallets() {
+        return this.marshallingPallet;
+    }
+
     public ArrayList<Stock> getSequenceableStock() {
         return this.sequenceableStock;
     }

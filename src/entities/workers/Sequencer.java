@@ -1,6 +1,7 @@
 // Defines the package.
 package entities.workers;
 
+import entities.Marshalling;
 import entities.Pallet;
 import entities.PickingRequest;
 import entities.Stock;
@@ -16,36 +17,83 @@ public class Sequencer extends Worker implements TaskGiver {
     public void doTask() {
         ArrayList<PickingRequest> pickingRequests = 
             this.getWarehouse().getServer().getPickingRequests();
-        ArrayList<Stock> stock = this.getWarehouse().getMarshalling().getMarshallingStock();
-        for (int i = 0; i < pickingRequests.size(); i++) {
-            if (pickingRequests.get(i).getStatus() == 2) {
-                int keep = 0;
-                for (int j = 0; j < pickingRequests.get(i).getSKUs().length; j++) {
-                    for (int k = 0; k < stock.size(); k++) {
-                        if (stock.get(k).getSKU() == pickingRequests.get(i).getSKUs()[j]) {
-                            keep += 1;
-                        } else if (keep == pickingRequests.get(i).getSKUs().length) {
-                            pickingRequests.get(i).setStatus(3);
+        Marshalling marshalling = this.getWarehouse().getMarshalling();
+        ArrayList<Stock> stock = marshalling.getMarshallingStock();
+        for (int pickingRequestIndex = 0; pickingRequestIndex < pickingRequests.size();
+            pickingRequestIndex++) {
+            if (pickingRequests.get(pickingRequestIndex).getStatus() == 2) {
+                PickingRequest potentialPickingRequest = pickingRequests.get(pickingRequestIndex);
+                Integer[] potentiallySequenceableSKUs = potentialPickingRequest.getSKUs();
+                ArrayList<Stock> potentiallySequenceableStock = new ArrayList<>();
+                for(int skuIndex = 0; skuIndex < potentiallySequenceableSKUs.length; skuIndex++) {
+                    boolean stockFound = false;
+                    for(int stockIndex = 0; stockIndex < stock.size() && stockFound == false;
+                    stockIndex++) {
+                        if(potentiallySequenceableSKUs[skuIndex].equals(
+                            stock.get(stockIndex).getSKU())) {
+                            stockFound = true;
+                            potentiallySequenceableStock.add(marshalling.popStock(stockIndex));
                         }
                     }
                 }
-                pickingRequests.get(i).setStatus(0);
+                if(potentiallySequenceableStock.size() == potentiallySequenceableSKUs.length) {
+                    marshalling.dumpSequenceableStock(potentiallySequenceableStock);
+                    potentialPickingRequest.setStatus(3);
+                } else {
+                    marshalling.dumpStock(potentiallySequenceableStock);
+                    potentialPickingRequest.setStatus(0);
+                }
             }
+        }
+        marshalling.clearStock();
+        while(pickingRequests.size() > 0 && pickingRequests.get(0).getStatus() == 3) {
+        System.out.println("Trying to complete PickingRequest.");
+            ArrayList<Stock> backPalletArrayList = new ArrayList<>();
+            ArrayList<Stock> frontPalletArrayList = new ArrayList<>();
+            Integer[] sequenceableSKUs = pickingRequests.remove(0).getSKUs();
+            boolean loadToFront = true;
+            ArrayList<Stock> sequenceableStock = marshalling.getSequenceableStock();
+            for(int skuIndex = 0; skuIndex < sequenceableSKUs.length; skuIndex++) {
+                boolean stockFound = false;
+                for(int stockIndex = 0; stockIndex < sequenceableStock.size() && 
+                    stockFound == false; stockIndex++) {
+                    if(sequenceableStock.get(stockIndex).getSKU().equals(
+                        sequenceableSKUs[skuIndex])) {
+                        stockFound = true;
+                        if(loadToFront == true) {
+                            loadToFront = false;
+                            frontPalletArrayList.add(marshalling.popSequenceableStock(
+                                stockIndex));
+                        } else {
+                            loadToFront = true;
+                            backPalletArrayList.add(marshalling.popSequenceableStock(stockIndex));
+                        }
+                    }
+                }
+            }
+            marshalling.addPallet(new Pallet(frontPalletArrayList.toArray(new 
+                                          Stock[frontPalletArrayList.size()])));
+            marshalling.addPallet(new Pallet(backPalletArrayList.toArray(new 
+                                          Stock[backPalletArrayList.size()])));
+        }
 
-            int l = 0;
-            while (pickingRequests.get(i).getStatus() == 3) {
-                Integer[] sequenced = pickingRequests.get(l).getSKUs();
-                l++;
-                Stock[] front = {new Stock(sequenced[0]), new Stock(sequenced[2]),
-                                 new Stock(sequenced[4]), new Stock(sequenced[6])};
-                Pallet pallet = new Pallet(front);
-                this.getWarehouse().getMarshalling().addPallet(pallet);
-                Stock[] back = {new Stock(sequenced[1]), new Stock(sequenced[3]),
-                                new Stock(sequenced[5]), new Stock(sequenced[7])};
-                Pallet pallet2 = new Pallet(back);
-                this.getWarehouse().getMarshalling().addPallet(pallet2);
+        System.out.println("The sequencing was completed with the marshalling stock being: ");
+        for(int si = 0; si < stock.size(); si++) {
+            System.out.println(stock.get(si).getSKU());
+        }
+        System.out.println("The sequencing was completed with the marshalling sequenceable " +
+            "stock being: ");
+        for(int sj = 0; sj < marshalling.getSequenceableStock().size(); sj++) {
+            System.out.println(marshalling.getSequenceableStock().get(sj).getSKU());
+        }
+        System.out.println("The sequencing was completed with the marshalling pallets being: ");
+        for(int sk = 0; sk < marshalling.getMarshallingPallets().size(); sk++) {
+            System.out.println("    Pallet " + Integer.toString(sk) + " : ");
+            for(int sl = 0; sl < marshalling.getMarshallingPallets().get(sk).getContent().length;
+                sl++) {
+                System.out.println("        " + 
+                    marshalling.getMarshallingPallets().get(sk).getContent()[sl].getSKU());
             }
-            this.getWarehouse().getMarshalling().clearStock();
         }
     }
 }
