@@ -133,7 +133,7 @@ public class Picker extends Worker implements TaskExecutor<String> {
     public void toMarshalling() {
         if (currentPick == DEFAULT_PICK_END) {
             this.isActive = true;
-            this.getWarehouse().getMarshalling().addStock(forklift);
+            this.getWarehouse().getMarshalling().dumpStock(forklift.getInventory());
             forklift.getInventory().clear();
             currentPick = DEFAULT_PICK_START;
             pickingRequest.setStatus(2);
