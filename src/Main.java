@@ -17,6 +17,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -118,6 +120,12 @@ public class Main {
 				System.out.println("Error reading file '" + ORDER_FILE + "'");
 				ex.printStackTrace();
 			}
+			try {
+                saveFinalState(warehouse.getFloor());
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 		} else {
 			System.out.println(args[0]);
 		}
@@ -126,6 +134,19 @@ public class Main {
 	/**
 	 * The method for saving final.csv, . . . . .
 	 */
+	private static void createFile(){
+	    PrintWriter writer;
+        try {
+            System.out.println("Creating final.csv");
+            writer = new PrintWriter(SAVE_FILE,"UTF-8");
+            writer.close();
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            System.out.println("Failed to create final.txt");
+            e.printStackTrace();
+        }
+	    
+	}
+		
 	private static void saveFinalState(Floor floor) throws IOException {
 		// Check every level, calling, floor.getItems() to get the floor.
 		// Then get each level, by calling getLevel() on floor.
@@ -133,15 +154,16 @@ public class Main {
 		// Then get each path to the level by calling, getLocation() on the
 		// level.
 		// Then write the resulting new line to the file if the line exists.
-		System.out.println("The current state of warehouse has been saved");
+	    createFile();
+		System.out.println("The current state of warehouse has been saved");	    
 		Level[] levels = floor.getLevels();
 		// goes through each possible location in the warehouse
 		for (int i = 0; i < levels.length; i++) {
-			if (!levels[i].atMaxCapacity()) {
-				// writes to the file
-				writeFile(levels[i].getLocation() + "," + levels[i].getStock());
-			}
-		}
+		    if (!levels[i].atMaxCapacity()) {
+		        // writes to the file
+		        writeFile(levels[i].getLocation() + "," + levels[i].getStock());
+		    }
+		} 
 	}
 
 	private static void writeFile(String content) {
