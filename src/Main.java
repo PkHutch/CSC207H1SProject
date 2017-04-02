@@ -137,7 +137,7 @@ public class Main {
 	private static void createFile(){
 	    PrintWriter writer;
         try {
-            System.out.println("Creating final.txt");
+            System.out.println("Creating final.csv");
             writer = new PrintWriter(SAVE_FILE,"UTF-8");
             writer.close();
         } catch (FileNotFoundException | UnsupportedEncodingException e) {
