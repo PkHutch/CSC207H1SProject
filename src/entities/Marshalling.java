@@ -24,18 +24,24 @@ public class Marshalling {
         this.sequenceableStock.add(newStock);
     }
 
-    public void addStock(LinkedListContainer<Stock> stock) {
-        while (!(stock.isEmpty())) {
-            this.marshallingStock.add(stock.removeItem());
-        }
-    }
-
     public void clearPallets() {
         this.marshallingPallet.clear();
     }
 
     public void clearStock() {
         this.marshallingStock.clear();
+    }
+
+    public void dumpSequenceableStock(List<Stock> stock) {
+        while(stock.size() > 0) {
+            this.sequenceableStock.add(stock.remove(0));
+        }
+    }
+
+    public void dumpStock(List<Stock> stock) {
+        while(stock.size() > 0) {
+            this.marshallingStock.add(stock.remove(0));
+        }
     }
 
     public ArrayList<Stock> getMarshallingStock() {
