@@ -1,12 +1,12 @@
 // Defines the package.
 package entities.workers;
 
-import entities.PickingRequest;
 import entities.Pallet;
+import entities.PickingRequest;
+import entities.Stock;
+import entities.taskentities.TaskGiver;
 import entities.Warehouse;
 import java.util.ArrayList;
-import entities.taskentities.TaskGiver;
-import entities.Stock;
 
 public class Sequencer extends Worker implements TaskGiver {
     public Sequencer(String name, Warehouse warehouse) {
@@ -41,7 +41,7 @@ public class Sequencer extends Worker implements TaskGiver {
                 Pallet pallet = new Pallet(front);
                 this.getWarehouse().getMarshalling().addPallet(pallet);
                 Stock[] back = {new Stock(sequenced[1]), new Stock(sequenced[3]),
-                                new Stock(sequenced[5]), new Stock(sequenced[7]) };
+                                new Stock(sequenced[5]), new Stock(sequenced[7])};
                 Pallet pallet2 = new Pallet(back);
                 this.getWarehouse().getMarshalling().addPallet(pallet2);
             }
