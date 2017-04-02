@@ -144,13 +144,7 @@ public class Server {
                            foundPickingRequest == false; index++) {
             if(this.pickingRequests.get(index).getStatus() == 0) {
                 foundPickingRequest = true;
-                PickingRequest pickingRequestToAssign = this.pickingRequests.get(index);
-                picker.setPickingLocations(new LinkedList<String>(
-                                                   this.warehouse.getWarehousePicking().optimize(
-                                                   new ArrayList<Integer>(Arrays.asList(
-                                                   pickingRequestToAssign.getSKUs())))));
-                picker.setPickingRequest(pickingRequestToAssign);
-                pickingRequestToAssign.setStatus(1);
+                picker.setPickingRequest(this.pickingRequests.get(index));
             }
         }
     }

@@ -14,6 +14,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.IllegalArgumentException;
+import java.lang.IllegalStateException;
+import java.lang.StringIndexOutOfBoundsException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -60,20 +63,18 @@ public class Main {
                 // Sets up for checking commands.
                 boolean commandFound = false;
 
-                System.out.println("    Checking if the input is a valid command.");
                 // Keep checking until there is a valid command or all commands have been checked.
                 for (int index = 0; (!(commandFound) && index < commands.length); index++) {
-                    System.out.println("    Currently checking commands[" + 
-                        Integer.toString(index) + "].");
-                    String commandString = commands[index].getCommand();
-
-                    System.out.println("    Checking if " + currentInput + " starts with " + 
-                        commandString);
                     // If the command is valid, execute the command.
-                    if (currentInput.startsWith(commandString)) {
+                    if (currentInput.startsWith(commands[index].getCommand())) {
                         commandFound = true;
-                        String argument = currentInput.substring(commandString.length() + 1);
-                        commands[index].executeCommand(argument);
+                        try {
+                            commands[index].executeCommand(currentInput.substring(commands[index].getCommand().length() + 1));
+                        } catch(StringIndexOutOfBoundsException exception) {
+                            System.err.println("    Error: An argument should follow the command \"" + commands[index].getCommand() + "\".");
+                        } catch(IllegalArgumentException|IllegalStateException exception) {
+                            System.err.println("    Error: " + exception.getMessage());
+                        }
                     }
                 }
             }

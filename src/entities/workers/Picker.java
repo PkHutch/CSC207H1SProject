@@ -4,6 +4,9 @@ package entities.workers;
 // Defines the imports.
 import java.lang.IllegalArgumentException;
 import java.lang.IllegalStateException;
+import java.lang.NumberFormatException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import entities.linkedlistcontainers.Forklift;
@@ -11,6 +14,7 @@ import entities.Level;
 import entities.Stock;
 import entities.taskentities.TaskExecutor;
 import entities.Warehouse;
+import entities.WarehousePicking;
 import entities.arraycontainers.Aisle;
 import entities.arraycontainers.Floor;
 import entities.arraycontainers.Rack;
@@ -25,6 +29,7 @@ import entities.PickingRequest;
 public class Picker extends Worker implements TaskExecutor<String> {
     private static int DEFAULT_PICK_END = 8;
     private static int DEFAULT_PICK_START = 0;
+    private static int DEFAULT_PICK_UNASSIGNED = -1;
 
     private int currentPick;
     private final Forklift forklift;
@@ -43,9 +48,7 @@ public class Picker extends Worker implements TaskExecutor<String> {
      */
     public Picker(String name, Warehouse warehouse) {
         super(name, warehouse);
-        System.out.println("Constructing Picker (" + this.toString() + "), with String name \"" +
-            name + "\" and Warehouse " + warehouse.toString());
-        this.currentPick = 0;
+        this.currentPick = DEFAULT_PICK_UNASSIGNED;
         this.forklift = new Forklift();
         this.isActive = true;
         this.pickingLocations = new LinkedList<>();
@@ -58,22 +61,31 @@ public class Picker extends Worker implements TaskExecutor<String> {
      * command given in the console.
      *
      * @param argument The valid commands are "pick x", where "x" is a String number between 1 and
-     *        8 inclusive, and must be called in order from 1 to 8.
+     *        8 inclusive, and must be called in order from 1 to 8. This command should only be
+     *        after setReady() has been called, and the server has been assigned a picking request
+     *        by the server.
      */
     public void doTask(String pickNumber) {
-        // IE currentPick == x, where x is the int in "pick x" of the argument.
-        if (currentPick == Integer.parseInt(pickNumber) - 1) {
-            Level nextLevel = this.pickingLocations.pop();
-            Stock desiredStock = nextLevel.removeStock();
-            String nextLocation = nextLevel.getLocation();
-            System.out.println("Adding item to forklift of " + desiredStock.toString() + " from level at Location " + nextLocation);
-            this.forklift.addItem(desiredStock);
-            currentPick++;
-        // Otherwise the picker is not on the specified pick.
+        if(this.hasPickingRequest() == true) {
+            if(this.isActive == false) {
+                try {
+                    Integer pickInteger = Integer.parseInt(pickNumber);
+                    if(currentPick == pickInteger - 1 && currentPick < DEFAULT_PICK_END) {
+                        this.forklift.addItem(this.pickingLocations.pop().removeStock());
+                        currentPick++;
+                    } else if(currentPick == DEFAULT_PICK_END) {
+                        throw new IllegalStateException("The Picker \"" + this.getName() + "\" is finished the current picking request, they should be sent to marshalling.");
+                    } else {
+                        throw new IllegalArgumentException("The Picker \"" + this.getName() + "\" is not on the given picking number they are on " + Integer.toString((this.currentPick + 1)) + ".");
+                    }
+                } catch(NumberFormatException exception) {
+                    throw new IllegalArgumentException("The Picker \"" + this.getName() + "\" can not pick invalid number \"" + pickNumber + "\".");
+                }
+            } else {
+                throw new IllegalStateException("The Picker \"" + this.getName() + "\" is not currently checked in as ready.");
+            }
         } else {
-            throw new IllegalArgumentException("The Picker " + this.getName() + " is not on the" +
-                          " given picking number, " + this.getName() + " is on " + 
-                          Integer.toString(this.currentPick));
+            throw new IllegalStateException("The Picker \"" + this.getName() + "\" does not currently have a picking request assigned.");
         }
     }
 
@@ -85,9 +97,7 @@ public class Picker extends Worker implements TaskExecutor<String> {
      *         otherwise.
      */
     public boolean hasPickingRequest() {
-        System.out.println("Calling hasPickingRequest of " + this.toString() + ".");
-        System.out.println("    Returning " + this.isActive + ".");
-        return (this.pickingLocations.size() != 0);
+        return (this.currentPick >= DEFAULT_PICK_START);
     }
 
     /**
@@ -98,35 +108,36 @@ public class Picker extends Worker implements TaskExecutor<String> {
      *        the zone, then the aisle, rack, and level. It does not concern the SKU of the item.
      *        This should only be called if the Picker doesn't already have a picking request.
      */
-    public void setPickingLocations(List<String> newPickingLocations) {
-        System.out.println("Calling setPickingRequest of " + this.toString() + " with " +
-            newPickingLocations.toArray() + " as the pickingRequest argument.");
-        System.out.println("    Checking if " + this.toString() + " has a current picking " + 
-            "request of size zero.");
-        if(this.pickingLocations.size() == 0) {
-            System.out.println("    The result is true, adding to the picking locations.");
-            for(int index = 0; index < newPickingLocations.size(); index++) {
-                String[] newLocation = newPickingLocations.get(index).split(",");
-                this.pickingLocations.add(this.getWarehouse().getFloor().getLevel(
-                    newLocation[0].charAt(0), Integer.parseInt(newLocation[1]),
-                    Integer.parseInt(newLocation[2]), Integer.parseInt(newLocation[3])));
-            }
-        } else {
-            throw new IllegalArgumentException("The picking request of Picker " +
-                          super.getName() + "(" + this.toString() + ") is already set.");
+    private void setPickingLocations(List<String> newPickingLocations) {
+        for(int index = 0; index < newPickingLocations.size(); index++) {
+            String[] newLocation = newPickingLocations.get(index).split(",");
+            this.pickingLocations.add(this.getWarehouse().getFloor().getLevel(
+                newLocation[0].charAt(0), Integer.parseInt(newLocation[1]),
+                Integer.parseInt(newLocation[2]), Integer.parseInt(newLocation[3])));
         }
     }
 
     public void setPickingRequest(PickingRequest newPickingRequest) {
-        this.pickingRequest = newPickingRequest;
+        if(this.hasPickingRequest() == false) {
+            this.pickingRequest = newPickingRequest;
+            this.currentPick = DEFAULT_PICK_START;
+            this.setPickingLocations(new LinkedList<String>(this.getWarehouse().getWarehousePicking().optimize(new ArrayList<Integer>(Arrays.asList(newPickingRequest.getSKUs())))));
+            newPickingRequest.setStatus(1);
+        } else {
+            throw new IllegalStateException("The Picker \"" + this.getName() + "\" already has a picking request.");
+        }
     }
 
     public void setReady() {
-        if(this.pickingLocations.size() == 0 && this.isActive == true) {
-            this.isActive = false;
-            this.getWarehouse().getServer().addInactivePicker(this);
+        if(this.hasPickingRequest() == false) {
+            if(this.isActive == true) {
+                this.isActive = false;
+                this.getWarehouse().getServer().addInactivePicker(this);
+            } else {
+                throw new IllegalStateException("The picker \"" + this.getName() + "\" is waiting for a picking request, more orders must be sent in.");
+            }
         } else {
-            throw new IllegalStateException("The picker is currently picking a picking request.");
+            throw new IllegalStateException("The picker \"" + this.getName() + "\" is already picking a picking request, the pick command should be used.");
         }
     }
 
@@ -135,7 +146,7 @@ public class Picker extends Worker implements TaskExecutor<String> {
             this.isActive = true;
             this.getWarehouse().getMarshalling().dumpStock(forklift.getInventory());
             forklift.getInventory().clear();
-            currentPick = DEFAULT_PICK_START;
+            currentPick = DEFAULT_PICK_UNASSIGNED;
             pickingRequest.setStatus(2);
         } else {
             throw new IllegalStateException("The Marshalling request of Picker " + 
