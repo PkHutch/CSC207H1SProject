@@ -14,6 +14,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.IllegalArgumentException;
 import java.lang.IllegalStateException;
 import java.lang.StringIndexOutOfBoundsException;
@@ -115,12 +117,18 @@ public class Main {
                 }
 
                 br.close();
-                } catch (FileNotFoundException ex) {
-                    System.out.println("Unable to open file '" + ORDER_FILE + "'");
-                } catch (IOException ex) {
-                    System.out.println("Error reading file '" + ORDER_FILE + "'");
-                    ex.printStackTrace();
-                }
+            } catch (FileNotFoundException ex) {
+                System.out.println("Unable to open file '" + ORDER_FILE + "'");
+            } catch (IOException ex) {
+                System.out.println("Error reading file '" + ORDER_FILE + "'");
+                ex.printStackTrace();
+            }
+            try {
+                saveFinalState(warehouse.getFloor());
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } else {
             System.out.println(args[0]);
         }
@@ -130,6 +138,7 @@ public class Main {
      * The method for saving final.csv, . . . . .
      */
     private static void saveFinalState(Floor floor) throws IOException {
+        createFile();
         System.out.println("The current state of warehouse has been saved");
         Level[] levels = floor.getLevels();
         // goes through each possible location in the warehouse
@@ -249,6 +258,21 @@ public class Main {
                     pointerB += 1;
                 }
             }
+        }
+    }
+
+    /**
+     * The method for saving final.csv, . . . . .
+     */
+    private static void createFile(){
+        PrintWriter writer;
+        try {
+            System.out.println("Creating final.csv");
+            writer = new PrintWriter(SAVE_FILE,"UTF-8");
+            writer.close();
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            System.out.println("Failed to create final.txt");
+            e.printStackTrace();
         }
     }
 }
