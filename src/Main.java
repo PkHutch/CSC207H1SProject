@@ -76,7 +76,13 @@ public class Main {
                         if (line.startsWith(commandString)) {
                             commandFound = true;
                             String argument = line.substring(commandString.length() + 1);
-                            commands[index].executeCommand(argument);
+                            try {
+                                commands[index].executeCommand(argument.substring(commands[index].getCommand().length() + 1));
+                            } catch(StringIndexOutOfBoundsException exception) {
+                                System.err.println("    Error: An argument should follow the command \"" + commands[index].getCommand() + "\".");
+                            } catch(IllegalArgumentException|IllegalStateException exception) {
+                                System.err.println("    Error: " + exception.getMessage());
+                            }
                         } else {
                             index++;
                         }

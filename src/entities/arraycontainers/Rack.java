@@ -17,7 +17,7 @@ public class Rack extends ArrayContainer<Aisle, Level> {
      * @param layout the Integer[] which represents the layout, where each element is a Level and
      *        the respective Integer SKU.
      */
-    public Rack(Aisle aisle, Integer[] layout) {
+    public Rack(Aisle aisle, String[] layout) {
         super(aisle, new Level[layout.length]);
         for(int index = 0; index < layout.length; index++) {
             this.setItem(index, new Level(this, layout[index]));

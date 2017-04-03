@@ -1,6 +1,5 @@
 package entities;
 
-import entities.linkedlistcontainers.LinkedListContainer;
 import entities.Pallet;
 import entities.Stock;
 import java.util.ArrayList;
