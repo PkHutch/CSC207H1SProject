@@ -219,7 +219,7 @@ public class Warehouse {
 	 *            the Worker to be added to the Warehouse.
 	 * @throws Exception 
 	 */
-	public void addWorker(Worker newWorker) throws Exception {
+	public void addWorker(Worker newWorker) {
 		boolean found = false;
 		System.out.println("Calling addWorker of Warehouse " + this.toString() + ", with " + "argument newWorker as "
                 + newWorker.toString() + ".");
@@ -231,7 +231,7 @@ public class Warehouse {
 	    if (found == false){
 	        this.workers.add(newWorker);
 		}else{
-		    throw new Exception("This Worker Already exists in this warehouse");
+		    System.out.println("This worker already exists in the warehouse");
 		}
 	}
 
