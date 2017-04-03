@@ -115,20 +115,28 @@ public class Server {
             for(int index = 0; index < this.lowLevels.size() && foundLevel == false; index++) {
                 if(level == this.lowLevels.get(index)) {
                     foundLevel = true;
-                }
-            }
-            if(foundLevel = false) {
-                this.lowLevels.add(level);
-            } else {
-                throw new IllegalArgumentException("The level at location " +
+                    throw new IllegalArgumentException("The level at location " +
                               level.getLocation() + " is being checked for low quantity, this " +
                               "should never occur because it has already been checked.");
+                }
+            }
+            if(foundLevel = false || this.lowLevels.size() == 0) {
+                System.out.println("    Warning: Level " + level.getLocation() + " must be replenished.");
+                this.lowLevels.add(level);
             }
         }
     }
 
     public boolean hasLowLevels() {
         return this.lowLevels.size() != 0;
+    }
+
+    public String getLowLevelsString() {
+        String lowLevelsString = new String();
+        for(int index = 0; index < this.lowLevels.size(); index++) {
+            lowLevelsString.concat("        " + this.lowLevels.get(index).getLocation() + "\n");
+        }
+        return lowLevelsString;
     }
 
     public void updateLevel(Level level) {

@@ -68,10 +68,15 @@ public class Picker extends Worker implements TaskExecutor<String> {
     public void doTask(String pickNumber) {
         if(this.hasPickingRequest() == true) {
             if(this.isActive == false) {
+                if(this.getWarehouse().getServer().hasLowLevels() == true) {
+                    throw new IllegalStateException("The Picker \"" + this.getName() + "\" can not pick because a replenish must be called for the low levels.");
+                }
                 try {
                     Integer pickInteger = Integer.parseInt(pickNumber);
                     if(currentPick == pickInteger - 1 && currentPick < DEFAULT_PICK_END) {
-                        this.forklift.addItem(this.pickingLocations.pop().removeStock());
+                        Level nextLevel = this.pickingLocations.pop();
+                        this.forklift.addItem(nextLevel.removeStock());
+                        this.getWarehouse().getServer().checkLevel(nextLevel);
                         currentPick++;
                     } else if(currentPick == DEFAULT_PICK_END) {
                         throw new IllegalStateException("The Picker \"" + this.getName() + "\" is finished the current picking request, they should be sent to marshalling.");

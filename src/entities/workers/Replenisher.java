@@ -19,5 +19,6 @@ public class Replenisher extends Worker implements TaskExecutor<String> {
 
 		Level nextLevel = this.getWarehouse().getFloor().getItem(zone).getItem(aisle).getItem(rack).getItem(currlevel);
 		nextLevel.addStock(nextLevel.getMaxCapacity() - nextLevel.getStock());
+                this.getWarehouse().getServer().updateLevel(nextLevel);
 	}
 }
