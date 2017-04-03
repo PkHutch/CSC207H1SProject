@@ -48,8 +48,14 @@ public class Main {
                                            new PickerCommand(warehouse), 
                                            new LoaderCommand(warehouse),
                                            new SequencerCommand(warehouse),
-                                           new ReplenisherCommand(warehouse) };
+                                           new ReplenisherCommand(warehouse)};
         loadInitialState(warehouse.getFloor());
+
+        Level[] levels = warehouse.getFloor().getLevels();
+        // Checks low levels.
+        for(int index = 0; index < levels.length; index++) {
+            warehouse.getServer().checkLevel(levels[index]);
+        }
 
         // Defines the variables that need to be used for user input.
         if (args[0].equals("Manual")) {
@@ -157,8 +163,8 @@ public class Main {
             System.out.println("Wrote current state to to final.csv");
         } catch (IOException e) {
             e.printStackTrace();
-            }
         }
+    }
 
     private static String[] checkForDup() {
         String line;
