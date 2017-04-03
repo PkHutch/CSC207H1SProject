@@ -68,7 +68,7 @@ public class ReplenisherCommand extends WorkerCommand<Replenisher> {
         try {
             if (splitArgument[1].equals("replenishes")) {
                 try {
-                    this.lookupReplenisher(splitArgument[0]).doTask(splitArgument[3]);
+                    this.lookupReplenisher(splitArgument[0]).doTask(splitArgument[2]);
                 } catch (StringIndexOutOfBoundsException exception) {
                     throw new IllegalArgumentException(
                             "The command \"loads\" was given for the Replenisher command and a location, but got something else instead.");
