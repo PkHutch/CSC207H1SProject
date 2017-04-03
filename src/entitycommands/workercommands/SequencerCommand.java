@@ -27,7 +27,7 @@ public class SequencerCommand extends WorkerCommand<Sequencer> {
 		// Add debug message.
 	}
 
-	protected Sequencer lookupWorker(String name) {
+	protected Sequencer lookupSequencer(String name) {
 		// Use the warehouse to find the worker with the name and instanceof T.
 		// Then if the worker with the given name doesn't exist, create the
 		// worker and notify the
@@ -62,12 +62,31 @@ public class SequencerCommand extends WorkerCommand<Sequencer> {
 		// If "sequence" then doTask of the Sequencer
 		// Otherwise IllegalArgumentException.
 		// Don't forget debug prints.
-		String[] command = argument.split(" ");
-		Sequencer sequencer = (Sequencer) this.lookupWorker(command[0]);
-		if (command[1].toLowerCase().equals("sequences")) {
-			sequencer.doTask();
-		} else {
-			System.out.println("No such command was found.");
-		}
+		String[] splitArgument = argument.split(" ");
+		try {
+            if (splitArgument[1].equals("sequences")) {
+                try {
+                    this.lookupSequencer(splitArgument[0]).doTask();
+                } catch (StringIndexOutOfBoundsException exception) {
+                    throw new IllegalArgumentException(
+                            "The command \"loads\" was given for the Sequencer command, but got something else instead.");
+                }
+            } else if (splitArgument[1].equals("ready")) {
+                if (splitArgument[1].length() > 5) {
+                    throw new IllegalArgumentException(
+                            "The command \"ready\" was given for the Sequencer command, and should have been followed by nothing, but was instead followed by \""
+                                    + splitArgument[1].substring(5) + "\".");
+                } else {
+                    // this.lookupSequencer(splitArgument[0]).setReady();
+                }
+            } else {
+                throw new IllegalArgumentException("The command \"" + splitArgument[1]
+                        + "\" is not a valid Sequencer command, the valid commands are \"sequences\",\"ready\".");
+            }
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new IllegalArgumentException(
+                    "The command \"Sequencer\" should be followed by the name of the Sequencer, and then a valid command, instead \""
+                            + argument + "\" was given.");
+        }
 	}
 }
