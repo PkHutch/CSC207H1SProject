@@ -78,7 +78,7 @@ public class LoaderCommand extends WorkerCommand<Loader> {
                             "The command \"ready\" was given for the Loader command, and should have been followed by nothing, but was instead followed by \""
                                     + splitArgument[1].substring(5) + "\".");
                 } else {
-                    // this.lookupLoader(splitArgument[0]).setReady();
+                    this.lookupLoader(splitArgument[0]).setReady();
                 }
             } else {
                 throw new IllegalArgumentException("The command \"" + splitArgument[1]

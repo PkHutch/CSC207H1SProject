@@ -13,8 +13,9 @@ import java.lang.Integer;
 import java.util.LinkedList;
 
 /**
- * This class defines the Server, which keeps track of the different states of orders, and
- * effectively governs how the other entities interact in the warehouse.
+ * This class defines the Server, which keeps track of the different states of
+ * orders, and effectively governs how the other entities interact in the
+ * warehouse.
  */
 public class Server {
     // Defines the constants.
@@ -31,11 +32,10 @@ public class Server {
     /**
      * The only contructor for Server.
      *
-     * @param warehouse the warehouse which this server belongs to.
+     * @param warehouse
+     *            the warehouse which this server belongs to.
      */
     public Server(Warehouse warehouse) {
-        System.out.println("Constructing Server " + this.toString() + " with argument warehouse" +
-            " as "+ warehouse.toString() + ".");
         this.inactivePickers = new LinkedList<>();
         this.partialPickingRequest = new LinkedList<>();
         this.pickingRequests = new ArrayList<>();
@@ -50,84 +50,71 @@ public class Server {
     /**
      * Adds the worker to the inactivePickers list.
      *
-     * @param worker the Picker to be added to the inactivePickers list.
+     * @param worker
+     *            the Picker to be added to the inactivePickers list.
      */
     public void addInactivePicker(Picker picker) {
-        if(picker.hasPickingRequest()) {
-            throw new IllegalArgumentException("The Picker " + picker.getName() + " already " +
-                          " has a PickingRequest assigned.");
+        if (picker.hasPickingRequest()) {
+            throw new IllegalArgumentException(
+                    "The Picker " + picker.getName() + " already " + " has a PickingRequest assigned.");
         } else {
             this.assignPicker(picker);
-            if(picker.hasPickingRequest() == false) {
+            if (picker.hasPickingRequest() == false) {
                 this.inactivePickers.add(picker);
             }
         }
     }
 
     /**
-     * The addOrder method of Server checks if the order is in translation array, and adds it the
-     * SKUs to inactivePicks if it is, and creates a picking request, adding the picking request
-     * to inactivePickingRequests if there is enough inactivePicks.
+     * The addOrder method of Server checks if the order is in translation
+     * array, and adds it the SKUs to inactivePicks if it is, and creates a
+     * picking request, adding the picking request to inactivePickingRequests if
+     * there is enough inactivePicks.
      *
-     * @param order the Order to be added to the inactivePicks of Server, and potentially the
-     *        inactivePickingRequests. order must have it's attributes exist in the Server's
-     *        translationArray.
+     * @param order
+     *            the Order to be added to the inactivePicks of Server, and
+     *            potentially the inactivePickingRequests. order must have it's
+     *            attributes exist in the Server's translationArray.
      */
     public void addOrder(Order order) {
-        System.out.println("Calling addOrder of Server " + this.toString() + " with argument " +
-            "order as " + order.toString() + ".");
         // This is used to check when the server has looked up the order's SKU.
         boolean foundOrder = false;
-
-        System.out.println("    Checking if the translationArray contains the model and colour.");
-        for(int index = 0; (!(foundOrder) && index < this.orderArray.length); index++) {
-            System.out.println("    Checking if orderArray[" + Integer.toString(index) + "][0]" +
-                " is equal to " + order.getColour() + " and orderArray[" + 
-                Integer.toString(index) + "][1] is equal to " + order.getModel() + ".");
-            if(order.getColour().equals(this.orderArray[index][0]) &&
-                order.getModel().equals(this.orderArray[index][1])) {
-                System.out.println("The colour " + order.getColour() + " and model " +
-                    order.getModel() + " exist in the translationArray.");
+        for (int index = 0; (!(foundOrder) && index < this.orderArray.length); index++) {
+            if (order.getColour().equals(this.orderArray[index][0])
+                    && order.getModel().equals(this.orderArray[index][1])) {
                 foundOrder = true;
                 this.partialPickingRequest.add(Integer.parseInt(this.orderArray[index][2]));
                 this.partialPickingRequest.add(Integer.parseInt(this.orderArray[index][3]));
             }
         }
 
-        if(foundOrder == false) {
-            throw new IllegalArgumentException("The order given with colour \"" +
-                          order.getColour() + "\" and model \"" + order.getModel() + "\" does " +
-                          "not exist in the Server's translationArray.");
+        if (foundOrder == false) {
+            throw new IllegalArgumentException("The order given with colour \"" + order.getColour() + "\" and model \""
+                    + order.getModel() + "\" does " + "not exist in the Server's translationArray.");
         }
 
-        System.out.println("    Checking if there are enough inactivePicks to create a " +
-            "picking request.");
         // If four orders have been placed, then creates a picking request.
-        if(partialPickingRequest.size() == DEFAULT_PICKING_REQUEST_SIZE) {
-            System.out.println("    There are enough, creating a new picking request.");
+        if (partialPickingRequest.size() == DEFAULT_PICKING_REQUEST_SIZE) {
             PickingRequest newPickingRequest = new PickingRequest(
-                                                       this.partialPickingRequest.toArray(
-                                                       new Integer[
-                                                       DEFAULT_PICKING_REQUEST_SIZE]));
+                    this.partialPickingRequest.toArray(new Integer[DEFAULT_PICKING_REQUEST_SIZE]));
             pickingRequests.add(newPickingRequest);
             this.partialPickingRequest.clear();
             if (this.inactivePickers.size() > 0) {
                 this.assignPicker(inactivePickers.pop());
             }
         } else {
-            System.out.println("Not enough!");
+            
         }
     }
 
     /**
-     * The getPickingRequests method of Server returns the PickingRequests of the server.
+     * The getPickingRequests method of Server returns the PickingRequests of
+     * the server.
      *
-     * @return the ArrayList<PickingRequest> which is the PickingRequests that the Server is
-     *         keeping track of.
+     * @return the ArrayList<PickingRequest> which is the PickingRequests that
+     *         the Server is keeping track of.
      */
     public ArrayList<PickingRequest> getPickingRequests() {
-        System.out.println("Calling getPickingRequests of Server " + this.toString() + ".");
-        System.out.println("    Returning " + this.pickingRequests.toString() + ".");
         return this.pickingRequests;
     }
 
@@ -135,13 +122,13 @@ public class Server {
     /**
      * The assignPicker method of Server assigns the Picker a PickingRequest.
      *
-     * @param picker the Picker to be assigned a PickingRequest.
+     * @param picker
+     *            the Picker to be assigned a PickingRequest.
      */
     private void assignPicker(Picker picker) {
         boolean foundPickingRequest = false;
-        for(int index = 0; index < this.pickingRequests.size() &&
-                           foundPickingRequest == false; index++) {
-            if(this.pickingRequests.get(index).getStatus() == 0) {
+        for (int index = 0; index < this.pickingRequests.size() && foundPickingRequest == false; index++) {
+            if (this.pickingRequests.get(index).getStatus() == 0) {
                 foundPickingRequest = true;
                 picker.setPickingRequest(this.pickingRequests.get(index));
             }
@@ -149,14 +136,15 @@ public class Server {
     }
 
     /**
-     * Parses the translation.csv file so that the server has a more readily useable form for the
-     * sake of looking up SKU numbers of units, this is more efficient than parsing the file every
-     * single time an SKU lookup is required. If translation.csv contains repeated SKUs, then an
+     * Parses the translation.csv file so that the server has a more readily
+     * useable form for the sake of looking up SKU numbers of units, this is
+     * more efficient than parsing the file every single time an SKU lookup is
+     * required. If translation.csv contains repeated SKUs, then an
      * IllegalFormatException is thrown.
      *
-     * @return the String[][], is each element being a single fascia pair, the first element of
-     *         the String[] is the model, the second is the colour, the third is the front, the
-     *         fourth is the back.
+     * @return the String[][], is each element being a single fascia pair, the
+     *         first element of the String[] is the model, the second is the
+     *         colour, the third is the front, the fourth is the back.
      */
     private String[][] parseTranslationFile() {
         // Defines constants.
@@ -180,29 +168,27 @@ public class Server {
                 String[] translatedLine = line.split(SPLIT_BY);
 
                 if (translatedLine[2].equals(translatedLine[3])) {
-                    throw new IllegalArgumentException("The SKU " + translatedLine[2] + " is " +
-                                  "equal to " + translatedLine[3] + " and can't have the same " +
-                                  "SKU.");
+                    throw new IllegalArgumentException("The SKU " + translatedLine[2] + " is " + "equal to "
+                            + translatedLine[3] + " and can't have the same " + "SKU.");
                 } else {
                     for (int index = 0; index < parsedArrayList.size(); index++) {
                         String[] currentTranslation = parsedArrayList.get(index);
-                        if (translatedLine[2].equals(currentTranslation[2]) ||
-                            translatedLine[2].equals(currentTranslation[3])) {
-                            throw new IllegalArgumentException("The SKU " + translatedLine[2] + 
-                                          " already exists in the translation table.");
-                        } else if (translatedLine[3].equals(currentTranslation[2]) ||
-                            translatedLine[3].equals(currentTranslation[3])) {
-                            throw new IllegalArgumentException("The SKU " + translatedLine[3] +
-                                          " already exists in the translation table.");
-                        } else if (translatedLine[0].equals(currentTranslation[0]) &&
-                            translatedLine[1].equals(currentTranslation[1])) {
-                            throw new IllegalArgumentException("The colour and model " +
-                                          translatedLine[0] + " and " + translatedLine[1] +
-                                          " already have been defined.");
+                        if (translatedLine[2].equals(currentTranslation[2])
+                                || translatedLine[2].equals(currentTranslation[3])) {
+                            throw new IllegalArgumentException(
+                                    "The SKU " + translatedLine[2] + " already exists in the translation table.");
+                        } else if (translatedLine[3].equals(currentTranslation[2])
+                                || translatedLine[3].equals(currentTranslation[3])) {
+                            throw new IllegalArgumentException(
+                                    "The SKU " + translatedLine[3] + " already exists in the translation table.");
+                        } else if (translatedLine[0].equals(currentTranslation[0])
+                                && translatedLine[1].equals(currentTranslation[1])) {
+                            throw new IllegalArgumentException("The colour and model " + translatedLine[0] + " and "
+                                    + translatedLine[1] + " already have been defined.");
                         }
                     }
-                    parsedArrayList.add(new String[]{translatedLine[0], translatedLine[1],
-                                                translatedLine[2], translatedLine[3]});
+                    parsedArrayList.add(new String[] { translatedLine[0], translatedLine[1], translatedLine[2],
+                            translatedLine[3] });
                 }
             }
         } catch (FileNotFoundException e) {

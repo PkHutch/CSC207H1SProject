@@ -8,8 +8,8 @@ import entities.workers.Worker;
 import entitycommands.EntityCommand;
 
 /**
- * A WorkerCommand is an abstract class that should be utilized for the commands involving
- * workers, so that they can inherit the lookupWorker method.
+ * A WorkerCommand is an abstract class that should be utilized for the commands
+ * involving workers, so that they can inherit the lookupWorker method.
  */
 public abstract class WorkerCommand<T extends Worker> extends EntityCommand {
     // Defines the instance methods.
@@ -17,12 +17,14 @@ public abstract class WorkerCommand<T extends Worker> extends EntityCommand {
 
     // Defines constructor methods.
     /**
-     * The default constructor, a worker command must have a Warehouse so that the lookupWorker
-     * is properly implemented.
+     * The default constructor, a worker command must have a Warehouse so that
+     * the lookupWorker is properly implemented.
      *
-     * @param command the String which is responsible for calling the command.
-     * @param warehouse the Warehouse which the lookupWorker requires inorder to look up the name
-     *        of the worker requested.
+     * @param command
+     *            the String which is responsible for calling the command.
+     * @param warehouse
+     *            the Warehouse which the lookupWorker requires inorder to look
+     *            up the name of the worker requested.
      */
     public WorkerCommand(String command, Warehouse warehouse) {
         super(command);
@@ -32,36 +34,41 @@ public abstract class WorkerCommand<T extends Worker> extends EntityCommand {
 
     // Defines functional methods.
     /**
-     * The executeCommand method is the main purpose of each command class, and should execute
-     * the functionality of the command.
+     * The executeCommand method is the main purpose of each command class, and
+     * should execute the functionality of the command.
      *
-     * @param argument the String argument should be the argument that a command requires to
-     *        execute. Each command will have their own way of dealing with this String.
+     * @param argument
+     *            the String argument should be the argument that a command
+     *            requires to execute. Each command will have their own way of
+     *            dealing with this String.
      */
     public abstract void executeCommand(String argument);
 
     /**
-     * The lookupWorker method will either return the worker of the type T, which has the matching
-     * name of the String given, and will notify the console if a new Worker had to be
-     * instantiated inorder to facilitate the command.
+     * The lookupWorker method will either return the worker of the type T,
+     * which has the matching name of the String given, and will notify the
+     * console if a new Worker had to be instantiated inorder to facilitate the
+     * command.
      *
-     * @param name the String name of the Worker to be looked up or returned.
+     * @param name
+     *            the String name of the Worker to be looked up or returned.
      */
     protected Worker lookupWorker(String name) {
         // Use the warehouse to find the worker with the name and instanceof T.
-        // Then if the worker with the given name doesn't exist, create the worker and notify the
+        // Then if the worker with the given name doesn't exist, create the
+        // worker and notify the
         // console.
-    	ArrayList<Worker> workers = this.getWarehouse().getWorkers();
-        for(int i=0;i<workers.size();i++){
-        	Worker currWorker = workers.get(i);
-        	if(currWorker.getName().equals(name)){
-        	    	return currWorker;        		
-        	}
+        ArrayList<Worker> workers = this.getWarehouse().getWorkers();
+        for (int i = 0; i < workers.size(); i++) {
+            Worker currWorker = workers.get(i);
+            if (currWorker.getName().equals(name)) {
+                return currWorker;
+            }
         }
-		return null;
+        return null;
     }
 
-	public Warehouse getWarehouse() {
-		return warehouse;
-	}
+    public Warehouse getWarehouse() {
+        return warehouse;
+    }
 }

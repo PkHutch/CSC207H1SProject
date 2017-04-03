@@ -33,13 +33,13 @@ public class Marshalling {
     }
 
     public void dumpSequenceableStock(List<Stock> stock) {
-        while(stock.size() > 0) {
+        while (stock.size() > 0) {
             this.sequenceableStock.add(stock.remove(0));
         }
     }
 
     public void dumpStock(List<Stock> stock) {
-        while(stock.size() > 0) {
+        while (stock.size() > 0) {
             this.marshallingStock.add(stock.remove(0));
         }
     }

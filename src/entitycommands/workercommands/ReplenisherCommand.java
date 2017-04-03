@@ -79,7 +79,7 @@ public class ReplenisherCommand extends WorkerCommand<Replenisher> {
                             "The command \"ready\" was given for the Replenisher command, and should have been followed by nothing, but was instead followed by \""
                                     + splitArgument[1].substring(5) + "\".");
                 } else {
-                    // this.lookupReplenisher(splitArgument[0]).setReady();
+                    this.lookupReplenisher(splitArgument[0]).setReady();
                 }
             } else {
                 throw new IllegalArgumentException("The command \"" + splitArgument[1]

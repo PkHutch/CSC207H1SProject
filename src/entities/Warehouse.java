@@ -11,8 +11,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * The warehouse class, which is where the simulation takes place, as the Warehouse effectively
- * acts as a container for the other entities.
+ * The warehouse class, which is where the simulation takes place, as the
+ * Warehouse effectively acts as a container for the other entities.
  */
 public class Warehouse {
     // Defines the instance variables.
@@ -22,7 +22,6 @@ public class Warehouse {
     private final Server server;
     private final WarehousePicking warehousePicking;
     private final ArrayList<Worker> workers;
-
 
     // Defines the constructors.
     /**
@@ -35,9 +34,10 @@ public class Warehouse {
         this.server = new Server(this);
         this.workers = new ArrayList<>();
 
-        // These instance variables are assigned after, because they require the creation of the
+        // These instance variables are assigned after, because they require the
+        // creation of the
         // instance variables prior to them.
-	this.faxMachine = new FaxMachine(this.server);
+        this.faxMachine = new FaxMachine(this.server);
         this.warehousePicking = new WarehousePicking(this.floor.getLevels());
     }
 
@@ -52,8 +52,8 @@ public class Warehouse {
     }
 
     /**
-     * The getWarehousePicking method of Warehouse returns the WarehousePicking class of this
-     * Warehouse, which contains the optimize method.
+     * The getWarehousePicking method of Warehouse returns the WarehousePicking
+     * class of this Warehouse, which contains the optimize method.
      *
      * @return the WarehousePicking of this Warehouse.
      */
@@ -61,188 +61,177 @@ public class Warehouse {
         return this.warehousePicking;
     }
 
-	// Defines the helper methods.
-	/**
-	 * Parses the traversal_table.csv file so that the server has a more readily
-	 * useable form for the sake of looking up SKU numbers of levels, this is
-	 * more efficient than parsing the file every single time an SKU lookup is
-	 * required.
-	 *
-	 * @return the Integer[][][][] which "models" the Warehouse in the sense
-	 *         that it describes SKU of each Level. The first dimension is the
-	 *         zones, then the aisles, then the racks, then the levels.
-	 */
-	private String[][][][] parseTraversalTableFile() {
-		System.out.println("Calling parseTraversalTableFile of Warehouse " + this.toString() + ".");
-		// Defines constants.
-		final String SPLIT_BY = ",";
-		final char STARTING_ZONE = 'A';
-		final char STARTING_AISLE = '0';
-		final char STARTING_RACK = '0';
-		final char STARTING_LEVEL = '0';
-		final String TRANSLATION_FILE = "./resources/traversal_table.csv";
+    // Defines the helper methods.
+    /**
+     * Parses the traversal_table.csv file so that the server has a more readily
+     * useable form for the sake of looking up SKU numbers of levels, this is
+     * more efficient than parsing the file every single time an SKU lookup is
+     * required.
+     *
+     * @return the Integer[][][][] which "models" the Warehouse in the sense
+     *         that it describes SKU of each Level. The first dimension is the
+     *         zones, then the aisles, then the racks, then the levels.
+     */
+    private String[][][][] parseTraversalTableFile() {
+        // Defines constants.
+        final String SPLIT_BY = ",";
+        final char STARTING_ZONE = 'A';
+        final char STARTING_AISLE = '0';
+        final char STARTING_RACK = '0';
+        final char STARTING_LEVEL = '0';
+        final String TRANSLATION_FILE = "./resources/traversal_table.csv";
 
-		// Defines variables for reading the file.
-		BufferedReader bufferedReader = null;
-		String line;
+        // Defines variables for reading the file.
+        BufferedReader bufferedReader = null;
+        String line;
 
-		// Defines the ArrayList that will be converted to an array.
-		ArrayList<String[][][]> parsedTraversalFile = new ArrayList<>();
+        // Defines the ArrayList that will be converted to an array.
+        ArrayList<String[][][]> parsedTraversalFile = new ArrayList<>();
 
-		try {
-			bufferedReader = new BufferedReader(new FileReader(TRANSLATION_FILE));
-			char currentZone = STARTING_ZONE;
-			char currentAisle = STARTING_AISLE;
-			char currentRack = STARTING_RACK;
-			char currentLevel = STARTING_LEVEL;
-			ArrayList<String> parsedRack = new ArrayList<>();
-			ArrayList<String[]> parsedAisle = new ArrayList<>();
-			ArrayList<String[][]> parsedZone = new ArrayList<>();
+        try {
+            bufferedReader = new BufferedReader(new FileReader(TRANSLATION_FILE));
+            char currentZone = STARTING_ZONE;
+            char currentAisle = STARTING_AISLE;
+            char currentRack = STARTING_RACK;
+            char currentLevel = STARTING_LEVEL;
+            ArrayList<String> parsedRack = new ArrayList<>();
+            ArrayList<String[]> parsedAisle = new ArrayList<>();
+            ArrayList<String[][]> parsedZone = new ArrayList<>();
 
-			line = bufferedReader.readLine();
-			String[] translatedLine = line.split(SPLIT_BY);
-			char translatedZone = translatedLine[0].charAt(0);
-			char translatedAisle = translatedLine[1].charAt(0);
-			char translatedRack = translatedLine[2].charAt(0);
-			char translatedLevel = translatedLine[3].charAt(0);
+            line = bufferedReader.readLine();
+            String[] translatedLine = line.split(SPLIT_BY);
+            char translatedZone = translatedLine[0].charAt(0);
+            char translatedAisle = translatedLine[1].charAt(0);
+            char translatedRack = translatedLine[2].charAt(0);
+            char translatedLevel = translatedLine[3].charAt(0);
 
-			if (currentZone == translatedZone && currentAisle == translatedAisle && currentRack == translatedRack
-					&& currentLevel == translatedLevel) {
+            if (currentZone == translatedZone && currentAisle == translatedAisle && currentRack == translatedRack
+                    && currentLevel == translatedLevel) {
+                parsedRack.add(translatedLine[4]);
+            } else {
+                throw new IllegalArgumentException("The first line is not of the form "
+                        + "\"A,0,0,0,X\" where X is the SKU that the level contains.");
+            }
+
+            // Operating on all remaining lines.
+            while ((line = bufferedReader.readLine()) != null) {
+                translatedLine = line.split(SPLIT_BY);
+                translatedZone = translatedLine[0].charAt(0);
+                translatedAisle = translatedLine[1].charAt(0);
+                translatedRack = translatedLine[2].charAt(0);
+                translatedLevel = translatedLine[3].charAt(0);
+
+                if (currentZone == translatedZone) {
+                    if (currentAisle == translatedAisle) {
+                        if (currentRack == translatedRack) {
+                            if (translatedLevel == ((char) ((int) currentLevel + 1))) {
+                                currentLevel = translatedLevel;
                                 parsedRack.add(translatedLine[4]);
-			} else {
-				throw new IllegalArgumentException("The first line is not of the form "
-						+ "\"A,0,0,0,X\" where X is the SKU that the level contains.");
-			}
+                            } else {
+                                throw new IllegalArgumentException(
+                                        "A line in the " + "traversal_table.csv is not valid.");
+                            }
+                        } else if (translatedRack == ((char) ((int) currentRack + 1))
+                                && (translatedLevel == STARTING_LEVEL)) {
+                            currentLevel = STARTING_LEVEL;
+                            currentRack = translatedRack;
+                            parsedRack.add(translatedLine[4]);
+                            parsedAisle.add(parsedRack.toArray(new String[parsedRack.size()]));
+                            parsedRack.clear();
+                        } else {
+                            throw new IllegalArgumentException("A line in the " + "traversal_table.csv is not valid.");
+                        }
+                    } else if (translatedAisle == ((char) ((int) currentAisle + 1)) && (translatedRack == STARTING_RACK)
+                            && (translatedLevel == STARTING_LEVEL)) {
+                        currentLevel = STARTING_LEVEL;
+                        currentRack = STARTING_RACK;
+                        currentAisle = translatedAisle;
+                        parsedRack.add(translatedLine[4]);
+                        parsedAisle.add(parsedRack.toArray(new String[parsedRack.size()]));
+                        parsedRack.clear();
+                        parsedZone.add(parsedAisle.toArray(new String[parsedAisle.size()][]));
+                        parsedAisle.clear();
+                    } else {
+                        throw new IllegalArgumentException("A line in the traversal_table.csv " + "is not valid.");
+                    }
+                } else if (translatedZone == ((char) ((int) currentZone + 1)) && (translatedAisle == STARTING_AISLE)
+                        && (translatedRack == STARTING_RACK) && (translatedLevel == STARTING_LEVEL)) {
+                    currentLevel = STARTING_LEVEL;
+                    currentRack = STARTING_RACK;
+                    currentAisle = STARTING_AISLE;
+                    currentZone = translatedZone;
+                    parsedRack.add(translatedLine[4]);
+                    parsedAisle.add(parsedRack.toArray(new String[parsedRack.size()]));
+                    parsedRack.clear();
+                    parsedZone.add(parsedAisle.toArray(new String[parsedAisle.size()][]));
+                    parsedAisle.clear();
+                    parsedTraversalFile.add(parsedZone.toArray(new String[parsedZone.size()][][]));
+                    parsedZone.clear();
+                } else {
+                    throw new IllegalArgumentException("A line in the traversal_table.csv is " + "not valid.");
+                }
+            }
+            parsedRack.add(translatedLine[4]);
+            parsedAisle.add(parsedRack.toArray(new String[parsedRack.size()]));
+            parsedZone.add(parsedAisle.toArray(new String[parsedAisle.size()][]));
+            parsedTraversalFile.add(parsedZone.toArray(new String[parsedZone.size()][][]));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return parsedTraversalFile.toArray(new String[parsedTraversalFile.size()][][][]);
+    }
 
-			// Operating on all remaining lines.
-			while ((line = bufferedReader.readLine()) != null) {
-				System.out.println("    Parsing line: " + line + ".");
-				translatedLine = line.split(SPLIT_BY);
-				translatedZone = translatedLine[0].charAt(0);
-				translatedAisle = translatedLine[1].charAt(0);
-				translatedRack = translatedLine[2].charAt(0);
-				translatedLevel = translatedLine[3].charAt(0);
+    /**
+     * The getWorkers function of Warehouse returns the workers that belong to
+     * that Warehouse.
+     *
+     * @return the ArrayList of Workers that belong to the Warehouse.
+     */
+    public ArrayList<Worker> getWorkers() {
+        return this.workers;
+    }
 
-				if (currentZone == translatedZone) {
-					System.out.println("    Zone is the same as current.");
-					if (currentAisle == translatedAisle) {
-						System.out.println("    Aisle is the same as current.");
-						if (currentRack == translatedRack) {
-							System.out.println("    Rack is the same as current.");
-							System.out.println("    " + Character.toString(((char) ((int) currentLevel + 1))) + ".");
-							if (translatedLevel == ((char) ((int) currentLevel + 1))) {
-								System.out.println("    Level is not, adding new level to " + "Rack.");
-								currentLevel = translatedLevel;
-								parsedRack.add(translatedLine[4]);
-							} else {
-								throw new IllegalArgumentException(
-										"A line in the " + "traversal_table.csv is not valid.");
-							}
-						} else if (translatedRack == ((char) ((int) currentRack + 1))
-								&& (translatedLevel == STARTING_LEVEL)) {
-							currentLevel = STARTING_LEVEL;
-							currentRack = translatedRack;
-							parsedRack.add(translatedLine[4]);
-							parsedAisle.add(parsedRack.toArray(new String[parsedRack.size()]));
-							parsedRack.clear();
-						} else {
-							throw new IllegalArgumentException("A line in the " + "traversal_table.csv is not valid.");
-						}
-					} else if (translatedAisle == ((char) ((int) currentAisle + 1)) && (translatedRack == STARTING_RACK)
-							&& (translatedLevel == STARTING_LEVEL)) {
-						currentLevel = STARTING_LEVEL;
-						currentRack = STARTING_RACK;
-						currentAisle = translatedAisle;
-						parsedRack.add(translatedLine[4]);
-						parsedAisle.add(parsedRack.toArray(new String[parsedRack.size()]));
-						parsedRack.clear();
-						parsedZone.add(parsedAisle.toArray(new String[parsedAisle.size()][]));
-						parsedAisle.clear();
-					} else {
-						throw new IllegalArgumentException("A line in the traversal_table.csv " + "is not valid.");
-					}
-				} else if (translatedZone == ((char) ((int) currentZone + 1)) && (translatedAisle == STARTING_AISLE)
-						&& (translatedRack == STARTING_RACK) && (translatedLevel == STARTING_LEVEL)) {
-					currentLevel = STARTING_LEVEL;
-					currentRack = STARTING_RACK;
-					currentAisle = STARTING_AISLE;
-					currentZone = translatedZone;
-					parsedRack.add(translatedLine[4]);
-					parsedAisle.add(parsedRack.toArray(new String[parsedRack.size()]));
-					parsedRack.clear();
-					parsedZone.add(parsedAisle.toArray(new String[parsedAisle.size()][]));
-					parsedAisle.clear();
-					parsedTraversalFile.add(parsedZone.toArray(new String[parsedZone.size()][][]));
-					parsedZone.clear();
-				} else {
-					throw new IllegalArgumentException("A line in the traversal_table.csv is " + "not valid.");
-				}
-			}
-			parsedRack.add(translatedLine[4]);
-			parsedAisle.add(parsedRack.toArray(new String[parsedRack.size()]));
-			parsedZone.add(parsedAisle.toArray(new String[parsedAisle.size()][]));
-			parsedTraversalFile.add(parsedZone.toArray(new String[parsedZone.size()][][]));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (bufferedReader != null) {
-				try {
-					bufferedReader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return parsedTraversalFile.toArray(new String[parsedTraversalFile.size()][][][]);
-	}
+    /**
+     * The addWorker function of Warehouse adds a Worker to the Warehouse
+     * workers ArrayList.
+     *
+     * @param newWorker
+     *            the Worker to be added to the Warehouse.
+     * @throws Exception
+     */
+    public void addWorker(Worker newWorker) {
+        boolean found = false;
+        for (int i = 0; i < this.workers.size(); i++) {
+            if (workers.get(i).getName().equals(newWorker.getName())) {
+                found = true;
+            }
+        }
+        if (found == false) {
+            this.workers.add(newWorker);
+        } else {
+            System.out.println("This worker already exists in the warehouse");
+        }
+    }
 
-	/**
-	 * The getWorkers function of Warehouse returns the workers that belong to
-	 * that Warehouse.
-	 *
-	 * @return the ArrayList of Workers that belong to the Warehouse.
-	 */
-	public ArrayList<Worker> getWorkers() {
-		System.out.println("Calling getWorkers() of Warehouse " + this.toString() + ".");
-		System.out.println("    Returning " + this.workers.toString() + ".");
-		return this.workers;
-	}
+    public Floor getFloor() {
+        return this.floor;
+    }
 
-	/**
-	 * The addWorker function of Warehouse adds a Worker to the Warehouse
-	 * workers ArrayList.
-	 *
-	 * @param newWorker
-	 *            the Worker to be added to the Warehouse.
-	 * @throws Exception 
-	 */
-	public void addWorker(Worker newWorker) {
-		boolean found = false;
-		System.out.println("Calling addWorker of Warehouse " + this.toString() + ", with " + "argument newWorker as "
-                + newWorker.toString() + ".");
-		for(int i=0;i<this.workers.size();i++){
-		    if(workers.get(i).getName().equals(newWorker.getName())){
-		        found = true;
-		    }
-		}
-	    if (found == false){
-	        this.workers.add(newWorker);
-		}else{
-		    System.out.println("This worker already exists in the warehouse");
-		}
-	}
+    public Marshalling getMarshalling() {
+        return this.marshalling;
+    }
 
-	public Floor getFloor() {
-		return this.floor;
-	}
-
-	public Marshalling getMarshalling() {
-		return this.marshalling;
-	}
-
-	public Server getServer() {
-		return this.server;
-	}
+    public Server getServer() {
+        return this.server;
+    }
 }
