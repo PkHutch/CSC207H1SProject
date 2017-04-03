@@ -54,7 +54,7 @@ public abstract class WorkerCommand<T extends Worker> extends EntityCommand {
     	ArrayList<Worker> workers = this.getWarehouse().getWorkers();
         for(int i=0;i<workers.size();i++){
         	Worker currWorker = workers.get(i);
-        	if(currWorker.getName() == name){
+        	if(currWorker.getName().equals(name)){
         	    	return currWorker;        		
         	}
         }

@@ -20,8 +20,6 @@ public abstract class ArrayContainer<S, T> {
      *        contains.
      */
     public ArrayContainer(S containedBy, T[] items) {
-        System.out.println("Constructing ArrayContainer " + this.toString() + " with argument " +
-            "containedBy as " + containedBy.toString() + ".");
         this.containedBy = containedBy;
         this.items = items;
     }
@@ -34,8 +32,6 @@ public abstract class ArrayContainer<S, T> {
      * @return the object which contains the ArrayContainer.
      */
     public S getContainer() {
-        System.out.println("Calling getContainer of ArrayContainer " + this.toString() + ".");
-        System.out.println("    Returning " + this.containedBy.toString() + ".");
         return this.containedBy;
     }
 
@@ -46,8 +42,6 @@ public abstract class ArrayContainer<S, T> {
      *         object that the ArrayContainer contains.
      */
     protected T[] getItems() {
-        System.out.println("Calling getItems of ArrayContainer " + this.toString() + ".");
-        System.out.println("    Returning " + this.items.toString() + ".");
         return this.items;
     }
 
@@ -79,9 +73,6 @@ public abstract class ArrayContainer<S, T> {
      *         that the ArrayContainer contains.
      */
     public T getItem(int index) {
-        System.out.println("Calling getItem of ArrayContainer " + this.toString() + " with " +
-            "argument index as " + Integer.toString(index) + ".");
-        System.out.println("    Returning " + this.items[index].toString() + ".");
         return this.items[index];
     }
 
@@ -92,8 +83,6 @@ public abstract class ArrayContainer<S, T> {
      * @return the int, which represents the amount of objects that ArrayContainer contains.
      */
     protected int getSize() {
-        System.out.println("Calling getSize of ArrayContainer " + this.toString() + ".");
-        System.out.println("    Returning " + Integer.toString(this.items.length) + ".");
         return this.items.length;
     }
 
@@ -105,8 +94,6 @@ public abstract class ArrayContainer<S, T> {
      * @param item the T object to be set.
      */
     protected void setItem(int index, T item) {
-        System.out.println("Calling getSize of ArrayContainer " + this.toString() + ".");
-        System.out.println("    Returning " + Integer.toString(this.items.length) + ".");
         this.items[index] = item;
     }
 }

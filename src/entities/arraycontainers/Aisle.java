@@ -16,9 +16,6 @@ public class Aisle extends ArrayContainer<Zone, Rack> {
      */
     public Aisle(Zone zone, Integer[][] layout) {
         super(zone, new Rack[layout.length]);
-        System.out.println("Constructing Aisle " + this.toString() + " with argument zone as " +
-            zone.toString() + ", and argument layout as " + layout.toString() + ".");
-        System.out.println("    Creating " + Integer.toString(layout.length) + " Racks.");
         for(int index = 0; index < layout.length; index++) {
             this.setItem(index, new Rack(this, layout[index]));
         }
