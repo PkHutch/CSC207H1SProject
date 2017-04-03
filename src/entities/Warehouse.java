@@ -87,7 +87,7 @@ public class Warehouse {
 		String line;
 
 		// Defines the ArrayList that will be converted to an array.
-		ArrayList<Integer[][][]> parsedTraversalFile = new ArrayList<>();
+		ArrayList<String[][][]> parsedTraversalFile = new ArrayList<>();
 
 		try {
 			bufferedReader = new BufferedReader(new FileReader(TRANSLATION_FILE));
@@ -172,7 +172,7 @@ public class Warehouse {
 					parsedRack.clear();
 					parsedZone.add(parsedAisle.toArray(new String[parsedAisle.size()][]));
 					parsedAisle.clear();
-					parsedTraversalFile.add(parsedZone.toArray(new Integer[parsedZone.size()][][]));
+					parsedTraversalFile.add(parsedZone.toArray(new String[parsedZone.size()][][]));
 					parsedZone.clear();
 				} else {
 					throw new IllegalArgumentException("A line in the traversal_table.csv is " + "not valid.");
@@ -181,7 +181,7 @@ public class Warehouse {
 			parsedRack.add(translatedLine[4]);
 			parsedAisle.add(parsedRack.toArray(new String[parsedRack.size()]));
 			parsedZone.add(parsedAisle.toArray(new String[parsedAisle.size()][]));
-			parsedTraversalFile.add(parsedZone.toArray(new Integer[parsedZone.size()][][]));
+			parsedTraversalFile.add(parsedZone.toArray(new String[parsedZone.size()][][]));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -195,7 +195,6 @@ public class Warehouse {
 				}
 			}
 		}
-
 		return parsedTraversalFile.toArray(new String[parsedTraversalFile.size()][][][]);
 	}
 
