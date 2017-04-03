@@ -224,7 +224,7 @@ public class Warehouse {
 		System.out.println("Calling addWorker of Warehouse " + this.toString() + ", with " + "argument newWorker as "
                 + newWorker.toString() + ".");
 		for(int i=0;i<this.workers.size();i++){
-		    if(workers.get(i).equals(newWorker.getName())){
+		    if(workers.get(i).getName().equals(newWorker.getName())){
 		        found = true;
 		    }
 		}
