@@ -217,11 +217,22 @@ public class Warehouse {
 	 *
 	 * @param newWorker
 	 *            the Worker to be added to the Warehouse.
+	 * @throws Exception 
 	 */
-	public void addWorker(Worker newWorker) {
+	public void addWorker(Worker newWorker) throws Exception {
+		boolean found = false;
 		System.out.println("Calling addWorker of Warehouse " + this.toString() + ", with " + "argument newWorker as "
-				+ newWorker.toString() + ".");
-		this.workers.add(newWorker);
+                + newWorker.toString() + ".");
+		for(int i=0;i<this.workers.size();i++){
+		    if(workers.get(i).equals(newWorker.getName())){
+		        found = true;
+		    }
+		}
+	    if (found == false){
+	        this.workers.add(newWorker);
+		}else{
+		    throw new Exception("This Worker Already exists in this warehouse");
+		}
 	}
 
 	public Floor getFloor() {
