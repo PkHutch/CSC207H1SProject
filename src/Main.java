@@ -40,8 +40,9 @@ public class Main {
      * execute the given command in the console.
      *
      * @param args Unused parameter required in main.
+     * @throws IOException 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Warehouse warehouse = new Warehouse();
         EntityCommand[] commands = new EntityCommand[]{
                                            new OrderCommand(warehouse.getFaxMachine()),
@@ -57,45 +58,7 @@ public class Main {
             warehouse.getServer().checkLevel(levels[index]);
         }
 
-        // Defines the variables that need to be used for user input.
-        if (args[0].equals("Manual")) {
-            String currentInput = "";
-            Scanner inputScanner = new Scanner(System.in);
-            // Keeps getting user input and inputting the commands until the quit command is 
-            // given.
-            while (!(currentInput.equals(QUIT_COMMAND))) {
-                // Gets user input.
-                System.out.print("Input: ");
-                currentInput = inputScanner.nextLine();
-
-                // Sets up for checking commands.
-                boolean commandFound = false;
-
-                // Keep checking until there is a valid command or all commands have been checked.
-                for (int index = 0; (!(commandFound) && index < commands.length); index++) {
-                    // If the command is valid, execute the command.
-                    if (currentInput.startsWith(commands[index].getCommand())) {
-                        commandFound = true;
-                        try {
-                            commands[index].executeCommand(currentInput.substring(commands[index].getCommand().length() + 1));
-                        } catch(StringIndexOutOfBoundsException exception) {
-                            System.err.println("    Error: An argument should follow the command \"" + commands[index].getCommand() + "\".");
-                        } catch(IllegalArgumentException|IllegalStateException exception) {
-                            System.err.println("    Error: " + exception.getMessage());
-                        }
-                    }
-                }
-            }
-
-            inputScanner.close();
-
-            try {
-                saveFinalState(warehouse.getFloor());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        // Phase 2 stuff
-        } else if (args[0].equals(ORDER_FILE)) {
+       if (args.length == 1 ) {
             try {
                 System.out.println("Started execution");
                 String line;
@@ -132,11 +95,45 @@ public class Main {
             try {
                 saveFinalState(warehouse.getFloor());
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-        } else {
-            System.out.println(args[0]);
+        } else if (args.length == 0 ) {
+            String currentInput = "";
+            Scanner inputScanner = new Scanner(System.in);
+            while (!(currentInput.equals(QUIT_COMMAND))) {
+                // Gets user input.
+                System.out.print("Input: ");
+                currentInput = inputScanner.nextLine();
+
+                // Sets up for checking commands.
+                boolean commandFound = false;
+
+                // Keep checking until there is a valid command or all commands have been checked.
+                for (int index = 0; (!(commandFound) && index < commands.length); index++) {
+                    // If the command is valid, execute the command.
+                    if (currentInput.startsWith(commands[index].getCommand())) {
+                        commandFound = true;
+                        try {
+                            commands[index].executeCommand(currentInput.substring(commands[index].getCommand().length() + 1));
+                        } catch(StringIndexOutOfBoundsException exception) {
+                            System.err.println("    Error: An argument should follow the command \"" + commands[index].getCommand() + "\".");
+                        } catch(IllegalArgumentException|IllegalStateException exception) {
+                            System.err.println("    Error: " + exception.getMessage());
+                        }
+                    }
+                }
+            }
+
+            inputScanner.close();
+
+            try {
+                saveFinalState(warehouse.getFloor());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            IOException e = new IOException();
+            throw e;
         }
     }
 

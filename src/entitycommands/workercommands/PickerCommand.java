@@ -16,17 +16,18 @@ public class PickerCommand extends WorkerCommand<Picker> {
     // Defines the class constants.
     private static final String COMMAND = "Picker";
 
-    // Defines constructor methods.
-    /**
-     * The default PickerCommand constructor, this is the only constructor for a PickerCommand,
-     * takes a warehouse as the parameter so that the command can lookup the Worker up from the
-     * Warehouse by name in executeCommand.
-     *
-     * @param warehouse the Warehouse that is to be used in the lookupWorker of the super class.
-     */
-    public PickerCommand(Warehouse warehouse) {
-        super(COMMAND, warehouse);
-    }
+	// Defines constructor methods.
+	/**
+	 * The default PickerCommand constructor, this is the only constructor for a
+	 * PickerCommand.
+	 *
+	 * @param warehouse the Warehouse that is to be used in the lookupWorker of the
+	 * super class.
+	 */
+	public PickerCommand(Warehouse warehouse) {
+		super(COMMAND, warehouse);
+	}
+
 
 
     // Defines the functional methods.
@@ -50,7 +51,7 @@ public class PickerCommand extends WorkerCommand<Picker> {
                 } catch(StringIndexOutOfBoundsException exception) {
                     throw new IllegalArgumentException("The command \"pick\" was given for the Picker command, and should have been followed by a number, but was instead followed by nothing.");
                 }
-            } else if(splitArgument[1].startsWith("to marshaling")) {
+            } else if(splitArgument[1].startsWith("to Marshaling")) {
                 if(splitArgument[1].length() > 13) {
                     throw new IllegalArgumentException("The command \"to marshaling\" was given for the Picker command, and should have been followed by nothing, but was instead followed by \"" + splitArgument[1].substring(13) + "\".");
                 } else {
