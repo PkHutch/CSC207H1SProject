@@ -52,7 +52,7 @@ public class Main {
                                            new ReplenisherCommand(warehouse) };
         loadInitialState(warehouse.getFloor());
         // Phase 2 stuff
-       if (args[0].equals(ORDER_FILE) && args.length == 1 ) {
+       if (args.length == 1 ) {
             try {
                 System.out.println("Started execution");
                 String line;
