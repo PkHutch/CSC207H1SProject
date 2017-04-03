@@ -14,7 +14,7 @@ public class Aisle extends ArrayContainer<Zone, Rack> {
      * @param layout the Integer[][] which represents the layout, where the first dimension
      *        is the Racks, and the second is the Level's SKU Integers.
      */
-    public Aisle(Zone zone, Integer[][] layout) {
+    public Aisle(Zone zone, String[][] layout) {
         super(zone, new Rack[layout.length]);
         for(int index = 0; index < layout.length; index++) {
             this.setItem(index, new Rack(this, layout[index]));

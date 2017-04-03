@@ -20,7 +20,7 @@ public class Floor extends ArrayContainer<Warehouse, Zone> {
      *        is the Zones, the second is the Aisles, the third is the the Racks, and the fourth
      *        is the Levels SKU Integers.
      */
-    public Floor(Warehouse warehouse, Integer[][][][] layout) {
+    public Floor(Warehouse warehouse, String[][][][] layout) {
         super(warehouse, new Zone[layout.length]);
         for (int index = 0; index < layout.length; index++) {
             this.setItem(index, new Zone(this, layout[index]));

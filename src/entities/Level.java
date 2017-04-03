@@ -16,7 +16,7 @@ public class Level {
 
     // Defines the instance variables.
     private final Rack containedBy;
-    private final Integer sku;
+    private final String sku;
     private int stock;
 
     // Defines the constructors.
@@ -28,7 +28,7 @@ public class Level {
      * @param sku the Integer which this Level contains, this should be a valid sku as defined by
      *        the Server that the Level belongs to, but this is not inforced.
      */
-    public Level(Rack rack, Integer sku) {
+    public Level(Rack rack, String sku) {
         this.containedBy = rack;
         this.sku = sku;
         this.stock = 0;
@@ -74,7 +74,7 @@ public class Level {
         return DEFAULT_MAX_QUANTITY;
     }
 
-    public Integer getSKU() {
+    public String getSKU() {
         return sku;
     }
 

@@ -3,7 +3,6 @@ package entitycommands;
 
 import entities.FaxMachine;
 import entities.Order;
-import java.util.Arrays;
 import java.lang.ArrayIndexOutOfBoundsException;
 import java.lang.IllegalArgumentException;
 

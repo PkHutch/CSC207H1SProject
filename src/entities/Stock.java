@@ -6,7 +6,7 @@ package entities;
  */
 public class Stock {
     // Defines instance variables.
-    private Integer sku;
+    private String sku;
 
     // Defines the constructors.
     /**
@@ -14,7 +14,7 @@ public class Stock {
      *
      * @param sku the Integer that represents the SKU of the Stock.
      */
-    public Stock(Integer sku) {
+    public Stock(String sku) {
         this.sku = sku;
     }
 
@@ -24,7 +24,7 @@ public class Stock {
      *
      * @return the Integer which represents the SKU of the Stock.
      */
-    public Integer getSKU() {
+    public String getSKU() {
         return this.sku;
     }
 }
