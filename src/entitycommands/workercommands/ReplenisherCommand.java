@@ -66,7 +66,7 @@ public class ReplenisherCommand extends WorkerCommand<Replenisher> {
         // Don't forget debug prints.
         String[] splitArgument = argument.split(" ", 3);
         try {
-            if (splitArgument[1].equals("replenishes")) {
+            if (splitArgument[1].equals("replenish")) {
                 try {
                     this.lookupReplenisher(splitArgument[0]).doTask(splitArgument[2]);
                 } catch (StringIndexOutOfBoundsException exception) {
@@ -83,7 +83,7 @@ public class ReplenisherCommand extends WorkerCommand<Replenisher> {
                 }
             } else {
                 throw new IllegalArgumentException("The command \"" + splitArgument[1]
-                        + "\" is not a valid Replenisher command, the valid commands are \"replenishes\",\"ready\".");
+                        + "\" is not a valid Replenisher command, the valid commands are \"replenish\",\"ready\".");
             }
         } catch (ArrayIndexOutOfBoundsException exception) {
             throw new IllegalArgumentException(
