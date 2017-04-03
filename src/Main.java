@@ -48,50 +48,11 @@ public class Main {
 				new ReplenisherCommand(warehouse) };
 
 		loadInitialState(warehouse.getFloor());
-		// Defines the variables that need to be used for user input.
-		if (args[0].equals("Manual")) {
-			String currentInput = "";
-			Scanner inputScanner = new Scanner(System.in);
-			// Keeps getting user input and inputting the commands until the
-			// quit command is given.
-			while (!(currentInput.equals(QUIT_COMMAND))) {
-				// Gets user input.
-				System.out.print("Input: ");
-				currentInput = inputScanner.nextLine();
-
-				// Sets up for checking commands.
-				boolean commandFound = false;
-
-				System.out.println("    Checking if the input is a valid command.");
-				// Keep checking until there is a valid command or all commands
-				// have
-				// been checked.
-				for (int index = 0; (!(commandFound) && index < commands.length); index++) {
-					System.out.println("    Currently checking commands[" + Integer.toString(index) + "].");
-					String commandString = commands[index].getCommand();
-
-					System.out.println("    Checking if " + currentInput + " starts with " + commandString);
-					// If the command is valid, execute the command.
-					if (currentInput.startsWith(commandString)) {
-						commandFound = true;
-						String argument = currentInput.substring(commandString.length() + 1);
-						commands[index].executeCommand(argument);
-					} else {
-						index++;
-					}
-				}
-			}
-			inputScanner.close();
-
-			try {
-				saveFinalState(warehouse.getFloor());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			// Phase 2 stuff
-		} else if (args[0].equals(ORDER_FILE)) {
-			try {
-				System.out.println("Started execution");
+		// Defines the variables that need to be used for user input.		
+		// Phase 2 stuff
+		if (args[0].equals(ORDER_FILE)) {
+		    try {
+		        System.out.println("Started execution");
 				String line;
 				FileReader fr = new FileReader(ORDER_FILE);
 				BufferedReader br = new BufferedReader(fr);
@@ -123,11 +84,49 @@ public class Main {
 			try {
                 saveFinalState(warehouse.getFloor());
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 		} else {
-			System.out.println(args[0]);
+		    if (args[0].equals("Manual")) {
+	            String currentInput = "";
+	            Scanner inputScanner = new Scanner(System.in);
+	            // Keeps getting user input and inputting the commands until the
+	            // quit command is given.
+	            while (!(currentInput.equals(QUIT_COMMAND))) {
+	                // Gets user input.
+	                System.out.print("Input: ");
+	                currentInput = inputScanner.nextLine();
+
+	                // Sets up for checking commands.
+	                boolean commandFound = false;
+
+	                System.out.println("    Checking if the input is a valid command.");
+	                // Keep checking until there is a valid command or all commands
+	                // have
+	                // been checked.
+	                for (int index = 0; (!(commandFound) && index < commands.length); index++) {
+	                    System.out.println("    Currently checking commands[" + Integer.toString(index) + "].");
+	                    String commandString = commands[index].getCommand();
+
+	                    System.out.println("    Checking if " + currentInput + " starts with " + commandString);
+	                    // If the command is valid, execute the command.
+	                    if (currentInput.startsWith(commandString)) {
+	                        commandFound = true;
+	                        String argument = currentInput.substring(commandString.length() + 1);
+	                        commands[index].executeCommand(argument);
+	                    } else {
+	                        index++;
+	                    }
+	                }
+	            }
+	            inputScanner.close();
+
+	            try {
+	                saveFinalState(warehouse.getFloor());
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+		    }
 		}
 	}
 
