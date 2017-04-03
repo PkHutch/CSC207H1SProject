@@ -49,9 +49,15 @@ public class Main {
                                            new PickerCommand(warehouse), 
                                            new LoaderCommand(warehouse),
                                            new SequencerCommand(warehouse),
-                                           new ReplenisherCommand(warehouse) };
+                                           new ReplenisherCommand(warehouse)};
         loadInitialState(warehouse.getFloor());
-        // Phase 2 stuff
+
+        Level[] levels = warehouse.getFloor().getLevels();
+        // Checks low levels.
+        for(int index = 0; index < levels.length; index++) {
+            warehouse.getServer().checkLevel(levels[index]);
+        }
+
        if (args.length == 1 ) {
             try {
                 System.out.println("Started execution");
@@ -154,8 +160,8 @@ public class Main {
             System.out.println("Wrote current state to to final.csv");
         } catch (IOException e) {
             e.printStackTrace();
-            }
         }
+    }
 
     private static String[] checkForDup() {
         String line;
