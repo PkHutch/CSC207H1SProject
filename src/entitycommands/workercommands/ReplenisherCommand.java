@@ -66,7 +66,7 @@ public class ReplenisherCommand extends WorkerCommand<Replenisher> {
         // Don't forget debug prints.
         String[] splitArgument = argument.split(" ", 3);
         try {
-            if (splitArgument[1].equals("loads")) {
+            if (splitArgument[1].equals("replenishes")) {
                 try {
                     this.lookupReplenisher(splitArgument[0]).doTask(splitArgument[3]);
                 } catch (StringIndexOutOfBoundsException exception) {
