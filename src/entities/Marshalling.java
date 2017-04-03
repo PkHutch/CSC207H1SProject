@@ -1,38 +1,67 @@
 package entities;
 
-import java.util.ArrayList;
-import entities.Stock;
+import entities.linkedlistcontainers.LinkedListContainer;
 import entities.Pallet;
-import entities.linkedlistcontainers.*;
+import entities.Stock;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Marshalling {
-	public ArrayList<Stock> marshallingStock;
-	public ArrayList<Pallet> marshallingPallet;
+    private final ArrayList<Pallet> marshallingPallet;
+    private final ArrayList<Stock> marshallingStock;
+    private final ArrayList<Stock> sequenceableStock;
 
-	public Marshalling() {
-		this.marshallingStock = new ArrayList<Stock>();
-		this.marshallingPallet = new ArrayList<Pallet>();
-	}
+    public Marshalling() {
+        this.marshallingPallet = new ArrayList<Pallet>();
+        this.marshallingStock = new ArrayList<Stock>();
+        this.sequenceableStock = new ArrayList<Stock>();
+    }
 
-	public void addStock(LinkedListContainer<Stock> stock) {
-		while (!(stock.isEmpty())) {
-			this.marshallingStock.add(stock.removeItem());
-		}
-	}
+    public void addPallet(Pallet p) {
+        this.marshallingPallet.add(p);
+    }
 
-	public void addPallet(Pallet p) {
-		this.marshallingPallet.add(p);
-	}
-	
-	public void clearStock() {
-		this.marshallingStock.clear();
-	}
+    public void addSequenceableStock(Stock newStock) {
+        this.sequenceableStock.add(newStock);
+    }
 
-	public ArrayList<Stock> getMarshallingStock() {
-		return this.marshallingStock;
-	}
+    public void clearPallets() {
+        this.marshallingPallet.clear();
+    }
 
-	public void clearPallets() {
-		this.marshallingPallet.clear();
-	}
+    public void clearStock() {
+        this.marshallingStock.clear();
+    }
+
+    public void dumpSequenceableStock(List<Stock> stock) {
+        while(stock.size() > 0) {
+            this.sequenceableStock.add(stock.remove(0));
+        }
+    }
+
+    public void dumpStock(List<Stock> stock) {
+        while(stock.size() > 0) {
+            this.marshallingStock.add(stock.remove(0));
+        }
+    }
+
+    public ArrayList<Stock> getMarshallingStock() {
+        return this.marshallingStock;
+    }
+
+    public ArrayList<Pallet> getMarshallingPallets() {
+        return this.marshallingPallet;
+    }
+
+    public ArrayList<Stock> getSequenceableStock() {
+        return this.sequenceableStock;
+    }
+
+    public Stock popStock(int index) {
+        return this.marshallingStock.remove(index);
+    }
+
+    public Stock popSequenceableStock(int index) {
+        return this.sequenceableStock.remove(index);
+    }
 }

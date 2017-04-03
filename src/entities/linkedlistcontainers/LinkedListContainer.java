@@ -10,8 +10,8 @@ import java.util.LinkedList;
 public abstract class LinkedListContainer<T> {
     // Defines variables.
     private int currentInventorySize;
-    private LinkedList<T> inventory;
-    private int maxInventorySize;
+    private final LinkedList<T> inventory;
+    private final int maxInventorySize;
 
     // Defines contructor methods.
     /**
@@ -21,6 +21,7 @@ public abstract class LinkedListContainer<T> {
      * @param inventorySize the integer which will be assigned to the max inventory size.
      */
     public LinkedListContainer(int inventorySize) {
+        this.inventory = new LinkedList<>();
         this.maxInventorySize = inventorySize;
     }
 
@@ -33,6 +34,8 @@ public abstract class LinkedListContainer<T> {
      *         LinkedListContainer is at max capacity.
      */
     public void addItem(T item) {
+        System.out.println("Calling addItem of LinkedListContainer " + this.toString() + " with" +
+            " argument item as " + item.toString() + ".");
         if(this.currentInventorySize == this.maxInventorySize) {
             throw new IllegalArgumentException("A LinkedListContainer is at max capacity but " +
                           "something is trying to add to it.");
@@ -61,18 +64,22 @@ public abstract class LinkedListContainer<T> {
     }
 
     /**
-     * The method which returns whether or not the LinkedListContainer is empty.
+     * The removeItems method of LinkedListContainer pops all items from the inventory.
      *
-     * @return the first item in the LinkedListContainer.
-     * @throws IllegalArgumentException the exception is thrown when the container is empty yet
-     *         something attempts to remove an item.
+     * @return the LinkedList<T> of the inventory that will no longer be contained in the
+     *         LinkedListContainers inventory.
      */
-    public T removeItem() {
+    public LinkedList<T> popItems() {
         if(this.isEmpty()) {
             throw new IllegalArgumentException("A LinkedListContainer is empty but something is" +
                           " attempting to remove an item from it.");
         } else {
-            return this.inventory.pop();
+            LinkedList<T> returnedList = new LinkedList<>();
+            while(this.inventory.size() > 0) {
+                returnedList.add(this.inventory.pop());
+                this.currentInventorySize--;
+            }
+            return returnedList;
         }
     }
 }
