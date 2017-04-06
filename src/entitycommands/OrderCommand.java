@@ -47,8 +47,10 @@ public class OrderCommand extends EntityCommand {
         try {
             Order order = new Order(thisOrder[1], thisOrder[0]);
             this.faxMachine.addOrder(order);
-        } catch(ArrayIndexOutOfBoundsException exception) {
-            throw new IllegalArgumentException("The command \"Order\" should be followed by the name of the fascia model, and then the colour, instead \"" + argument + "\" was given.");
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new IllegalArgumentException(
+                    "The command \"Order\" should be followed by the name of the fascia model, and then the colour, instead \""
+                            + argument + "\" was given.");
         }
     }
 }

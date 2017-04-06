@@ -6,11 +6,12 @@ import entities.Warehouse;
 import entities.taskentities.TaskEntity;
 
 /**
- * The Worker class is mostly just a class that has a name, and warehouse, but the children of
- * workers should implement either TaskExecutor, or TaskGiver.
+ * The Worker class is mostly just a class that has a name, and warehouse, but
+ * the children of workers should implement either TaskExecutor, or TaskGiver.
+ * 
  * @param <T>
  */
-public class Worker implements TaskEntity{
+public class Worker implements TaskEntity {
     // Defines the instance variables.
     private final String name;
     private final Warehouse warehouse;
@@ -19,13 +20,14 @@ public class Worker implements TaskEntity{
     /**
      * The main constructor for the Worker class.
      *
-     * @param name the name of String, which is the name of the Worker, ideally is unique, but
-     *        not necessary, however this could cause problems otherwise.
-     * @param warehouse the Warehouse that the Worker belongs to.
+     * @param name
+     *            the name of String, which is the name of the Worker, ideally
+     *            is unique, but not necessary, however this could cause
+     *            problems otherwise.
+     * @param warehouse
+     *            the Warehouse that the Worker belongs to.
      */
     public Worker(String name, Warehouse warehouse) {
-        System.out.println("Constructing Worker (" + this.toString() + "), with argument name" +
-            "\"" + name + "\", and Warehouse " + warehouse.toString() + ".");
         this.name = name;
         this.warehouse = warehouse;
     }
@@ -37,8 +39,6 @@ public class Worker implements TaskEntity{
      * @return the String name of the Worker.
      */
     public String getName() {
-        System.out.println("Calling getName of " + this.toString() + ".");
-        System.out.println("    Returning \"" + this.name + "\".");
         return this.name;
     }
 
@@ -48,8 +48,6 @@ public class Worker implements TaskEntity{
      * @return the Warehouse that the Worker belongs to.
      */
     public Warehouse getWarehouse() {
-        System.out.println("Calling getWarehouse of " + this.toString() + ".");
-        System.out.println("    Returning " + this.warehouse.toString() + ".");
         return this.warehouse;
     }
 }

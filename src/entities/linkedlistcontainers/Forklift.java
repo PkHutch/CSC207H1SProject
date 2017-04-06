@@ -13,7 +13,8 @@ public class Forklift extends LinkedListContainer<Stock> {
 
     // Defines the constructors.
     /**
-     * The only method and constructor of a Forklift, which is just a LinkedListContainer.
+     * The only method and constructor of a Forklift, which is just a
+     * LinkedListContainer.
      */
     public Forklift() {
         super(DEFAULT_INVENTORY_SIZE);

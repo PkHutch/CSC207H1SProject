@@ -16,6 +16,7 @@ public class SequencerCommand extends WorkerCommand<Sequencer> {
 
     // Defines constructor methods.
     /**
+
      * The default SequencerCommand constructor, this is the only constructor for a
      * SequencerCommand.
      *
@@ -39,16 +40,27 @@ public class SequencerCommand extends WorkerCommand<Sequencer> {
     }
 
     /**
-     * The executeCommand method of SequencerCommand tells the sequencer to sequence, but doesn't
-     * serve any other purpose.
+     * The executeCommand method of SequencerCommand tells the sequencer to
+     * sequence, but doesn't serve any other purpose.
      *
-     * @param argument the String which should be the name of the Sequencer, followed by the
-     *        command "sequence", which tells the sequencer to sequence. Anything else is not a valid argument.
+     * @param argument
+     *            the String which should be the name of the Sequencer, followed
+     *            by the command "sequence", which tells the sequencer to
+     *            sequence. Anything else is not a valid argument.
      */
     public void executeCommand(String argument) {
+        // First lookup the Sequencer using super. and use the returned result
+        // as the Sequencer in
+        // question.
+        // Then check the argument, split using the same method as in
+        // OrderCommand.
+        // If "sequence" then doTask of the Sequencer
+        // Otherwise IllegalArgumentException.
+        // Don't forget debug prints.
         String[] splitArgument = argument.split(" ");
         try {
-            if(splitArgument[1].equals("sequences")) {
+            if (splitArgument[1].equals("sequences")) {
+
                 try {
                     this.lookupSequencer(splitArgument[0]).doTask();
                 } catch(StringIndexOutOfBoundsException exception) {

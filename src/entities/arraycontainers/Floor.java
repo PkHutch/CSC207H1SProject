@@ -7,18 +7,23 @@ import entities.Warehouse;
 import java.util.ArrayList;
 
 /**
- * A Floor is an ArrayContainer with the parent being Warehouse, and the child being Zone.
+ * A Floor is an ArrayContainer with the parent being Warehouse, and the child
+ * being Zone.
  */
 public class Floor extends ArrayContainer<Warehouse, Zone> {
     // Defines the constructors.
     /**
-     * The default constructor for Floor, this calls the super class with the Warehouse as the
-     * container, and according to the layout, creates the contained Zones.
+     * The default constructor for Floor, this calls the super class with the
+     * Warehouse as the container, and according to the layout, creates the
+     * contained Zones.
      *
-     * @param warehouse the Warehouse object which contains this Floor object.
-     * @param layout the Integer[][][][] which represents the layout, where the first dimension
-     *        is the Zones, the second is the Aisles, the third is the the Racks, and the fourth
-     *        is the Levels SKU Integers.
+     * @param warehouse
+     *            the Warehouse object which contains this Floor object.
+     * @param layout
+     *            the Integer[][][][] which represents the layout, where the
+     *            first dimension is the Zones, the second is the Aisles, the
+     *            third is the the Racks, and the fourth is the Levels SKU
+     *            Integers.
      */
     public Floor(Warehouse warehouse, String[][][][] layout) {
         super(warehouse, new Zone[layout.length]);
@@ -29,11 +34,12 @@ public class Floor extends ArrayContainer<Warehouse, Zone> {
 
     // Defines the functional methods.
     /**
-     * The same as the getItem method of the super class, this gets the item at a given index but
-     * instead a capital letter character is given.
+     * The same as the getItem method of the super class, this gets the item at
+     * a given index but instead a capital letter character is given.
      *
-     * @param zone the capital letter character of the zone to return, ensure that a capital
-     *        letter is given.
+     * @param zone
+     *            the capital letter character of the zone to return, ensure
+     *            that a capital letter is given.
      * @return the zone specified by the letter given.
      */
     public Zone getItem(char zone) {
@@ -41,13 +47,17 @@ public class Floor extends ArrayContainer<Warehouse, Zone> {
     }
 
     /**
-     * The getLevel method of Floor returns the Level object at the given location, the input must
-     * point to a valid Level object.
+     * The getLevel method of Floor returns the Level object at the given
+     * location, the input must point to a valid Level object.
      *
-     * @param zone the char input that is the zone the Level is contained in.
-     * @param aisle the int input that is the aisle the Level is contained in.
-     * @param rack the int input that is the rack the Level is conatained in.
-     * @param level the int input that is the index of the Level.
+     * @param zone
+     *            the char input that is the zone the Level is contained in.
+     * @param aisle
+     *            the int input that is the aisle the Level is contained in.
+     * @param rack
+     *            the int input that is the rack the Level is conatained in.
+     * @param level
+     *            the int input that is the index of the Level.
      * @return the Level object, assuming the input is a valid location.
      */
     public Level getLevel(char zone, int aisle, int rack, int level) {
@@ -55,11 +65,11 @@ public class Floor extends ArrayContainer<Warehouse, Zone> {
     }
 
     /**
-     * The getLevels method of Floor returns the Level objects contained by the objects which the
-     * Floor contains.
+     * The getLevels method of Floor returns the Level objects contained by the
+     * objects which the Floor contains.
      *
-     * @return the array of Level objects which are contained by the objects contained by the
-     *         Floor.
+     * @return the array of Level objects which are contained by the objects
+     *         contained by the Floor.
      */
     public Level[] getLevels() {
         ArrayList<Level> returnedArrayList = new ArrayList<>();
@@ -67,7 +77,7 @@ public class Floor extends ArrayContainer<Warehouse, Zone> {
         for (int zoneIndex = 0; zoneIndex < zones.length; zoneIndex++) {
             Aisle[] aisles = zones[zoneIndex].getItems();
             for (int aisleIndex = 0; aisleIndex < aisles.length; aisleIndex++) {
-            Rack[] racks = aisles[aisleIndex].getItems();
+                Rack[] racks = aisles[aisleIndex].getItems();
                 for (int rackIndex = 0; rackIndex < racks.length; rackIndex++) {
                     Level[] levels = racks[rackIndex].getItems();
                     for (int levelIndex = 0; levelIndex < levels.length; levelIndex++) {
