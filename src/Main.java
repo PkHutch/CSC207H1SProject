@@ -45,12 +45,21 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
         Warehouse warehouse = new Warehouse();
-        EntityCommand[] commands = new EntityCommand[] { new OrderCommand(warehouse.getFaxMachine()),
-                new PickerCommand(warehouse), new LoaderCommand(warehouse), new SequencerCommand(warehouse),
-                new ReplenisherCommand(warehouse) };
+        EntityCommand[] commands = new EntityCommand[]{
+                                           new OrderCommand(warehouse.getFaxMachine()),
+                                           new PickerCommand(warehouse), 
+                                           new LoaderCommand(warehouse),
+                                           new SequencerCommand(warehouse),
+                                           new ReplenisherCommand(warehouse)};
         loadInitialState(warehouse.getFloor());
-        // Phase 2 stuff
-        if (args.length == 1) {
+
+        Level[] levels = warehouse.getFloor().getLevels();
+        // Checks low levels.
+        for(int index = 0; index < levels.length; index++) {
+            warehouse.getServer().checkLevel(levels[index]);
+        }
+
+       if (args.length == 1 ) {
             try {
                 System.out.println("Started execution");
                 String line;

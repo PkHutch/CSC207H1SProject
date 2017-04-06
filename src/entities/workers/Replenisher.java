@@ -31,4 +31,5 @@ public class Replenisher extends Worker implements TaskExecutor<String> {
     public void setReady() {
         this.isActive = false;
     }
+
 }

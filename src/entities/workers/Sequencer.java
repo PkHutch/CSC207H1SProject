@@ -38,6 +38,7 @@ public class Sequencer extends Worker implements TaskGiver {
                         }
                     }
                     if (potentiallySequenceableStock.size() == potentiallySequenceableSKUs.length) {
+
                         marshalling.dumpSequenceableStock(potentiallySequenceableStock);
                         potentialPickingRequest.setStatus(3);
                     } else {
@@ -65,17 +66,35 @@ public class Sequencer extends Worker implements TaskGiver {
                             } else {
                                 loadToFront = true;
                                 backPalletArrayList.add(marshalling.popSequenceableStock(stockIndex));
+                for(int skuIndex = 0; skuIndex < sequenceableSKUs.length; skuIndex++) {
+                    boolean stockFound = false;
+                    for(int stockIndex = 0; stockIndex < sequenceableStock.size() &&
+                        stockFound == false; stockIndex++) {
+                        if(sequenceableStock.get(stockIndex).getSKU().equals(sequenceableSKUs[
+                            skuIndex])) {
+                            stockFound = true;
+                            if(loadToFront == true) {
+                                loadToFront = false;
+                                frontPalletArrayList.add(marshalling.popSequenceableStock(
+                                    stockIndex));
+                            } else {
+                                loadToFront = true;
+                                backPalletArrayList.add(marshalling.popSequenceableStock(
+                                    stockIndex));
                             }
                         }
                     }
                 }
-                marshalling.addPallet(new Pallet(frontPalletArrayList.toArray(new Stock[frontPalletArrayList.size()])));
-                marshalling.addPallet(new Pallet(backPalletArrayList.toArray(new Stock[backPalletArrayList.size()])));
+
+                marshalling.addPallet(new Pallet(frontPalletArrayList.toArray(new Stock[
+                    frontPalletArrayList.size()])));
+                marshalling.addPallet(new Pallet(backPalletArrayList.toArray(new Stock[
+                    backPalletArrayList.size()])));
             }
             this.isActive = true;
         } else {
-            throw new IllegalStateException(
-                    "The Sequencer \"" + this.getName() + "\" is not " + "currently checked in as ready.");
+            throw new IllegalStateException("The Sequencer \"" + this.getName() + "\" is not " +
+                          "currently checked in as ready.");
         }
     }
 

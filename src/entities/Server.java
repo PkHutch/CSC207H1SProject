@@ -19,10 +19,11 @@ import java.util.LinkedList;
  */
 public class Server {
     // Defines the constants.
-    // private final static int DEFAULT_REFILL_QUANTITY = 5;
+    private final static int DEFAULT_REFILL_QUANTITY = 5;
     private final static int DEFAULT_PICKING_REQUEST_SIZE = 8;
     // Defines instance variables.
     private final LinkedList<Picker> inactivePickers;
+    private final ArrayList<Level> lowLevels;
     private final LinkedList<Integer> partialPickingRequest;
     private final ArrayList<PickingRequest> pickingRequests;
     private final String[][] orderArray;
@@ -37,6 +38,7 @@ public class Server {
      */
     public Server(Warehouse warehouse) {
         this.inactivePickers = new LinkedList<>();
+        this.lowLevels = new ArrayList<>();
         this.partialPickingRequest = new LinkedList<>();
         this.pickingRequests = new ArrayList<>();
         this.orderArray = this.parseTranslationFile();
@@ -79,9 +81,9 @@ public class Server {
     public void addOrder(Order order) {
         // This is used to check when the server has looked up the order's SKU.
         boolean foundOrder = false;
-        for (int index = 0; (!(foundOrder) && index < this.orderArray.length); index++) {
-            if (order.getColour().equals(this.orderArray[index][0])
-                    && order.getModel().equals(this.orderArray[index][1])) {
+        for(int index = 0; (!(foundOrder) && index < this.orderArray.length); index++) {
+            if(order.getColour().equals(this.orderArray[index][0]) &&
+                order.getModel().equals(this.orderArray[index][1])) {
                 foundOrder = true;
                 this.partialPickingRequest.add(Integer.parseInt(this.orderArray[index][2]));
                 this.partialPickingRequest.add(Integer.parseInt(this.orderArray[index][3]));
@@ -95,6 +97,7 @@ public class Server {
 
         // If four orders have been placed, then creates a picking request.
         if (partialPickingRequest.size() == DEFAULT_PICKING_REQUEST_SIZE) {
+
             PickingRequest newPickingRequest = new PickingRequest(
                     this.partialPickingRequest.toArray(new Integer[DEFAULT_PICKING_REQUEST_SIZE]));
             pickingRequests.add(newPickingRequest);
@@ -104,6 +107,48 @@ public class Server {
             }
         } else {
             
+        }
+    }
+
+    public void checkLevel(Level level) {
+        if(level.getStock() <= DEFAULT_REFILL_QUANTITY) {
+            boolean foundLevel = false;
+            for(int index = 0; index < this.lowLevels.size() && foundLevel == false; index++) {
+                if(level == this.lowLevels.get(index)) {
+                    foundLevel = true;
+                    throw new IllegalArgumentException("The level at location " +
+                              level.getLocation() + " is being checked for low quantity, this " +
+                              "should never occur because it has already been checked.");
+                }
+            }
+            if(foundLevel = false || this.lowLevels.size() == 0) {
+                System.out.println("    Warning: Level " + level.getLocation() + " must be replenished.");
+                this.lowLevels.add(level);
+            }
+        }
+    }
+
+    public boolean hasLowLevels() {
+        return this.lowLevels.size() != 0;
+    }
+
+    public String getLowLevelsString() {
+        String lowLevelsString = new String();
+        for(int index = 0; index < this.lowLevels.size(); index++) {
+            lowLevelsString.concat("        " + this.lowLevels.get(index).getLocation() + "\n");
+        }
+        return lowLevelsString;
+    }
+
+    public void updateLevel(Level level) {
+        if(level.getStock() > DEFAULT_REFILL_QUANTITY) {
+            boolean foundLevel = false;
+            for(int index = 0; index < this.lowLevels.size() && foundLevel == false; index++) {
+                if(level == this.lowLevels.get(index)) {
+                    foundLevel = true;
+                    this.lowLevels.remove(level);
+                }
+            }
         }
     }
 

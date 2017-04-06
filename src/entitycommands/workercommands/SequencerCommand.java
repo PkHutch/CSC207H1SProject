@@ -7,8 +7,8 @@ import entities.workers.Sequencer;
 import entities.workers.Worker;
 
 /**
- * A SequencerCommand is the class responsible for handling the execution of a
- * Picker command given by the console.
+ * A SequencerCommand is the class responsible for handling the execution of a Picker command
+ * given by the console.
  */
 public class SequencerCommand extends WorkerCommand<Sequencer> {
     // Defines the class constants.
@@ -16,29 +16,24 @@ public class SequencerCommand extends WorkerCommand<Sequencer> {
 
     // Defines constructor methods.
     /**
-     * The default SequencerCommand constructor, this is the only constructor
-     * for a SequencerCommand.
+
+     * The default SequencerCommand constructor, this is the only constructor for a
+     * SequencerCommand.
      *
-     * @param warehouse
-     *            the Warehouse that is to be used for lookupWorker.
+     * @param warehouse the Warehouse that is to be used for lookupWorker.
      */
     public SequencerCommand(Warehouse warehouse) {
         super(COMMAND, warehouse);
-        // Add debug message.
     }
 
     protected Sequencer lookupSequencer(String name) {
-        // Use the warehouse to find the worker with the name and instanceof T.
-        // Then if the worker with the given name doesn't exist, create the
-        // worker and notify the
-        // console.
         Worker worker = super.lookupWorker(name);
         if (worker instanceof Sequencer) {
             return (Sequencer) worker;
         } else {
             Sequencer newWorker = new Sequencer(name, this.getWarehouse());
-            System.out.println("The Worker with the name " + name + " was not found, so a Sequencer"
-                    + "has been created in their place.");
+            System.out.println("    The Worker with the name " + name + " was not found, so a " +
+                 "Sequencer has been created in their place.");
             this.getWarehouse().addWorker(newWorker);
             return newWorker;
         }
@@ -65,28 +60,31 @@ public class SequencerCommand extends WorkerCommand<Sequencer> {
         String[] splitArgument = argument.split(" ");
         try {
             if (splitArgument[1].equals("sequences")) {
+
                 try {
                     this.lookupSequencer(splitArgument[0]).doTask();
-                } catch (StringIndexOutOfBoundsException exception) {
-                    throw new IllegalArgumentException(
-                            "The command \"loads\" was given for the Sequencer command, but got something else instead.");
+                } catch(StringIndexOutOfBoundsException exception) {
+                    throw new IllegalArgumentException("The command \"loads\" was given for the " +
+                                  "Sequencer command, but got something else instead.");
                 }
             } else if (splitArgument[1].equals("ready")) {
                 if (splitArgument[1].length() > 5) {
-                    throw new IllegalArgumentException(
-                            "The command \"ready\" was given for the Sequencer command, and should have been followed by nothing, but was instead followed by \""
-                                    + splitArgument[1].substring(5) + "\".");
+                    throw new IllegalArgumentException("The command \"ready\" was given for the" +
+                                  " Sequencer command, and should have been followed by " +
+                                  "nothing, but was instead followed by \"" +
+                                  splitArgument[1].substring(5) + "\".");
                 } else {
                     this.lookupSequencer(splitArgument[0]).setReady();
                 }
             } else {
-                throw new IllegalArgumentException("The command \"" + splitArgument[1]
-                        + "\" is not a valid Sequencer command, the valid commands are \"sequences\",\"ready\".");
+                throw new IllegalArgumentException("The command \"" + splitArgument[1] + "\" is" + 
+                              " not a valid Sequencer command, the valid commands are " + 
+                              "\"sequences\", and \"ready\".");
             }
-        } catch (ArrayIndexOutOfBoundsException exception) {
-            throw new IllegalArgumentException(
-                    "The command \"Sequencer\" should be followed by the name of the Sequencer, and then a valid command, instead \""
-                            + argument + "\" was given.");
+        } catch(ArrayIndexOutOfBoundsException exception) {
+            throw new IllegalArgumentException("The command \"Sequencer\" should be followed by" +
+                          " the name of the Sequencer, and then a valid command, instead \"" +
+                          argument + "\" was given.");
         }
     }
 }
